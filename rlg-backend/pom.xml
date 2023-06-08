@@ -17,16 +17,21 @@
     <name>rlg-backend</name>
     <description>RedLeafGarden Backend</description>
 
-    <properties>
-        <java.version>8</java.version>
-    </properties>
-
     <packaging>pom</packaging>
 
     <modules>
         <module>rlg-backend-main</module>
         <module>rlg-backend-modules</module>
     </modules>
+
+    <properties>
+        <java.version>8</java.version>
+        <mybatis.version>2.2.2</mybatis.version>
+        <knife4j.version>2.0.9</knife4j.version>
+        <mysql.version>8.0.28</mysql.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <lombok.version>1.18.20</lombok.version>
+    </properties>
 
     <!-- 当前项目使用的依赖项 -->
     <dependencies>
@@ -49,31 +54,32 @@
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>2.2.2</version>
+            <version>${mybatis.version}</version>
         </dependency>
         <!-- Spring Boot Knife4j：在线API -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>2.0.9</version>
+            <version>${knife4j.version}</version>
         </dependency>
         <!-- MySQL -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
             <scope>runtime</scope>
         </dependency>
         <!-- JJWT（Java JWT） -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
-            <version>0.9.1</version>
+            <version>${jjwt.version}</version>
         </dependency>
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.20</version>
+            <version>${lombok.version}</version>
         </dependency>
         <!-- Spring Boot Test -->
         <dependency>
