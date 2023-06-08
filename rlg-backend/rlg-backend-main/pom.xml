@@ -10,10 +10,6 @@
 	</parent>
 
 	<artifactId>rlg-backend-main</artifactId>
-	<version>1</version>
-
-	<name>rlg-backend-main</name>
-	<description>RedLeafGarden Backend Main</description>
 
 	<properties>
 		<rlg-backend-modules.version>1</rlg-backend-modules.version>
@@ -22,7 +18,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>cn.maplerabbit</groupId>
-			<artifactId>rlg-backend-modules</artifactId>
+			<artifactId>user-module</artifactId>
 			<version>${rlg-backend-modules.version}</version>
 		</dependency>
 	</dependencies>
