@@ -16,5 +16,24 @@
 
     <modules>
         <module>user-module</module>
+        <module>file-module</module>
     </modules>
+
+    <properties>
+        <user.version>1</user.version>
+        <file.version>1</file.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>cn.maplerabbit</groupId>
+            <artifactId>user-module</artifactId>
+            <version>${user.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.maplerabbit</groupId>
+            <artifactId>file-module</artifactId>
+            <version>${file.version}</version>
+        </dependency>
+    </dependencies>
 </project>

@@ -1,0 +1,34 @@
+-- DROP DATABASE IF EXISTS rlg_rms;
+-- CREATE DATABASE IF NOT EXISTS rlg_rms CHARSET utf8mb4;
+USE rlg_rms;
+
+-- DROP TABLE IF EXISTS user;
+CREATE TABLE IF NOT EXISTS user(
+                                   uuid            varchar(32)     NOT NULL COMMENT 'uuid',
+                                   nickname        varchar(32)    NOT NULL COMMENT '昵称',
+                                   password        varchar(128)    NOT NULL COMMENT '密码',
+                                   gmt_created     datetime        DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                   gmt_modified    datetime        DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
+                                   PRIMARY KEY (uuid),
+                                   UNIQUE KEY (nickname)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
+
+-- DROP TABLE IF EXISTS user_info;
+CREATE TABLE IF NOT EXISTS user_info(
+                                        user_uuid       varchar(32)     NOT NULL COMMENT '用户uuid',
+                                        avatar          varchar(255)    DEFAULT NULL COMMENT '头像URL',
+                                        gender          tinyint         UNSIGNED DEFAULT 1 COMMENT '性别，1为男，0为女',
+                                        phone           varchar(32)     DEFAULT NULL COMMENT '手机号码',
+                                        email           varchar(32)     DEFAULT NULL COMMENT '电子邮箱',
+                                        birth           date            DEFAULT NULL COMMENT '生日',
+                                        description     text            DEFAULT NULL COMMENT '个人简介',
+                                        is_enable       tinyint(3)      UNSIGNED DEFAULT 1 COMMENT '是否启用，1为启用，0为禁用',
+                                        last_login_ip   varchar(32)     DEFAULT NULL COMMENT '最后登录IP地址',
+                                        last_login_time datetime        DEFAULT CURRENT_TIMESTAMP COMMENT '最后登录时间',
+                                        registered      date            DEFAULT CURRENT_DATE COMMENT '注册日期',
+                                        gmt_created     datetime        DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                        gmt_modified    datetime        DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
+                                        PRIMARY KEY (user_uuid),
+                                        UNIQUE KEY (phone),
+                                        UNIQUE KEY (email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户信息表';

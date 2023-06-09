@@ -18,7 +18,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>cn.maplerabbit</groupId>
-			<artifactId>user-module</artifactId>
+			<artifactId>rlg-backend-modules</artifactId>
 			<version>${rlg-backend-modules.version}</version>
 		</dependency>
 	</dependencies>

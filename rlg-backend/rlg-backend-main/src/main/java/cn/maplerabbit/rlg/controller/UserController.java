@@ -1,4 +1,4 @@
-package cn.maplerabbit.rlg.modules.user;
+package cn.maplerabbit.rlg.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
