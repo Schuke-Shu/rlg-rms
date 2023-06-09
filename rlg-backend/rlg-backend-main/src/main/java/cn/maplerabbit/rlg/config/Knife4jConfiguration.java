@@ -70,7 +70,7 @@ public class Knife4jConfiguration {
     private OpenApiExtensionResolver openApiExtensionResolver;
 
     public Knife4jConfiguration() {
-        log.debug("Knife4jConfiguration()...");
+        log.trace("Knife4jConfiguration()...");
     }
 
     @Bean

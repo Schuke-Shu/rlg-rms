@@ -1,5 +1,8 @@
 # Spring相关配置
 spring:
+  main:
+    # 关闭banner
+    banner-mode: off
   # Profile相关配置
   profiles:
     # 激活指定名称的Profile配置

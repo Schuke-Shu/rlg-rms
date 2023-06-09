@@ -11,15 +11,14 @@
 
 	<artifactId>rlg-backend-main</artifactId>
 
-	<properties>
-		<rlg-backend-modules.version>1</rlg-backend-modules.version>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>cn.maplerabbit</groupId>
-			<artifactId>rlg-backend-modules</artifactId>
-			<version>${rlg-backend-modules.version}</version>
+			<artifactId>rlg-backend-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.maplerabbit</groupId>
+			<artifactId>user-module</artifactId>
 		</dependency>
 	</dependencies>
 </project>

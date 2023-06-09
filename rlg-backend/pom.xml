@@ -21,6 +21,7 @@
     <modules>
         <module>rlg-backend-main</module>
         <module>rlg-backend-modules</module>
+        <module>rlg-backend-common</module>
     </modules>
 
     <properties>
@@ -30,9 +31,12 @@
         <mysql.version>8.0.28</mysql.version>
         <jjwt.version>0.9.1</jjwt.version>
         <lombok.version>1.18.20</lombok.version>
+
+        <rlg-backend-common.version>1</rlg-backend-common.version>
+        <user-module.version>1</user-module.version>
+        <file-module.version>1</file-module.version>
     </properties>
 
-    <!-- 当前项目使用的依赖项 -->
     <dependencies>
         <!-- Spring Boot WEB -->
         <dependency>
@@ -87,6 +91,26 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>cn.maplerabbit</groupId>
+                <artifactId>rlg-backend-common</artifactId>
+                <version>${rlg-backend-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.maplerabbit</groupId>
+                <artifactId>user-module</artifactId>
+                <version>${user-module.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.maplerabbit</groupId>
+                <artifactId>file-module</artifactId>
+                <version>${file-module.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>

@@ -8,12 +8,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="rlg-backend-main" />
+        <module name="file-module" />
         <module name="user-module" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="file-module" options="-parameters" />
       <module name="rlg-backend" options="" />
       <module name="rlg-backend-main" options="-parameters" />
       <module name="rlg-backend-modules" options="" />
