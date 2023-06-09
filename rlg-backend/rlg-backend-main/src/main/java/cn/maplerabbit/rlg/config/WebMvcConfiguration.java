@@ -19,6 +19,9 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         log.trace("WebMvcConfiguration()...");
     }
 
+    /**
+     * 解决跨域问题
+     */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
