@@ -5,12 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-/**
- * Spring MVC配置类
- *
- * @author java@tedu.cn
- * @version 0.0.1
- */
 @Slf4j
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {

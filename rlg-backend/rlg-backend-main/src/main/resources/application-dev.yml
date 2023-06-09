@@ -12,7 +12,6 @@ spring:
 # 日志的显示级别
 logging:
   level:
-    root: warn
     cn.maplerabbit.rlg: trace
 
 # debug开关

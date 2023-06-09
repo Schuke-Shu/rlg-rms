@@ -14,16 +14,14 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
-/**
- * Knife4j配置类
- *
- * @author java@tedu.cn
- * @version 0.0.1
- */
 @Slf4j
 @Configuration
 @EnableSwagger2WebMvc
-public class Knife4jConfiguration {
+public class Knife4jConfiguration
+{
+    public Knife4jConfiguration() {
+        log.trace("Knife4jConfiguration()...");
+    }
 
     /**
      * 【重要】指定Controller包路径
@@ -66,34 +64,36 @@ public class Knife4jConfiguration {
      */
     private String version = "1";
 
-    @Autowired
-    private OpenApiExtensionResolver openApiExtensionResolver;
-
-    public Knife4jConfiguration() {
-        log.trace("Knife4jConfiguration()...");
-    }
-
     @Bean
-    public Docket docket() {
-        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+    public Docket docket()
+    {
+        return new Docket(DocumentationType.SWAGGER_2)
                 .host(host)
-                .apiInfo(apiInfo())
+                .apiInfo(
+                        new ApiInfoBuilder()
+                                .title(title)
+                                .description(description)
+                                .termsOfServiceUrl(termsOfServiceUrl)
+                                .contact(
+                                        new Contact(
+                                                contactName,
+                                                contactUrl,
+                                                contactEmail
+                                        )
+                                )
+                                .version(version)
+                                .build()
+                )
                 .groupName(groupName)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage(basePackage))
-                .paths(PathSelectors.any())
-                .build()
-                .extensions(openApiExtensionResolver.buildExtensions(groupName));
-        return docket;
-    }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title(title)
-                .description(description)
-                .termsOfServiceUrl(termsOfServiceUrl)
-                .contact(new Contact(contactName, contactUrl, contactEmail))
-                .version(version)
+                .apis(
+                        RequestHandlerSelectors
+                                .basePackage(basePackage)
+                )
+                .paths(
+                        PathSelectors
+                                .any()
+                )
                 .build();
     }
 }
