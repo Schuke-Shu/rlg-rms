@@ -7,6 +7,12 @@
     <sql id="BaseColumns">
         <!-- add base columns -->
     </sql>
+    <sql id="save">
+        , #{gmtCreated}, #{gmtModified}
+    </sql>
+    <sql id="saveBatch">
+        (, #{i.gmtCreated}, #{i.gmtModified})
+    </sql>
 
     <resultMap id="BaseResultMap" type="">
         <id column="" property="" />
@@ -17,7 +23,7 @@
         insert into xxx(
             <include refid="BaseColumns" />
         ) values (
-            , #{gmtCreated}, #{gmtModified}
+            <include refid="save" />
         )
     </insert>
 
@@ -26,7 +32,7 @@
             <include refid="BaseColumns" />
         ) values
         <foreach collection="list" item="i" separator=", ">
-            (, #{i.gmtCreated}, #{i.gmtModified})
+            <include refid="saveBatch" />
         </foreach>
     </insert>
 
