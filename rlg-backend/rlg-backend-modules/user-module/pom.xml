@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>user-module</artifactId>
+    <version>1</version>
 
     <description>User-about Module</description>
 

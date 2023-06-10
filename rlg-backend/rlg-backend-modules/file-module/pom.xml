@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>file-module</artifactId>
+    <version>1</version>
 
     <description>File-about Module</description>
 

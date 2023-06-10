@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>rlg-backend-pojo</artifactId>
+    <version>1</version>
 
     <description>RedLeafGarden Backend pojo module</description>
 
