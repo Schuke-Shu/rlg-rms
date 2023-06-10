@@ -6,11 +6,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.StringJoiner;
 import java.util.UUID;
 
 /**
- * UUID生成器，内置一个链表集合充当容器
+ * UUID生成器
  */
 @Component
 @Slf4j
@@ -19,15 +18,12 @@ public class UUIDGenerator
     /**
      * UUID容器
      */
-    private List<String> uuidContainer = new LinkedList<>();
+    private final List<String> uuidContainer = new LinkedList<>();
 
     /**
-     * 上一次生成的UUID
+     * 最后一次生成的UUID
      */
-    private String uuid = UUID
-            .randomUUID()
-            .toString()
-            .replaceAll("-", "");
+    private String latest_uuid = "";
 
     public UUIDGenerator()
     {
@@ -56,10 +52,7 @@ public class UUIDGenerator
     private void reloadContainer()
     {
         while (uuidContainer.size() < max)
-        {
-            uuidContainer.add(uuid);
-            re();
-        }
+            uuidContainer.add(re());
 
         log.trace("reloadContainer()...\nuuidContainer‘s capacity: {}", max);
     }
@@ -67,7 +60,7 @@ public class UUIDGenerator
     /**
      * 刷新uuid
      */
-    private void re()
+    private String re()
     {
         String s;
         do
@@ -75,7 +68,8 @@ public class UUIDGenerator
                     .randomUUID()
                     .toString()
                     .replaceAll("-", "");
-        while (uuid.equals(s));
-        uuid = s;
+        while (latest_uuid.equals(s));
+        latest_uuid = s;
+        return s;
     }
 }
