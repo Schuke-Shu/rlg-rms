@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="cn.maplerabbit.rlg.module.user.mapper.UserLoginLogMapper">
+<mapper namespace="cn.maplerabbit.rlg.module.user.UserLoginLogMapper">
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
         id, user_uuid, username, ip, engine, gmt_login, gmt_created, gmt_modified
@@ -13,7 +13,7 @@
         (null, #{i.userUuid}, #{i.username}, #{i.engine}, #{i.ip}, #{i.gmtLogin}, #{i.gmtCreated}, #{i.gmtModified})
     </sql>
 
-    <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.module.user.pojo.entity.UserLoginLog">
+    <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.module.user.UserLoginLog">
         <id column="id" property="id" />
         <result column="user_uuid" property="userUuid" />
         <result column="username" property="username" />
