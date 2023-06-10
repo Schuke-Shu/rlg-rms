@@ -12,7 +12,7 @@ spring:
 # 日志的显示级别
 logging:
   level:
-    cn.maplerabbit.rlg: trace
+    cn.maplerabbit.rlg: warn
 
 # debug开关
 debug: false
@@ -20,7 +20,7 @@ debug: false
 # knife4j配置
 knife4j:
   # 开关
-  enable: true
+  enable: false
 
 # 项目配置
 rlg:
@@ -29,6 +29,6 @@ rlg:
     # 配置根目录
     root:
       # 系统文件根目录
-      project: D:\Projects\MapleProjects\RedLeafGarden\TestFile\project
+      project:
       # 用户文件根目录
-      user: D:\Projects\MapleProjects\RedLeafGarden\TestFile\user
+      user:

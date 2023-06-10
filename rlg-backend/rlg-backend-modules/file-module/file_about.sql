@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS file(
     path            varchar(255)    NOT NULL COMMENT '路径',
     filename        varchar(255)    NOT NULL COMMENT '文件名称',
     deep            int(10)         UNSIGNED DEFAULT 1 COMMENT '文件层级',
-    parent_uuid     varchar(32)     DEFAULT 1 COMMENT '父目录uuid',
+    parent_uuid     varchar(32)     DEFAULT NULL COMMENT '父目录uuid',
     is_directory    tinyint(3)      UNSIGNED DEFAULT 0 COMMENT '是否为目录，1:是，0:否',
     suffix          varchar(8)      DEFAULT NULL COMMENT '后缀名',
     size            bigint(20)      UNSIGNED DEFAULT NULL COMMENT '文件大小',

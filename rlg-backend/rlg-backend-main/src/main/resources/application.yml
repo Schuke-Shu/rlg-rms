@@ -1,4 +1,4 @@
-# Spring相关配置
+# Spring配置
 spring:
   main:
     # 关闭banner
@@ -17,8 +17,7 @@ logging:
   level:
     root: warn
 
-# knife4j开关
+# knife4j配置
 knife4j:
-  enable: true
   setting:
     language: zh-CN
