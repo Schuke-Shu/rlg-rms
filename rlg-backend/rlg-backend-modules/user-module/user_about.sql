@@ -4,7 +4,7 @@ USE rlg_rms;
 
 -- DROP TABLE IF EXISTS user;
 CREATE TABLE IF NOT EXISTS user(
-    uuid            varchar(32)     NOT NULL COMMENT 'uuid',
+    uuid            varchar(32)     NOT NULL,
     nickname        varchar(32)    NOT NULL COMMENT '昵称',
     password        varchar(128)    NOT NULL COMMENT '密码',
     gmt_create      datetime        DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS user(
 
 -- DROP TABLE IF EXISTS user_info;
 CREATE TABLE IF NOT EXISTS user_info(
-    user_uuid       varchar(32)     NOT NULL COMMENT '用户uuid',
+    user_uuid       varchar(32)     NOT NULL,
     avatar          varchar(255)    DEFAULT NULL COMMENT '头像URL',
     real_name       varchar(255)    DEFAULT NULL COMMENT '用户真实姓名',
     gender          tinyint(3)      UNSIGNED DEFAULT 1 COMMENT '性别，1:男，0:女',
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS user_info(
     is_enable       tinyint(3)      UNSIGNED DEFAULT 1 COMMENT '是否启用，1:启用，0:禁用',
     last_login_ip   varchar(32)     DEFAULT NULL COMMENT '最后登录IP地址',
     last_login_time datetime        DEFAULT CURRENT_TIMESTAMP COMMENT '最后登录时间',
-    register        datetime        DEFAULT CURRENT_DATE COMMENT '注册时间',
+    register        datetime        DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
     gmt_create      datetime        DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     gmt_modified    datetime        DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
     PRIMARY KEY (user_uuid),
