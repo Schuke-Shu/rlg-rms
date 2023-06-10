@@ -11,6 +11,8 @@
 
 	<artifactId>rlg-backend-main</artifactId>
 
+	<description>RedLeafGarden Backend main program</description>
+
 	<dependencies>
 		<dependency>
 			<groupId>cn.maplerabbit</groupId>

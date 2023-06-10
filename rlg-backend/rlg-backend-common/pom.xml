@@ -10,4 +10,6 @@
     </parent>
 
     <artifactId>rlg-backend-common</artifactId>
+
+    <description>RedLeafGarden Backend common program</description>
 </project>
