@@ -1,4 +1,4 @@
-package cn.maplerabbit.rlg.pojo.file.entity;
+package cn.maplerabbit.rlg.modules.user.pojo.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -8,25 +8,17 @@ import java.time.LocalDateTime;
 
 @Data
 @Accessors(chain = true)
-public class File implements Serializable
+public class User implements Serializable
 {
     private String uuid;
     /**
-     * 文件上传者
+     * 昵称
      */
-    private String userUuid;
+    private String nickname;
     /**
-     * 后缀名
+     * 密码
      */
-    private String suffix;
-    /**
-     * 文件大小
-     */
-    private Long size;
-    /**
-     * 文件上传时间
-     */
-    private LocalDateTime uploadTime;
+    private String password;
     /**
      * 创建时间
      */
