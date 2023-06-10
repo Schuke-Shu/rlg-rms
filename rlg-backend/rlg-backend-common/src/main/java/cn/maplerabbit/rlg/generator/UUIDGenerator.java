@@ -54,7 +54,9 @@ public class UUIDGenerator
         while (uuidContainer.size() < max)
             uuidContainer.add(re());
 
-        log.trace("reloadContainer()...\nuuidContainer‘s capacity: {}", max);
+        log.debug("reloadContainer()...");
+        log.trace("UUID容器最大容量: {}", max);
+        if (max > 1000) log.warn("UUID容器容量：{}，容量过大", max);
     }
 
     /**
