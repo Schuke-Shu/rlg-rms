@@ -15,23 +15,23 @@ public interface mapperTemplate<T>
      * 单个添加
      * @return 受影响行数
      */
-    int add(T t);
+    int save(T t);
 
     /**
      * 批量添加
      * @return 受影响行数
      */
-    int addBatch(List<T> list);
+    int saveBatch(List<T> list);
 
     /**
-     * 单个删除（按主键删除）
+     * 单个删除
      * @param pk primary key
      * @return 受影响行数
      */
     int remove(@Param("pk") Serializable pk);
 
     /**
-     * 批量删除（按住键删除）
+     * 批量删除
      * @param pks primary keys
      * @return 受影响行数
      */

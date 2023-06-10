@@ -1,5 +1,8 @@
 package cn.maplerabbit.rlg.exception;
 
+/**
+ * 自定义运行时异常
+ */
 public class RlgRuntimeException extends RuntimeException
 {
     public RlgRuntimeException()

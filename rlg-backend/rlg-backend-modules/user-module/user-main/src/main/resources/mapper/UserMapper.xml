@@ -1,6 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.maplerabbit.rlg.modules.user.mapper.UserMapper">
+<mapper namespace="cn.maplerabbit.rlg.module.user.mapper.UserMapper">
+    <sql id="BaseColumns">
+        uuid, username, password, avatar_uuid, real_name, gender, phone, email, birth, description, is_enable, last_login_ip, last_login_time, gmt_registered, gmt_created, gmt_modified
+    </sql>
+    <sql id="save">
+        #{uuid}, #{username}, #{password}, #{avatarUuid}, #{realName}, #{gender}, #{phone}, #{email}, #{birth}, #{description}, #{isEnable}, #{lastLoginIp}, #{lastLoginTime}, #{gmtRegistered}, #{gmtCreated}, #{gmtModified}
+    </sql>
+    <sql id="saveBatch">
+        (#{i.uuid}, #{i.username}, #{i.password}, #{i.avatarUuid}, #{i.realName}, #{i.gender}, #{i.phone}, #{i.email}, #{i.birth}, #{i.description}, #{i.isEnable}, #{i.lastLoginIp}, #{i.lastLoginTime}, #{i.gmtRegistered}, #{i.gmtCreated}, #{i.gmtModified})
+    </sql>
 
+    <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.module.user.pojo.entity.User">
+        <id column="uuid" property="uuid" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="avatar_uuid" property="avatarUuid" />
+        <result column="real_name" property="realName" />
+        <result column="gender" property="gender" />
+        <result column="phone" property="phone" />
+        <result column="email" property="email" />
+        <result column="birth" property="birth" />
+        <result column="description" property="description" />
+        <result column="is_enable" property="isEnable" />
+        <result column="last_login_ip" property="lastLoginIp" />
+        <result column="last_login_time" property="lastLoginTime" />
+        <result column="gmt_registered" property="gmtRegistered" />
+        <result column="gmt_created" property="gmtCreated" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+
+    <insert id="save">
+        insert into user(
+            <include refid="BaseColumns" />
+        ) values (
+            <include refid="save" />
+        )
+    </insert>
+
+    <insert id="saveBatch">
+        insert into user(
+            <include refid="BaseColumns" />
+        ) values
+        <foreach collection="list" item="i" separator=", ">
+            <include refid="saveBatch" />
+        </foreach>
+    </insert>
+
+    <delete id="remove">
+        delete from user where uuid = #{pk}
+    </delete>
+
+    <delete id="removeBatch">
+        delete from user where uuid in
+        <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
+    </delete>
+
+    <update id="update">
+        update user
+        <set>
+            <if test="username != null">username = #{username},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="avatarUuid != null">avatar_uuid = #{avatarUuid},</if>
+            <if test="realName != null">real_name = #{realName},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="birth != null">birth = #{birth},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="isEnable != null">is_enable = #{isEnable},</if>
+            <if test="lastLoginIp != null">last_login_ip = #{lastLoginIp},</if>
+            <if test="lastLoginTime != null">last_login_time = #{lastLoginTime},</if>
+            <if test="gmtRegistered != null">gmt_registered = #{gmtRegistered},</if>
+            gmt_modified = #{gmtModified}
+        </set>
+        <where>
+            uuid = #{uuid}
+        </where>
+    </update>
+
+    <select id="query" resultMap="BaseResultMap">
+        select
+            <include refid="BaseColumns" />
+        from user
+        <where>
+            uuid = #{pk}
+        </where>
+    </select>
+
+    <select id="queryBatch" resultMap="BaseResultMap">
+        select
+            <include refid="BaseColumns" />
+        from user
+        <where>
+            uuid in
+            <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
+        </where>
+    </select>
 </mapper>

@@ -1,5 +1,8 @@
 package cn.maplerabbit.rlg.exception;
 
+/**
+ * 自定义强制处理异常
+ */
 public class RlgException extends Exception
 {
     public RlgException()

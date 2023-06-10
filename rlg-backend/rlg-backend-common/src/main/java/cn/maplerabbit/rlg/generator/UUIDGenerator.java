@@ -25,6 +25,12 @@ public class UUIDGenerator
      */
     private String latest_uuid = "";
 
+    /**
+     * UUID容器的最大容量
+     */
+    @Value("${rlg.uuid.max:10}")
+    private int max;
+
     public UUIDGenerator()
     {
         log.trace("UUIDGenerator()...");
@@ -40,13 +46,6 @@ public class UUIDGenerator
     }
 
     /**
-     * 最多存储的UUID数量
-     */
-    @Value("${rlg.uuid.max:10}")
-    private int max;
-
-
-    /**
      * 重新填充容器
      */
     private void reloadContainer()
@@ -54,8 +53,7 @@ public class UUIDGenerator
         while (uuidContainer.size() < max)
             uuidContainer.add(re());
 
-        log.debug("reloadContainer()...");
-        log.trace("UUID容器最大容量: {}", max);
+        log.debug("UUIDGenerator reloadContainer()...");
         if (max > 1000) log.warn("UUID容器容量：{}，容量过大", max);
     }
 
