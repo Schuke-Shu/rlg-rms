@@ -78,7 +78,7 @@
             <include refid="BaseColumns" />
         from user_login_log
         <where>
-            user_uuid in
+            id in
             <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
         </where>
     </select>

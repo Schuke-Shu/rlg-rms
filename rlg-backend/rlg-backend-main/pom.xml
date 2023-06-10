@@ -14,13 +14,6 @@
 	<description>RedLeafGarden Backend main program</description>
 
 	<dependencies>
-		<!-- Spring Boot Test -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>cn.maplerabbit</groupId>
 			<artifactId>rlg-backend-common</artifactId>

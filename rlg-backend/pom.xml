@@ -23,6 +23,7 @@
         <module>rlg-backend-modules</module>
         <module>rlg-backend-common</module>
         <module>rlg-backend-pojo</module>
+        <module>rlg-backend-test</module>
     </modules>
 
     <properties>

@@ -11,6 +11,7 @@
         <module name="user-main" />
         <module name="user-api" />
         <module name="rlg-backend-pojo" />
+        <module name="rlg-backend-test" />
         <module name="rlg-backend-main" />
         <module name="file-main" />
         <module name="file-api" />
@@ -34,6 +35,7 @@
       <module name="rlg-backend-main" options="-parameters" />
       <module name="rlg-backend-modules" options="" />
       <module name="rlg-backend-pojo" options="-parameters" />
+      <module name="rlg-backend-test" options="-parameters" />
       <module name="rlg-module-pojo" options="-parameters" />
       <module name="user-api" options="-parameters" />
       <module name="user-main" options="-parameters" />
