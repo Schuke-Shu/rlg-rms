@@ -6,7 +6,6 @@ USE rlg_rms;
 CREATE TABLE IF NOT EXISTS file(
     uuid            varchar(32)     NOT NULL,
     user_uuid       varchar(32)     NOT NULL,
-    path            varchar(255)    NOT NULL COMMENT '文件路径（基于项目指定根目录）',
     filename        varchar(255)    NOT NULL COMMENT '文件名称',
     deep            int(10)         UNSIGNED DEFAULT 1 COMMENT '文件层级',
     parent_uuid     varchar(32)     DEFAULT NULL COMMENT '父目录uuid',

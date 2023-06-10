@@ -13,6 +13,9 @@ CREATE TABLE IF NOT EXISTS user(
     UNIQUE KEY (nickname)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
+INSERT INTO user(uuid, nickname, password) VALUES ('1', '测试', 'P@ssw0rd');
+INSERT INTO user(uuid, nickname, password) VALUES ('2', 'root', 'P@ssw0rdRoot');
+
 -- DROP TABLE IF EXISTS user_info;
 CREATE TABLE IF NOT EXISTS user_info(
     user_uuid       varchar(32)     NOT NULL,
@@ -33,3 +36,6 @@ CREATE TABLE IF NOT EXISTS user_info(
     UNIQUE KEY (phone),
     UNIQUE KEY (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户信息表';
+
+INSERT INTO user_info(user_uuid) VALUES ('1');
+INSERT INTO user_info(user_uuid) VALUES ('2');
