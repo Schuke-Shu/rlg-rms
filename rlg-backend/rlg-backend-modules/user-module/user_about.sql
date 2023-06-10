@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS user(
 CREATE TABLE IF NOT EXISTS user_info(
     user_uuid       varchar(32)     NOT NULL COMMENT '用户uuid',
     avatar          varchar(255)    DEFAULT NULL COMMENT '头像URL',
-    real_name        varchar(255)    DEFAULT NULL COMMENT '用户真实姓名',
+    real_name       varchar(255)    DEFAULT NULL COMMENT '用户真实姓名',
     gender          tinyint(3)      UNSIGNED DEFAULT 1 COMMENT '性别，1:男，0:女',
     phone           varchar(32)     DEFAULT NULL COMMENT '手机号码',
     email           varchar(32)     DEFAULT NULL COMMENT '电子邮箱',
