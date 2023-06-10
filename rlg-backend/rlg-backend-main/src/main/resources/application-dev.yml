@@ -27,10 +27,7 @@ rlg:
   # 文件系统相关配置
   file:
     # 配置根目录
-    root:
-      # 系统文件根目录
-      project: D:\Projects\MapleProjects\RedLeafGarden\TestFile\project
-      # 用户文件根目录
-      user: D:\Projects\MapleProjects\RedLeafGarden\TestFile\user
+    root: D:\Projects\MapleProjects\RedLeafGarden\TestFile
   uuid:
+    # UUID容器最大容量
     max: 100
