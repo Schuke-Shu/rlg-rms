@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- modify namespace -->
+<mapper namespace="cn.maplerabbit.rlg.template.mapperTemplate">
+    <sql id="BaseColumns">
+        <!-- add base columns -->
+    </sql>
+
+    <resultMap id="BaseResultMap" type="">
+        <id column="" property="" />
+        <result column="" property="" />
+    </resultMap>
+
+    <!-- int add(XXX xxx); -->
+    <insert id="add">
+        insert into xxx(
+            <include refid="BaseColumns" />
+        ) values (
+
+        )
+    </insert>
+
+    <!-- int addBatch(List<XXX> xxx); -->
+    <insert id="addBatch">
+        insert into xxx(
+            <include refid="BaseColumns" />
+        ) values
+        <foreach collection="list" item="" separator=", ">
+            ()
+        </foreach>
+    </insert>
+
+    <!-- int remove(@Param("pk") Serializable pk); -->
+    <delete id="remove">
+        delete from xxx where xxx = #{pk}
+    </delete>
+
+    <!-- int removeBatch(List<Serializable> pks); -->
+    <delete id="removeBatch">
+        delete from xxx where xxx in
+        <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
+    </delete>
+
+    <!-- int update(XXX xxx); -->
+    <update id="update">
+        update xxx
+        <set>
+            <if test="xxx">xxx</if>
+        </set>
+        <where>
+            xxx = #{xxx}
+        </where>
+    </update>
+
+    <select id="query" resultMap="BaseResultMap" resultType="xxx">
+        select
+            <include refid="BaseColumns" />
+        from xxx
+        <where>
+            xxx = #{pk}
+        </where>
+    </select>
+
+    <select id="queryBatch" resultMap="BaseResultMap" resultType="xxx">
+        select
+            <include refid="BaseColumns" />
+        from xxx
+        <where>
+            xxx in
+            <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
+        </where>
+    </select>
+</mapper>
