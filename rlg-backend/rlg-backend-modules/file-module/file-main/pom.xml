@@ -11,7 +11,7 @@
 
     <artifactId>file-main</artifactId>
 
-    <description>File module's main package</description>
+    <description>File module's main program</description>
 
     <dependencies>
         <dependency>

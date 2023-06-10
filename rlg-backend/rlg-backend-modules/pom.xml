@@ -11,6 +11,8 @@
 
     <artifactId>rlg-backend-modules</artifactId>
 
+    <description>RedLeafGarden Backend service modules</description>
+
     <packaging>pom</packaging>
 
     <modules>

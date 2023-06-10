@@ -11,7 +11,7 @@
 
     <artifactId>user-main</artifactId>
 
-    <description>User module's main package</description>
+    <description>User module's main program</description>
 
     <dependencies>
         <dependency>
