@@ -15,11 +15,10 @@
 
     <description>User-about Module</description>
 
-    <dependencies>
-        <dependency>
-            <groupId>cn.maplerabbit</groupId>
-            <artifactId>rlg-backend-common</artifactId>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>user-main</module>
+        <module>user-api</module>
+    </modules>
 </project>

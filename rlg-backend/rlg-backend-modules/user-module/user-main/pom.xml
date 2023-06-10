@@ -5,24 +5,18 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cn.maplerabbit</groupId>
-        <artifactId>rlg-backend</artifactId>
+        <artifactId>user-module</artifactId>
         <version>1</version>
     </parent>
 
-    <artifactId>rlg-backend-modules</artifactId>
+    <artifactId>user-main</artifactId>
 
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>user-module</module>
-        <module>file-module</module>
-    </modules>
+    <description>User module's main package</description>
 
     <dependencies>
         <dependency>
             <groupId>cn.maplerabbit</groupId>
-            <artifactId>rlg-backend-common</artifactId>
-            <scope>provided</scope>
+            <artifactId>user-api</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -3,22 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>cn.maplerabbit</groupId>
-        <artifactId>rlg-backend-modules</artifactId>
+        <artifactId>file-module</artifactId>
         <version>1</version>
     </parent>
 
-    <artifactId>file-module</artifactId>
-    <version>1</version>
+    <artifactId>file-api</artifactId>
 
-    <description>File-about Module</description>
-
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>file-api</module>
-        <module>file-main</module>
-    </modules>
+    <description>File module's service api</description>
 </project>

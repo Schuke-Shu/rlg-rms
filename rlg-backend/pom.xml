@@ -94,19 +94,34 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- rlg-backend-common -->
             <dependency>
                 <groupId>cn.maplerabbit</groupId>
                 <artifactId>rlg-backend-common</artifactId>
                 <version>${rlg-backend-common.version}</version>
             </dependency>
+
+            <!-- user-module -->
             <dependency>
                 <groupId>cn.maplerabbit</groupId>
-                <artifactId>user-module</artifactId>
+                <artifactId>user-api</artifactId>
                 <version>${user-module.version}</version>
             </dependency>
             <dependency>
                 <groupId>cn.maplerabbit</groupId>
-                <artifactId>file-module</artifactId>
+                <artifactId>user-main</artifactId>
+                <version>${user-module.version}</version>
+            </dependency>
+
+            <!-- file-module -->
+            <dependency>
+                <groupId>cn.maplerabbit</groupId>
+                <artifactId>file-api</artifactId>
+                <version>${file-module.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.maplerabbit</groupId>
+                <artifactId>file-main</artifactId>
                 <version>${file-module.version}</version>
             </dependency>
         </dependencies>
