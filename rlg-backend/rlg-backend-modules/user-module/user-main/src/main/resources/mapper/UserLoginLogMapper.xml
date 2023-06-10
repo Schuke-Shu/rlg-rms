@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="cn.maplerabbit.rlg.module.user.mapper.UserLoginLogMapper">
+    <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
         id, user_uuid, username, ip, engine, gmt_login, gmt_created, gmt_modified
     </sql>
