@@ -1,4 +1,4 @@
-package cn.maplerabbit.rlg.modules.user.pojo.entity;
+package cn.maplerabbit.rlg.pojo.user.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

@@ -1,4 +1,4 @@
-package cn.maplerabbit.rlg.modules.file.pojo.entity;
+package cn.maplerabbit.rlg.pojo.file.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -8,14 +8,13 @@ import java.time.LocalDateTime;
 
 @Data
 @Accessors(chain = true)
-public class File implements Serializable
+public class directory implements Serializable
 {
-    private String uuid;
-    private String userUuid;
+    private Long id;
     /**
-     * 路径
+     * 所属用户uuid
      */
-    private String path;
+    private String userUuid;
     /**
      * 文件名称
      */
@@ -25,33 +24,17 @@ public class File implements Serializable
      */
     private Integer deep;
     /**
-     * 父目录uuid
+     * 父目录id
      */
-    private String parentUuid;
+    private Long parentId;
     /**
      * 是否为目录，1:是，0:否
      */
-    private Integer isDirectory;
-    /**
-     * 后缀名
-     */
-    private String suffix;
-    /**
-     * 文件大小
-     */
-    private Long size;
-    /**
-     * 文件上传时间
-     */
-    private LocalDateTime uploadTime;
-    /**
-     * 修改次数
-     */
-    private Integer updateCount;
+    private Integer isDir;
     /**
      * 是否在回收站中，1:是，0:否
      */
-    private Integer isDeleted;
+    private Integer isDel;
     /**
      * 进入回收站时间
      */

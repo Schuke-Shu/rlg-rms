@@ -1,5 +1,8 @@
 package cn.maplerabbit.rlg.modules.file.mapper;
 
-public interface FileMapper
+import cn.maplerabbit.rlg.pojo.file.entity.File;
+import cn.maplerabbit.rlg.template.mapperTemplate;
+
+public interface FileMapper extends mapperTemplate<File>
 {
 }

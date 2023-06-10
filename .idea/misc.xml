@@ -13,6 +13,7 @@
       <set>
         <option value="$PROJECT_DIR$/rlg-backend-mudules/pom.xml" />
         <option value="$PROJECT_DIR$/rlg-backend/rlg-backend-commen/pom.xml" />
+        <option value="$PROJECT_DIR$/rlg-backend/rlg-module-pojo/pom.xml" />
       </set>
     </option>
   </component>

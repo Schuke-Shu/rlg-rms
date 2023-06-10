@@ -5,7 +5,7 @@ USE rlg_rms;
 -- DROP TABLE IF EXISTS user;
 CREATE TABLE IF NOT EXISTS user(
     uuid            varchar(32)     NOT NULL,
-    nickname        varchar(32)    NOT NULL COMMENT '昵称',
+    nickname        varchar(32)     NOT NULL COMMENT '昵称',
     password        varchar(128)    NOT NULL COMMENT '密码',
     gmt_create      datetime        DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     gmt_modified    datetime        DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
@@ -19,7 +19,7 @@ INSERT INTO user(uuid, nickname, password) VALUES ('2', 'root', 'P@ssw0rdRoot');
 -- DROP TABLE IF EXISTS user_info;
 CREATE TABLE IF NOT EXISTS user_info(
     user_uuid       varchar(32)     NOT NULL,
-    avatar          varchar(255)    DEFAULT NULL COMMENT '头像URL',
+    avatar_uuid     varchar(255)    DEFAULT NULL COMMENT '头像文件uuid',
     real_name       varchar(255)    DEFAULT NULL COMMENT '用户真实姓名',
     gender          tinyint(3)      UNSIGNED DEFAULT 1 COMMENT '性别，1:男，0:女',
     phone           varchar(32)     DEFAULT NULL COMMENT '手机号码',

@@ -22,6 +22,7 @@
         <module>rlg-backend-main</module>
         <module>rlg-backend-modules</module>
         <module>rlg-backend-common</module>
+        <module>rlg-backend-pojo</module>
     </modules>
 
     <properties>
@@ -32,97 +33,84 @@
         <jjwt.version>0.9.1</jjwt.version>
         <lombok.version>1.18.20</lombok.version>
 
-        <rlg-backend-common.version>1</rlg-backend-common.version>
-        <user-module.version>1</user-module.version>
-        <file-module.version>1</file-module.version>
+        <rlg-backend.version>1</rlg-backend.version>
     </properties>
-
-    <dependencies>
-        <!-- Spring Boot WEB -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!-- Spring Boot Security -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-security</artifactId>-->
-<!--        </dependency>-->
-        <!-- Spring Boot Validation -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-        <!-- Spring Boot Mybatis -->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>${mybatis.version}</version>
-        </dependency>
-        <!-- Spring Boot Knife4j：在线API -->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>${knife4j.version}</version>
-        </dependency>
-        <!-- MySQL -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <!-- JJWT（Java JWT） -->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>${jjwt.version}</version>
-        </dependency>
-        <!-- Lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-        </dependency>
-        <!-- Spring Boot Test -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 
     <dependencyManagement>
         <dependencies>
+            <!-- Spring Boot Mybatis -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+
+            <!-- Spring Boot Knife4j：在线API -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+
+            <!-- MySQL -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <!-- JJWT（Java JWT） -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+
+            <!-- Lombok -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
+            <!-- ========== rlg-self dependencies ========== -->
             <!-- rlg-backend-common -->
             <dependency>
                 <groupId>cn.maplerabbit</groupId>
                 <artifactId>rlg-backend-common</artifactId>
-                <version>${rlg-backend-common.version}</version>
+                <version>${rlg-backend.version}</version>
+            </dependency>
+
+            <!-- rlg-backend-pojo -->
+            <dependency>
+                <groupId>cn.maplerabbit</groupId>
+                <artifactId>rlg-backend-pojo</artifactId>
+                <version>${rlg-backend.version}</version>
             </dependency>
 
             <!-- user-module -->
             <dependency>
                 <groupId>cn.maplerabbit</groupId>
                 <artifactId>user-api</artifactId>
-                <version>${user-module.version}</version>
+                <version>${rlg-backend.version}</version>
             </dependency>
             <dependency>
                 <groupId>cn.maplerabbit</groupId>
                 <artifactId>user-main</artifactId>
-                <version>${user-module.version}</version>
+                <version>${rlg-backend.version}</version>
             </dependency>
 
             <!-- file-module -->
             <dependency>
                 <groupId>cn.maplerabbit</groupId>
                 <artifactId>file-api</artifactId>
-                <version>${file-module.version}</version>
+                <version>${rlg-backend.version}</version>
             </dependency>
             <dependency>
                 <groupId>cn.maplerabbit</groupId>
                 <artifactId>file-main</artifactId>
-                <version>${file-module.version}</version>
+                <version>${rlg-backend.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

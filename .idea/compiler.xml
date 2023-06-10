@@ -7,10 +7,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="rlg-backend-main" />
         <module name="rlg-backend-common" />
         <module name="user-main" />
         <module name="user-api" />
+        <module name="rlg-backend-pojo" />
+        <module name="rlg-backend-main" />
         <module name="file-main" />
         <module name="file-api" />
       </profile>
@@ -18,6 +19,7 @@
     <bytecodeTargetLevel>
       <module name="rlg-backend-commen" target="1.8" />
       <module name="rlg-backend-commens" target="1.8" />
+      <module name="rlg-module-pojo" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -31,6 +33,8 @@
       <module name="rlg-backend-common" options="-parameters" />
       <module name="rlg-backend-main" options="-parameters" />
       <module name="rlg-backend-modules" options="" />
+      <module name="rlg-backend-pojo" options="-parameters" />
+      <module name="rlg-module-pojo" options="-parameters" />
       <module name="user-api" options="-parameters" />
       <module name="user-main" options="-parameters" />
       <module name="user-module" options="" />

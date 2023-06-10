@@ -32,3 +32,5 @@ rlg:
       project: D:\Projects\MapleProjects\RedLeafGarden\TestFile\project
       # 用户文件根目录
       user: D:\Projects\MapleProjects\RedLeafGarden\TestFile\user
+  uuid:
+    max: 100
