@@ -41,35 +41,45 @@ public class UUIDGenerator
      */
     public String get()
     {
-        if (uuidContainer.size() == 0) reloadContainer();
+        if (empty())
+            synchronized (this)
+            {
+                if (empty())
+                    reloadContainer();
+            }
         return uuidContainer.remove(0);
     }
+
+    /**
+     * 容器是否为空
+     */
+    private boolean empty() {return uuidContainer.size() == 0;}
 
     /**
      * 重新填充容器
      */
     private void reloadContainer()
     {
-        while (uuidContainer.size() < max)
-            uuidContainer.add(re());
-
         log.debug("UUIDGenerator reloadContainer()...");
-        if (max > 1000) log.warn("UUID容器容量：{}，容量过大", max);
+
+        while (uuidContainer.size() < max)
+        {
+            re();
+            uuidContainer.add(latest_uuid);
+        }
     }
 
     /**
      * 刷新uuid
      */
-    private String re()
+    private void re()
     {
-        String s;
+        String s = latest_uuid;
         do
-            s = UUID
+            latest_uuid = UUID
                     .randomUUID()
                     .toString()
                     .replaceAll("-", "");
         while (latest_uuid.equals(s));
-        latest_uuid = s;
-        return s;
     }
 }
