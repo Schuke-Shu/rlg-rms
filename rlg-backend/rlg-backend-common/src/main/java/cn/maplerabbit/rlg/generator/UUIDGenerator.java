@@ -15,6 +15,7 @@ import java.util.UUID;
 @Slf4j
 public class UUIDGenerator
 {
+    private Object lock = new Object();
     /**
      * UUID容器
      */
@@ -23,7 +24,7 @@ public class UUIDGenerator
     /**
      * 最后一次生成的UUID
      */
-    private String latest_uuid = "";
+    private String uuid = "";
 
     /**
      * UUID容器的最大容量
@@ -41,45 +42,33 @@ public class UUIDGenerator
      */
     public String get()
     {
-        if (empty())
-            synchronized (this)
+        if (uuidContainer.isEmpty())
+            synchronized (lock)
             {
-                if (empty())
+                if (uuidContainer.isEmpty())
                     reloadContainer();
             }
         return uuidContainer.remove(0);
     }
 
     /**
-     * 容器是否为空
-     */
-    private boolean empty() {return uuidContainer.size() == 0;}
-
-    /**
      * 重新填充容器
      */
     private void reloadContainer()
     {
-        log.debug("UUIDGenerator reloadContainer()...");
+        log.debug("reload UUID container...");
 
-        while (uuidContainer.size() < max)
-        {
-            re();
-            uuidContainer.add(latest_uuid);
+        while (uuidContainer.size() < max) {
+            // refresh uuid
+            String s = uuid;
+            do
+                uuid = UUID
+                        .randomUUID()
+                        .toString()
+                        .replaceAll("-", "");
+            while (uuid.equals(s));
+
+            uuidContainer.add(uuid);
         }
-    }
-
-    /**
-     * 刷新uuid
-     */
-    private void re()
-    {
-        String s = latest_uuid;
-        do
-            latest_uuid = UUID
-                    .randomUUID()
-                    .toString()
-                    .replaceAll("-", "");
-        while (latest_uuid.equals(s));
     }
 }
