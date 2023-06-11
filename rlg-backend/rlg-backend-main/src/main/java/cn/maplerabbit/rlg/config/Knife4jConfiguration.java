@@ -23,7 +23,7 @@ public class Knife4jConfiguration
     /**
      * 【重要】指定Controller包路径
      */
-    private String basePackage = "cn.maplerabbit.rlg.controller";
+    private String basePackage = "cn.maplerabbit.rlg.module";
     /**
      * 分组名称
      */

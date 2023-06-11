@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.maplerabbit.rlg.module.user.UserMapper">
+<mapper namespace="cn.maplerabbit.rlg.module.user.mapper.UserMapper">
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
         uuid, username, password, avatar_uuid, real_name, gender, phone, email, birth, description, is_enable, last_login_ip, last_login_time, gmt_registered, gmt_created, gmt_modified
@@ -13,7 +13,7 @@
         (#{i.uuid}, #{i.username}, #{i.password}, #{i.avatarUuid}, #{i.realName}, #{i.gender}, #{i.phone}, #{i.email}, #{i.birth}, #{i.description}, #{i.isEnable}, #{i.lastLoginIp}, #{i.lastLoginTime}, #{i.gmtRegistered}, #{i.gmtCreated}, #{i.gmtModified})
     </sql>
 
-    <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.module.user.User">
+    <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.module.user.entity.User">
         <id column="uuid" property="uuid" />
         <result column="username" property="username" />
         <result column="password" property="password" />

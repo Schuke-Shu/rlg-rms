@@ -1,5 +1,7 @@
 package cn.maplerabbit.rlg.module.user;
 
+import cn.maplerabbit.rlg.module.user.mapper.UserLoginLogMapper;
+import cn.maplerabbit.rlg.module.user.entity.UserLoginLog;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

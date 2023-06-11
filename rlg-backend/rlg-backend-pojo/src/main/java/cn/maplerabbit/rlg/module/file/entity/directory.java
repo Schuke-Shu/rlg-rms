@@ -1,4 +1,4 @@
-package cn.maplerabbit.rlg.module.file;
+package cn.maplerabbit.rlg.module.file.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

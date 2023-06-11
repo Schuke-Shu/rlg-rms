@@ -1,5 +1,6 @@
-package cn.maplerabbit.rlg.module.file;
+package cn.maplerabbit.rlg.module.file.service.impl;
 
+import cn.maplerabbit.rlg.module.file.service.IFileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
