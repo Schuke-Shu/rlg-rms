@@ -1,0 +1,23 @@
+# Spring配置
+spring:
+  main:
+    # 关闭banner
+    banner-mode: off
+  # Profile相关配置
+  profiles:
+    # 激活指定名称的Profile配置
+    active: dev
+
+# 配置SQL语句的XML文件的位置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+# 日志配置
+logging:
+  level:
+    root: warn
+
+# knife4j配置
+knife4j:
+  setting:
+    language: zh-CN

@@ -1,7 +1,6 @@
-package cn.maplerabbit.rlg.module.user;
+package cn.maplerabbit.rlg.module.file.mapper;
 
-import cn.maplerabbit.rlg.module.user.mapper.UserMapper;
-import cn.maplerabbit.rlg.module.user.entity.User;
+import cn.maplerabbit.rlg.module.file.entity.File;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,20 +8,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Arrays;
 
 @SpringBootTest
-public class UserMapperTest
+public class FileMapperTest
 {
     @Autowired
-    UserMapper mapper;
+    FileMapper mapper;
 
     @Test
     void testSave() // ok
     {
         System.out.println(
                 mapper.save(
-                        new User()
-                                .setUuid("3")
-                                .setUsername("测试2")
-                                .setPassword("123456")
+                        new File()
+                                .setUuid("1")
+                                .setUserUuid("1")
+                                .setSize(0L)
                 )
         );
     }
@@ -33,14 +32,14 @@ public class UserMapperTest
         System.out.println(
                 mapper.saveBatch(
                         Arrays.asList(
-                                new User()
-                                        .setUuid("4")
-                                        .setUsername("测试3")
-                                        .setPassword("123456"),
-                                new User()
-                                        .setUuid("5")
-                                        .setUsername("测试4")
-                                        .setPassword("123456")
+                                new File()
+                                        .setUuid("2")
+                                        .setUserUuid("2")
+                                        .setSize(0L),
+                                new File()
+                                        .setUuid("3")
+                                        .setUserUuid("3")
+                                        .setSize(0L)
                         )
                 )
         );
@@ -71,9 +70,9 @@ public class UserMapperTest
     {
         System.out.println(
                 mapper.update(
-                        new User()
-                                .setUuid("3")
-                                .setUsername("更新测试")
+                        new File()
+                                .setUuid("1")
+                                .setUserUuid("123")
                 )
         );
     }
@@ -82,7 +81,7 @@ public class UserMapperTest
     void testQuery() // ok
     {
         System.out.println(
-                mapper.query(1L)
+                mapper.query("1")
         );
     }
 
@@ -91,7 +90,7 @@ public class UserMapperTest
     {
         mapper.queryBatch(
                         Arrays.asList(
-                                2L, 3L
+                                "2", "3"
                         )
                 )
                 .forEach(System.out::println);

@@ -16,6 +16,10 @@ public class directory implements Serializable
 {
     private Long id;
     /**
+     * 对应文件uuid
+     */
+    private String fileUuid;
+    /**
      * 所属用户uuid
      */
     private String userUuid;

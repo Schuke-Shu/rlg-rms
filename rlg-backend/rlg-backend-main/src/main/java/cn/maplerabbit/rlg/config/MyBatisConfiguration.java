@@ -5,7 +5,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@MapperScan("cn.maplerabbit.rlg.module")
+@MapperScan("cn.maplerabbit.rlg.module.**.mapper")
 @Slf4j
 public class MyBatisConfiguration
 {

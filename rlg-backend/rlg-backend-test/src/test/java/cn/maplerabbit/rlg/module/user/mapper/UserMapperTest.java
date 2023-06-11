@@ -1,7 +1,6 @@
-package cn.maplerabbit.rlg.module.user;
+package cn.maplerabbit.rlg.module.user.mapper;
 
-import cn.maplerabbit.rlg.module.user.mapper.UserLoginLogMapper;
-import cn.maplerabbit.rlg.module.user.entity.UserLoginLog;
+import cn.maplerabbit.rlg.module.user.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,19 +8,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Arrays;
 
 @SpringBootTest
-public class UserLoginLogMapperTest
+public class UserMapperTest
 {
     @Autowired
-    UserLoginLogMapper mapper;
+    UserMapper mapper;
 
     @Test
     void testSave() // ok
     {
         System.out.println(
                 mapper.save(
-                        new UserLoginLog()
-                                .setUserUuid("123")
-                                .setUsername("测试")
+                        new User()
+                                .setUuid("3")
+                                .setUsername("测试2")
+                                .setPassword("123456")
                 )
         );
     }
@@ -32,12 +32,14 @@ public class UserLoginLogMapperTest
         System.out.println(
                 mapper.saveBatch(
                         Arrays.asList(
-                                new UserLoginLog()
-                                        .setUserUuid("1")
-                                        .setUsername("测试"),
-                                new UserLoginLog()
-                                        .setUserUuid("2")
-                                        .setUsername("root")
+                                new User()
+                                        .setUuid("4")
+                                        .setUsername("测试3")
+                                        .setPassword("123456"),
+                                new User()
+                                        .setUuid("5")
+                                        .setUsername("测试4")
+                                        .setPassword("123456")
                         )
                 )
         );
@@ -47,7 +49,7 @@ public class UserLoginLogMapperTest
     void testRemove() //ok
     {
         System.out.println(
-                mapper.remove(1L)
+                mapper.remove(3L)
         );
     }
 
@@ -57,7 +59,7 @@ public class UserLoginLogMapperTest
         System.out.println(
                 mapper.removeBatch(
                         Arrays.asList(
-                                2L, 3L
+                                4L, 5L
                         )
                 )
         );
@@ -68,9 +70,9 @@ public class UserLoginLogMapperTest
     {
         System.out.println(
                 mapper.update(
-                        new UserLoginLog()
-                                .setId(1L)
-                                .setUserUuid("123456")
+                        new User()
+                                .setUuid("3")
+                                .setUsername("更新测试")
                 )
         );
     }
@@ -87,10 +89,10 @@ public class UserLoginLogMapperTest
     void testQueryBatch() // ok
     {
         mapper.queryBatch(
-                Arrays.asList(
-                        1L, 2L, 3L
+                        Arrays.asList(
+                                2L, 3L
+                        )
                 )
-        )
                 .forEach(System.out::println);
     }
 }

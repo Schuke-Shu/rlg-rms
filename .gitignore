@@ -1,9 +1,0 @@
-/TestFile
-/rlg-backend/rlg-backend-main/target
-/rlg-backend/rlg-backend-common/target
-/rlg-backend/rlg-backend-modules/file-module/file-main/target
-/rlg-backend/rlg-backend-modules/file-module/file-api/target
-/rlg-backend/rlg-backend-modules/user-module/user-api/target
-/rlg-backend/rlg-backend-modules/user-module/user-main/target
-/rlg-backend/rlg-backend-pojo/target
-/rlg-backend/rlg-backend-test/target

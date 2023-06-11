@@ -19,19 +19,12 @@ CREATE TABLE IF NOT EXISTS directory(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文件目录表，存储用户的文件目录结构';
 
--- DROP TABLE IF EXISTS directory_file;
-CREATE TABLE IF NOT EXISTS directory_file(
-    directory_id    bigint(20)      UNSIGNED NOT NULL COMMENT '目录id',
-    file_uuid       varchar(32)     NOT NULL COMMENT '文件uuid',
-    gmt_created     datetime        DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    gmt_modified    datetime        DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='目录与文件关联表，只有is_dir为0的文件才可以和文件表关联';
-
 -- DROP TABLE IF EXISTS file;
 CREATE TABLE IF NOT EXISTS file(
     uuid            varchar(32)     NOT NULL,
     user_uuid       varchar(32)     NOT NULL COMMENT '文件上传者',
     suffix          varchar(8)      DEFAULT NULL COMMENT '后缀名',
+    type            varchar(64)     DEFAULT NULL COMMENT '文件类型',
     size            bigint(20)      UNSIGNED NOT NULL COMMENT '文件大小',
     upload_time     datetime        DEFAULT CURRENT_TIMESTAMP COMMENT '文件上传时间',
     gmt_created     datetime        DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
