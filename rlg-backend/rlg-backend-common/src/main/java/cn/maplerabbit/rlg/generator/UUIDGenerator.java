@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -16,21 +15,19 @@ import java.util.UUID;
 public class UUIDGenerator
 {
     private Object lock = new Object();
+
     /**
      * UUID容器
      */
-    private final List<String> uuidContainer = new LinkedList<>();
-
-    /**
-     * 最后一次生成的UUID
-     */
-    private String uuid = "";
+    private final LinkedList<String> uuidContainer = new LinkedList<>();
 
     /**
      * UUID容器的最大容量
      */
     @Value("${rlg.uuid.max:10}")
     private int max;
+
+    private String uuid = "";
 
     public UUIDGenerator()
     {
@@ -48,7 +45,7 @@ public class UUIDGenerator
                 if (uuidContainer.isEmpty())
                     reloadContainer();
             }
-        return uuidContainer.remove(0);
+        return uuidContainer.poll();
     }
 
     /**
