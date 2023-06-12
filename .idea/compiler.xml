@@ -28,7 +28,7 @@
       <module name="rlg-backend-main" options="-parameters" />
       <module name="rlg-backend-modules" options="" />
       <module name="rlg-backend-pojo" options="-parameters" />
-      <module name="rlg-backend-test" options="" />
+      <module name="rlg-backend-test" options="-parameters" />
       <module name="user-api" options="-parameters" />
       <module name="user-main" options="-parameters" />
       <module name="user-module" options="" />

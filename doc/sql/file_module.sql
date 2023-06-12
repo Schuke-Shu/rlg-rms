@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS directory(
     gmt_created     datetime        DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     gmt_modified    datetime        DEFAULT CURRENT_TIMESTAMP COMMENT '最后修改时间',
     PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文件目录表，存储用户的文件目录结构';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户文件目录表，存储用户的文件目录结构';
 
 -- DROP TABLE IF EXISTS file;
 CREATE TABLE IF NOT EXISTS file(
