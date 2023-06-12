@@ -21,7 +21,7 @@ mybatis:
 logging:
   # 显示级别
   level:
-    root: warn
+    root: info
 
 # knife4j配置
 knife4j:
