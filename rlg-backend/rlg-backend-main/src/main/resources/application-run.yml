@@ -1,17 +1,20 @@
-# Web服务端口
+# Web服务配置
 server:
+  # 端口
   port: 10086
 
-# 连接数据库配置
+# Spring配置
 spring:
+  # 数据源配置
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/rlg_rms?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Chongqing
+    # 用户名
     username: root
+    # 密码
     password: root
 
-# 日志的显示级别
+# 日志配置
 logging:
+  # 显示级别
   level:
     cn.maplerabbit.rlg: warn
 
@@ -23,12 +26,13 @@ knife4j:
   # 开关
   enable: false
 
-# 项目配置
+# 项目全局配置
 rlg:
   # 文件系统相关配置
   file:
-    # 配置根目录
+    # 根目录
     root:
+  # uuid配置
   uuid:
     # UUID容器最大容量
     max: 100
