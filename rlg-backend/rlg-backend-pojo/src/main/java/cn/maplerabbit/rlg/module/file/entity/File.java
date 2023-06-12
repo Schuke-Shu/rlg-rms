@@ -38,6 +38,10 @@ public class File implements Serializable
      */
     private LocalDateTime uploadTime;
     /**
+     * 关联到此文件的记录数
+     */
+    private Integer associationCount;
+    /**
      * 创建时间
      */
     private LocalDateTime gmtCreated;

@@ -4,13 +4,13 @@
 <mapper namespace="cn.maplerabbit.rlg.module.file.mapper.FileMapper">
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
-        uuid, user_uuid, suffix, type, size, upload_time, gmt_created, gmt_modified
+        uuid, user_uuid, suffix, type, size, upload_time, association_count, gmt_created, gmt_modified
     </sql>
     <sql id="save">
-        #{uuid}, #{userUuid}, #{suffix}, #{type}, #{size}, #{uploadTime}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+        #{uuid}, #{userUuid}, #{suffix}, #{type}, #{size}, #{uploadTime}, #{associationCount}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
     </sql>
     <sql id="saveBatch">
-        (#{i.uuid}, #{i.userUuid}, #{i.suffix}, #{i.type}, #{i.size}, #{i.uploadTime}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        (#{i.uuid}, #{i.userUuid}, #{i.suffix}, #{i.type}, #{i.size}, #{i.uploadTime}, #{i.associationCount}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     </sql>
 
     <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.module.file.entity.File">
@@ -20,6 +20,7 @@
         <result column="type" property="type" />
         <result column="size" property="size" />
         <result column="upload_time" property="uploadTime" />
+        <result column="association_count" property="associationCount" />
         <result column="gmt_created" property="gmtCreated" />
         <result column="gmt_modified" property="gmtModified" />
     </resultMap>
@@ -58,6 +59,7 @@
             <if test="type != null">type = #{type},</if>
             <if test="size != null">size = #{size},</if>
             <if test="uploadTime != null">upload_time = #{uploadTime},</if>
+            <if test="associationCount != null">association_count = #{associationCount},</if>
             gmt_modified = CURRENT_TIMESTAMP
         </set>
         <where>
