@@ -14,33 +14,41 @@ public class UserLoginLogMapperTest
     @Autowired
     UserLoginLogMapper mapper;
 
+    /* ========== Base CRUD ========== */
     @Test
     void testSave() // ok
     {
+        UserLoginLog test1 = new UserLoginLog()
+                .setUserUuid("1")
+                .setUsername("测试");
+
         System.out.println(
-                mapper.save(
-                        new UserLoginLog()
-                                .setUserUuid("123")
-                                .setUsername("测试")
-                )
+                mapper.save(test1)
         );
+
+        System.out.println(test1.getId());
     }
 
     @Test
     void testSaveBatch() // ok
     {
+        UserLoginLog test2 = new UserLoginLog()
+                .setUserUuid("1")
+                .setUsername("测试");
+        UserLoginLog test3 = new UserLoginLog()
+                .setUserUuid("2")
+                .setUsername("root");
+
         System.out.println(
                 mapper.saveBatch(
                         Arrays.asList(
-                                new UserLoginLog()
-                                        .setUserUuid("1")
-                                        .setUsername("测试"),
-                                new UserLoginLog()
-                                        .setUserUuid("2")
-                                        .setUsername("root")
+                                test2, test3
                         )
                 )
         );
+
+        System.out.println(test2.getId());
+        System.out.println(test3.getId());
     }
 
     @Test

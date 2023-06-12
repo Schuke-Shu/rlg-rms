@@ -3,11 +3,12 @@
   <component name="MyBatisCodeHelperDatasource">
     <option name="projectProfile">
       <ProjectProfile>
-        <option name="mapperFilesFolder" value="D:\Projects\MapleProjects\RedLeafGarden\rlg-backend\rlg-backend-modules\user-module\user-main\src\main\resources\mapper" />
+        <option name="mapperFilesFolder" value="D:\Projects\MapleProjects\RedLeafGarden\rlg-backend\rlg-backend-modules\file-module\file-main\src\main\resources\mapper" />
         <option name="mapperFilesFolderList">
           <list>
             <option value="D:\Projects\MapleProjects\RedLeafGarden\rlg-backend\rlg-backend-modules\user-module\src\main\resources\mapper" />
             <option value="D:\Projects\MapleProjects\RedLeafGarden\rlg-backend\rlg-backend-modules\user-module\user-main\src\main\resources\mapper" />
+            <option value="D:\Projects\MapleProjects\RedLeafGarden\rlg-backend\rlg-backend-modules\file-module\file-main\src\main\resources\mapper" />
           </list>
         </option>
       </ProjectProfile>

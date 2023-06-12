@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class directory implements Serializable
+public class Directory implements Serializable
 {
     private Long id;
     /**

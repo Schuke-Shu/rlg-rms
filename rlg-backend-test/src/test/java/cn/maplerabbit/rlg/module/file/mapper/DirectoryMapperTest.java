@@ -1,5 +1,6 @@
 package cn.maplerabbit.rlg.module.file.mapper;
 
+import cn.maplerabbit.rlg.module.file.entity.Directory;
 import cn.maplerabbit.rlg.module.file.entity.File;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,49 +9,56 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Arrays;
 
 @SpringBootTest
-public class FileMapperTest
+public class DirectoryMapperTest
 {
     @Autowired
-    FileMapper mapper;
+    DirectoryMapper mapper;
 
     /* ========== Base CRUD ========== */
     @Test
     void testSave() // ok
     {
+
+        Directory test1 = new Directory()
+                .setFileUuid("1")
+                .setUserUuid("1")
+                .setFilename("测试1");
+
         System.out.println(
-                mapper.save(
-                        new File()
-                                .setUuid("1")
-                                .setUserUuid("1")
-                                .setSize(0L)
-                )
+                mapper.save(test1)
         );
+        System.out.println(test1.getId());
     }
 
     @Test
     void testSaveBatch() // ok
     {
+        Directory test2 = new Directory()
+                .setFileUuid("2")
+                .setUserUuid("2")
+                .setFilename("测试2");
+        Directory test3 = new Directory()
+                .setFileUuid("3")
+                .setUserUuid("3")
+                .setFilename("测试3");
+
         System.out.println(
                 mapper.saveBatch(
                         Arrays.asList(
-                                new File()
-                                        .setUuid("2")
-                                        .setUserUuid("2")
-                                        .setSize(0L),
-                                new File()
-                                        .setUuid("3")
-                                        .setUserUuid("3")
-                                        .setSize(0L)
+                                test2, test3
                         )
                 )
         );
+
+        System.out.println(test2.getId());
+        System.out.println(test3.getId());
     }
 
     @Test
     void testRemove() //ok
     {
         System.out.println(
-                mapper.remove(3L)
+                mapper.remove(1L)
         );
     }
 
@@ -60,7 +68,7 @@ public class FileMapperTest
         System.out.println(
                 mapper.removeBatch(
                         Arrays.asList(
-                                4L, 5L
+                                2L, 3L
                         )
                 )
         );
@@ -71,9 +79,9 @@ public class FileMapperTest
     {
         System.out.println(
                 mapper.update(
-                        new File()
-                                .setUuid("1")
-                                .setUserUuid("123")
+                        new Directory()
+                                .setId(1L)
+                                .setFilename("更新测试1")
                 )
         );
     }
@@ -82,7 +90,7 @@ public class FileMapperTest
     void testQuery() // ok
     {
         System.out.println(
-                mapper.query("1")
+                mapper.query(1L)
         );
     }
 
@@ -91,7 +99,7 @@ public class FileMapperTest
     {
         mapper.queryBatch(
                         Arrays.asList(
-                                "2", "3"
+                                2L, 3L
                         )
                 )
                 .forEach(System.out::println);

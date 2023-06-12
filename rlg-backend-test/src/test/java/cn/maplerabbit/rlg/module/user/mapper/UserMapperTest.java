@@ -13,6 +13,7 @@ public class UserMapperTest
     @Autowired
     UserMapper mapper;
 
+    /* ========== Base CRUD ========== */
     @Test
     void testSave() // ok
     {

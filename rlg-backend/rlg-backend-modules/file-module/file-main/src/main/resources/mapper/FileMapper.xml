@@ -7,10 +7,10 @@
         uuid, user_uuid, suffix, type, size, upload_time, gmt_created, gmt_modified
     </sql>
     <sql id="save">
-        #{uuid}, #{userUuid}, #{suffix}, #{type}, #{size}, #{uploadTime}, null, null
+        #{uuid}, #{userUuid}, #{suffix}, #{type}, #{size}, #{uploadTime}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
     </sql>
     <sql id="saveBatch">
-        (#{i.uuid}, #{i.userUuid}, #{i.suffix}, #{i.type}, #{i.size}, #{i.uploadTime}, null, null)
+        (#{i.uuid}, #{i.userUuid}, #{i.suffix}, #{i.type}, #{i.size}, #{i.uploadTime}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     </sql>
 
     <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.module.file.entity.File">

@@ -7,10 +7,10 @@
         id, user_uuid, username, ip, engine, gmt_login, gmt_created, gmt_modified
     </sql>
     <sql id="save">
-        null, #{userUuid}, #{username}, #{engine}, #{ip}, #{gmtLogin}, null, null
+        null, #{userUuid}, #{username}, #{engine}, #{ip}, #{gmtLogin}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
     </sql>
     <sql id="saveBatch">
-        (null, #{i.userUuid}, #{i.username}, #{i.engine}, #{i.ip}, #{i.gmtLogin}, null, null)
+        (null, #{i.userUuid}, #{i.username}, #{i.engine}, #{i.ip}, #{i.gmtLogin}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     </sql>
 
     <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.module.user.entity.UserLoginLog">
@@ -24,7 +24,7 @@
         <result column="gmt_modified" property="gmtModified" />
     </resultMap>
 
-    <insert id="save">
+    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into user_login_log(
             <include refid="BaseColumns" />
         ) values (
@@ -32,7 +32,7 @@
         )
     </insert>
 
-    <insert id="saveBatch">
+    <insert id="saveBatch" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into user_login_log(
             <include refid="BaseColumns" />
         ) values

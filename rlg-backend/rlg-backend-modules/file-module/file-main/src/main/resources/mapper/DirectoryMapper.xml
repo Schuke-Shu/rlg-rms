@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.maplerabbit.rlg.module.file.mapper.DirectoryMapper">
+    <!-- ========== Base CRUD ========== -->
+    <sql id="BaseColumns">
+        id, file_uuid, user_uuid, filename, deep, parent_id, is_directory, is_deleted, delete_time, is_hidden, gmt_created, gmt_modified
+    </sql>
+    <sql id="save">
+        null, #{fileUuid}, #{userUuid}, #{filename}, #{deep}, #{parentId}, #{isDirectory}, #{isDeleted}, #{deleteTime}, #{isHidden}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+    </sql>
+    <sql id="saveBatch">
+        (null, #{i.fileUuid}, #{i.userUuid}, #{i.filename}, #{i.deep}, #{i.parentId}, #{i.isDirectory}, #{i.isDeleted}, #{i.deleteTime}, #{i.isHidden}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+    </sql>
+
+    <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.module.file.entity.Directory">
+        <id column="id" property="id" />
+        <result column="file_uuid" property="fileUuid" />
+        <result column="user_uuid" property="userUuid" />
+        <result column="filename" property="filename" />
+        <result column="deep" property="deep" />
+        <result column="parent_id" property="parentId" />
+        <result column="is_directory" property="isDirectory" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="delete_time" property="deleteTime" />
+        <result column="is_hidden" property="isHidden" />
+        <result column="gmt_created" property="gmtCreated" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+
+    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into directory(
+            <include refid="BaseColumns" />
+        ) values (
+        <include refid="save" />
+        )
+    </insert>
+
+    <insert id="saveBatch" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into directory(
+            <include refid="BaseColumns" />
+        ) values
+        <foreach collection="list" item="i" separator=", ">
+            <include refid="saveBatch" />
+        </foreach>
+    </insert>
+
+    <delete id="remove">
+        delete from directory where id = #{pk}
+    </delete>
+
+    <delete id="removeBatch">
+        delete from directory where id in
+        <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
+    </delete>
+
+    <update id="update">
+        update directory
+        <set>
+            <if test="fileUuid != null">file_uuid = #{fileUuid},</if>
+            <if test="userUuid != null">user_uuid = #{userUuid},</if>
+            <if test="filename != null">filename = #{filename},</if>
+            <if test="deep != null">deep = #{deep},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+            <if test="deleteTime != null">delete_time = #{deleteTime},</if>
+            <if test="isHidden != null">is_hidden = #{isHidden},</if>
+            gmt_modified = CURRENT_TIMESTAMP
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <select id="query" resultMap="BaseResultMap">
+        select
+            <include refid="BaseColumns" />
+        from directory
+        <where>
+            id = #{pk}
+        </where>
+    </select>
+
+    <select id="queryBatch" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumns" />
+        from directory
+        <where>
+            id in
+            <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
+        </where>
+    </select>
+</mapper>
