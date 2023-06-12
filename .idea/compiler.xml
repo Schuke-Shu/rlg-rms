@@ -17,11 +17,6 @@
         <module name="file-api" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="rlg-backend-commen" target="1.8" />
-      <module name="rlg-backend-commens" target="1.8" />
-      <module name="rlg-module-pojo" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -29,14 +24,11 @@
       <module name="file-main" options="-parameters" />
       <module name="file-module" options="" />
       <module name="rlg-backend" options="" />
-      <module name="rlg-backend-commen" options="-parameters" />
-      <module name="rlg-backend-commens" options="-parameters" />
       <module name="rlg-backend-common" options="-parameters" />
       <module name="rlg-backend-main" options="-parameters" />
       <module name="rlg-backend-modules" options="" />
       <module name="rlg-backend-pojo" options="-parameters" />
-      <module name="rlg-backend-test" options="-parameters" />
-      <module name="rlg-module-pojo" options="-parameters" />
+      <module name="rlg-backend-test" options="" />
       <module name="user-api" options="-parameters" />
       <module name="user-main" options="-parameters" />
       <module name="user-module" options="" />
