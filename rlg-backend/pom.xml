@@ -96,7 +96,7 @@
             <!-- rlg-backend-modules -->
             <dependency>
                 <groupId>cn.maplerabbit</groupId>
-                <artifactId>modules-prov</artifactId>
+                <artifactId>module-prov</artifactId>
                 <version>${rlg-backend-modules.version}</version>
             </dependency>
         </dependencies>

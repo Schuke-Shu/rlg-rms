@@ -20,6 +20,5 @@
     <modules>
         <module>file-api</module>
         <module>file-main</module>
-        <module>file-prov</module>
     </modules>
 </project>

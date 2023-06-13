@@ -20,6 +20,5 @@
     <modules>
         <module>user-main</module>
         <module>user-api</module>
-        <module>user-prov</module>
     </modules>
 </project>

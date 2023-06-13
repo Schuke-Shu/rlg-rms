@@ -5,18 +5,18 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cn.maplerabbit</groupId>
-        <artifactId>file-module</artifactId>
+        <artifactId>rlg-backend-modules</artifactId>
         <version>1</version>
     </parent>
 
-    <artifactId>file-prov</artifactId>
+    <artifactId>module-prov</artifactId>
 
-    <description>File module provider</description>
+    <description>RedLeafGarden Backend module provider</description>
 
     <dependencies>
         <dependency>
             <groupId>cn.maplerabbit</groupId>
-            <artifactId>file-api</artifactId>
+            <artifactId>user-main</artifactId>
         </dependency>
         <dependency>
             <groupId>cn.maplerabbit</groupId>
