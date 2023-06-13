@@ -7,12 +7,15 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="user-prov" />
+        <module name="file-prov" />
         <module name="rlg-backend-common" />
         <module name="user-main" />
         <module name="user-api" />
         <module name="rlg-backend-pojo" />
         <module name="rlg-backend-test" />
         <module name="rlg-backend-main" />
+        <module name="modules-prov" />
         <module name="file-main" />
         <module name="file-api" />
       </profile>
@@ -23,6 +26,8 @@
       <module name="file-api" options="-parameters" />
       <module name="file-main" options="-parameters" />
       <module name="file-module" options="" />
+      <module name="file-prov" options="-parameters" />
+      <module name="modules-prov" options="-parameters" />
       <module name="rlg-backend" options="" />
       <module name="rlg-backend-common" options="-parameters" />
       <module name="rlg-backend-main" options="-parameters" />
@@ -32,6 +37,7 @@
       <module name="user-api" options="-parameters" />
       <module name="user-main" options="-parameters" />
       <module name="user-module" options="" />
+      <module name="user-prov" options="-parameters" />
     </option>
   </component>
 </project>

@@ -58,12 +58,6 @@
             <artifactId>jjwt</artifactId>
         </dependency>
 
-        <!-- Lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-
         <!-- rlg-backend-pojo -->
         <dependency>
             <groupId>cn.maplerabbit</groupId>

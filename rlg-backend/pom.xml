@@ -35,9 +35,17 @@
 
         <rlg-backend-common.version>1</rlg-backend-common.version>
         <rlg-backend-pojo.version>1</rlg-backend-pojo.version>
-        <rlg-backend-user-module.version>1</rlg-backend-user-module.version>
-        <rlg-backend-file-module.version>1</rlg-backend-file-module.version>
+        <rlg-backend-modules.version>1</rlg-backend-modules.version>
     </properties>
+
+    <dependencies>
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+    </dependencies>
 
     <dependencyManagement>
         <dependencies>
@@ -70,13 +78,6 @@
                 <version>${jjwt.version}</version>
             </dependency>
 
-            <!-- Lombok -->
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-            </dependency>
-
             <!-- ========== rlg-self dependencies ========== -->
             <!-- rlg-backend-common -->
             <dependency>
@@ -92,28 +93,11 @@
                 <version>${rlg-backend-pojo.version}</version>
             </dependency>
 
-            <!-- user-module -->
+            <!-- rlg-backend-modules -->
             <dependency>
                 <groupId>cn.maplerabbit</groupId>
-                <artifactId>user-api</artifactId>
-                <version>${rlg-backend-user-module.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.maplerabbit</groupId>
-                <artifactId>user-main</artifactId>
-                <version>${rlg-backend-user-module.version}</version>
-            </dependency>
-
-            <!-- file-module -->
-            <dependency>
-                <groupId>cn.maplerabbit</groupId>
-                <artifactId>file-api</artifactId>
-                <version>${rlg-backend-file-module.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.maplerabbit</groupId>
-                <artifactId>file-main</artifactId>
-                <version>${rlg-backend-file-module.version}</version>
+                <artifactId>modules-prov</artifactId>
+                <version>${rlg-backend-modules.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

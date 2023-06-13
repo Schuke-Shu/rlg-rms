@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>rlg-backend-modules</artifactId>
+    <version>1</version>
 
     <description>RedLeafGarden Backend service modules</description>
 
@@ -18,7 +19,13 @@
     <modules>
         <module>user-module</module>
         <module>file-module</module>
+        <module>modules-prov</module>
     </modules>
+
+    <properties>
+        <user-module.version>1</user-module.version>
+        <file-module.version>1</file-module.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -27,4 +34,40 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>cn.maplerabbit</groupId>
+                <artifactId>user-api</artifactId>
+                <version>${user-module.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.maplerabbit</groupId>
+                <artifactId>user-main</artifactId>
+                <version>${user-module.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.maplerabbit</groupId>
+                <artifactId>user-prov</artifactId>
+                <version>${user-module.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.maplerabbit</groupId>
+                <artifactId>file-api</artifactId>
+                <version>${file-module.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.maplerabbit</groupId>
+                <artifactId>file-main</artifactId>
+                <version>${file-module.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.maplerabbit</groupId>
+                <artifactId>file-prov</artifactId>
+                <version>${file-module.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

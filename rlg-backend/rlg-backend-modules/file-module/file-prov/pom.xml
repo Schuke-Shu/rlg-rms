@@ -5,26 +5,22 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cn.maplerabbit</groupId>
-        <artifactId>rlg-backend</artifactId>
+        <artifactId>file-module</artifactId>
         <version>1</version>
     </parent>
 
-    <artifactId>rlg-backend-pojo</artifactId>
-    <version>1</version>
+    <artifactId>file-prov</artifactId>
 
-    <description>RedLeafGarden Backend pojo module</description>
+    <description>File module provider</description>
 
     <dependencies>
-        <!-- Spring Boot Validation -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
+            <groupId>cn.maplerabbit</groupId>
+            <artifactId>file-api</artifactId>
         </dependency>
-
-        <!-- Spring Boot knife4j -->
         <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <groupId>cn.maplerabbit</groupId>
+            <artifactId>file-main</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -21,20 +21,7 @@
 
 		<dependency>
 			<groupId>cn.maplerabbit</groupId>
-			<artifactId>user-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.maplerabbit</groupId>
-			<artifactId>user-main</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>cn.maplerabbit</groupId>
-			<artifactId>file-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.maplerabbit</groupId>
-			<artifactId>file-main</artifactId>
+			<artifactId>modules-prov</artifactId>
 		</dependency>
 	</dependencies>
 
