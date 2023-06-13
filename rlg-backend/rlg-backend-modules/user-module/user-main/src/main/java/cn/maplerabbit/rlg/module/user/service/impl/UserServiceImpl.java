@@ -10,6 +10,6 @@ public class UserServiceImpl implements IUserService
 {
     public UserServiceImpl()
     {
-        log.trace("UserServiceImpl()...");
+        log.debug("UserServiceImpl()...");
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
     public WebMvcConfiguration() {
-        log.trace("WebMvcConfiguration()...");
+        log.debug("WebMvcConfiguration()...");
     }
 
     /**

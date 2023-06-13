@@ -11,6 +11,6 @@ public class MyBatisConfiguration
 {
     public MyBatisConfiguration()
     {
-        log.trace("MyBatisConfiguration()...");
+        log.debug("MyBatisConfiguration()...");
     }
 }

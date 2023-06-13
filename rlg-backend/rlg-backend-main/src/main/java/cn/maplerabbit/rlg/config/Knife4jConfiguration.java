@@ -17,7 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 public class Knife4jConfiguration
 {
     public Knife4jConfiguration() {
-        log.trace("Knife4jConfiguration()...");
+        log.debug("Knife4jConfiguration()...");
     }
 
     /**

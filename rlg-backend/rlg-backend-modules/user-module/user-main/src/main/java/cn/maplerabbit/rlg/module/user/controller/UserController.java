@@ -13,6 +13,6 @@ public class UserController
 {
     public UserController()
     {
-        log.trace("UserController()...");
+        log.debug("UserController()...");
     }
 }

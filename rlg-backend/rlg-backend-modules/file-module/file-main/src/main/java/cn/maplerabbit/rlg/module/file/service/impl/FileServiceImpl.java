@@ -10,6 +10,6 @@ public class FileServiceImpl implements IFileService
 {
     public FileServiceImpl()
     {
-        log.trace("FileServiceImpl()...");
+        log.debug("FileServiceImpl()...");
     }
 }

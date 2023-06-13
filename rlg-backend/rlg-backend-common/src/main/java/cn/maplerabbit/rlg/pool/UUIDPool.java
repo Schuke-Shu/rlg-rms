@@ -26,7 +26,7 @@ public class UUIDPool
 
     public UUIDPool()
     {
-        log.trace("UUIDPool()...");
+        log.debug("UUIDPool()...");
     }
 
     /**
