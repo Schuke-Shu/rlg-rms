@@ -19,12 +19,14 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Spring Boot knife4j -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
