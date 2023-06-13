@@ -14,8 +14,6 @@ import java.util.UUID;
 @Slf4j
 public class UUIDPool
 {
-    private Object lock = new Object();
-
     private final LinkedList<String> pool = new LinkedList<>();
 
     /**
@@ -36,8 +34,8 @@ public class UUIDPool
      */
     public String get()
     {
-        if (pool.isEmpty())
-            reloadContainer();
+        if (pool.isEmpty()) reloadContainer();
+
         return pool.poll();
     }
 
