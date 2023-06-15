@@ -1,3 +1,7 @@
+# ============ #
+#  配置文件主体  #
+# ============ #
+
 # Spring配置
 spring:
   # Profile相关配置
@@ -8,6 +12,14 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/rlg_rms?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Chongqing
+  # web配置
+  web:
+    # 静态资源配置
+    resources:
+      # 静态资源根路径
+      static-locations:
+        - classpath:static
+        - file:${rlg.file.directory.static}
 
 # MyBatis配置
 mybatis:

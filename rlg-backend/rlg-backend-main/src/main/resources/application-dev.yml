@@ -1,3 +1,10 @@
+# ============ #
+#  开发环境配置  #
+# ============ #
+
+# debug开关
+debug: false
+
 # Web服务配置
 server:
   # 端口
@@ -18,9 +25,6 @@ logging:
   level:
     cn.maplerabbit.rlg: trace
 
-# debug开关
-debug: false
-
 # knife4j配置
 knife4j:
   # 开关
@@ -30,9 +34,8 @@ knife4j:
 rlg:
   # 文件系统相关配置
   file:
-    # 根目录
-    root: D:\Projects\MapleProjects\RedLeafGarden\TestFile
-  # uuid配置
-  uuid:
-    # UUID容器最大容量
-    max: 100
+    directory:
+      # 系统静态目录
+      static: D:/rlg/static
+      # 用户文件根目录
+      user: D:/rlg/user
