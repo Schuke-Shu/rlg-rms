@@ -50,7 +50,7 @@ public class FileMapperTest
     void testRemove() //ok
     {
         System.out.println(
-                mapper.remove(3L)
+                mapper.remove("3")
         );
     }
 
@@ -60,7 +60,7 @@ public class FileMapperTest
         System.out.println(
                 mapper.removeBatch(
                         Arrays.asList(
-                                4L, 5L
+                                "4", "5"
                         )
                 )
         );
