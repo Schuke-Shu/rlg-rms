@@ -20,11 +20,6 @@
         <module>file-module</module>
     </modules>
 
-    <properties>
-        <user-module.version>1</user-module.version>
-        <file-module.version>1</file-module.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>cn.maplerabbit</groupId>

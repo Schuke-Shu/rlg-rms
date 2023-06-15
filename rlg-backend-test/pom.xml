@@ -17,22 +17,23 @@
 
     <description>RedLeafGarden Backend test</description>
 
-    <properties>
-        <rlg-backend-main.version>1</rlg-backend-main.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>cn.maplerabbit</groupId>
             <artifactId>rlg-backend-main</artifactId>
-            <version>${rlg-backend-main.version}</version>
+            <version>1</version>
         </dependency>
 
         <!-- Spring Boot Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>
