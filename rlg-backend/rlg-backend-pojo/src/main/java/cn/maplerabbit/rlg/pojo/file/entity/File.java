@@ -1,4 +1,4 @@
-package cn.maplerabbit.rlg.module.file.entity;
+package cn.maplerabbit.rlg.pojo.file.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

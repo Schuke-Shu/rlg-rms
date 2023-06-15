@@ -13,13 +13,13 @@
         <module name="rlg-backend-pojo" />
         <module name="rlg-backend-test" />
         <module name="rlg-backend-main" />
-        <module name="module-prov" />
         <module name="file-main" />
         <module name="file-api" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="file-prov" target="1.8" />
+      <module name="module-prov" target="1.8" />
       <module name="modules-prov" target="1.8" />
       <module name="user-prov" target="1.8" />
     </bytecodeTargetLevel>

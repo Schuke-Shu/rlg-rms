@@ -13,7 +13,7 @@
         (null, #{i.fileUuid}, #{i.userUuid}, #{i.filename}, #{i.deep}, #{i.parentId}, #{i.isDirectory}, #{i.isDeleted}, #{i.deleteTime}, #{i.isHidden}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     </sql>
 
-    <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.module.file.entity.Directory">
+    <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.file.entity.Directory">
         <id column="id" property="id" />
         <result column="file_uuid" property="fileUuid" />
         <result column="user_uuid" property="userUuid" />

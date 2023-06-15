@@ -1,6 +1,6 @@
 package cn.maplerabbit.rlg.module.file.mapper;
 
-import cn.maplerabbit.rlg.module.file.entity.File;
+import cn.maplerabbit.rlg.pojo.file.entity.File;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

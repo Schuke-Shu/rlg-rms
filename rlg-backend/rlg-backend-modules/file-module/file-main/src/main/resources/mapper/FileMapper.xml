@@ -13,7 +13,7 @@
         (#{i.uuid}, #{i.userUuid}, #{i.suffix}, #{i.type}, #{i.size}, #{i.uploadTime}, #{i.associationCount}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     </sql>
 
-    <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.module.file.entity.File">
+    <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.file.entity.File">
         <id column="uuid" property="uuid" />
         <result column="user_uuid" property="userUuid" />
         <result column="suffix" property="suffix" />

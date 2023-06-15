@@ -33,9 +33,7 @@
         <jjwt.version>0.9.1</jjwt.version>
         <lombok.version>1.18.20</lombok.version>
 
-        <rlg-backend-common.version>1</rlg-backend-common.version>
-        <rlg-backend-pojo.version>1</rlg-backend-pojo.version>
-        <rlg-backend-modules.version>1</rlg-backend-modules.version>
+        <rlg-backend.version>1</rlg-backend.version>
     </properties>
 
     <dependencies>
@@ -83,21 +81,38 @@
             <dependency>
                 <groupId>cn.maplerabbit</groupId>
                 <artifactId>rlg-backend-common</artifactId>
-                <version>${rlg-backend-common.version}</version>
+                <version>${rlg-backend.version}</version>
             </dependency>
 
             <!-- rlg-backend-pojo -->
             <dependency>
                 <groupId>cn.maplerabbit</groupId>
                 <artifactId>rlg-backend-pojo</artifactId>
-                <version>${rlg-backend-pojo.version}</version>
+                <version>${rlg-backend.version}</version>
             </dependency>
 
-            <!-- rlg-backend-modules -->
+            <!-- user module -->
             <dependency>
                 <groupId>cn.maplerabbit</groupId>
-                <artifactId>module-prov</artifactId>
-                <version>${rlg-backend-modules.version}</version>
+                <artifactId>user-api</artifactId>
+                <version>${rlg-backend.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.maplerabbit</groupId>
+                <artifactId>user-main</artifactId>
+                <version>${rlg-backend.version}</version>
+            </dependency>
+
+            <!-- file module -->
+            <dependency>
+                <groupId>cn.maplerabbit</groupId>
+                <artifactId>file-api</artifactId>
+                <version>${rlg-backend.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.maplerabbit</groupId>
+                <artifactId>file-main</artifactId>
+                <version>${rlg-backend.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

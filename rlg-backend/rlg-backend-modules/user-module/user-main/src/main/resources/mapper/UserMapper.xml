@@ -13,7 +13,7 @@
         (#{i.uuid}, #{i.username}, #{i.password}, #{i.avatarUuid}, #{i.realName}, #{i.gender}, #{i.phone}, #{i.email}, #{i.birth}, #{i.description}, #{i.isEnable}, #{i.lastLoginIp}, #{i.lastLoginTime}, #{i.gmtRegistered}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     </sql>
 
-    <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.module.user.entity.User">
+    <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.user.entity.User">
         <id column="uuid" property="uuid" />
         <result column="username" property="username" />
         <result column="password" property="password" />
