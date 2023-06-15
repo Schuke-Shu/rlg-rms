@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS directory(
 CREATE TABLE IF NOT EXISTS file(
     uuid                varchar(32)     NOT NULL,
     user_uuid           varchar(32)     NOT NULL COMMENT '文件上传者',
-    suffix              varchar(8)      DEFAULT NULL COMMENT '后缀名',
-    type                varchar(64)     DEFAULT NULL COMMENT '文件类型',
+    suffix              varchar(8)      DEFAULT '' COMMENT '后缀名',
+    type                varchar(64)     DEFAULT '' COMMENT '文件类型',
     size                bigint(20)      UNSIGNED NOT NULL COMMENT '文件大小',
     association_count   int(10)         UNSIGNED DEFAULT 1 COMMENT '关联到此文件的记录数',
     upload_time         datetime        DEFAULT CURRENT_TIMESTAMP COMMENT '文件上传时间',
