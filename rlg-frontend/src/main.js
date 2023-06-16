@@ -3,12 +3,12 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
-import App from './App.vue'
+import Rlg from './Rlg.vue'
 import router from './router'
 
-const app = createApp(App)
+const rlg = createApp(Rlg)
 
-app.use(createPinia())
-app.use(router)
+rlg.use(createPinia())
+rlg.use(router)
 
-app.mount('#app')
+rlg.mount('#rlg')
