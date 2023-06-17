@@ -5,7 +5,7 @@ USE rlg_rms;
 # DROP TABLE IF EXISTS directory;
 CREATE TABLE IF NOT EXISTS directory(
     id                  bigint(20)      UNSIGNED AUTO_INCREMENT,
-    file_uuid           varchar(32)     DEFAULT NULL COMMENT '对应文件uuid',
+    file_uuid           char(32)        DEFAULT NULL COMMENT '对应文件uuid',
     user_uuid           varchar(32)     DEFAULT NULL COMMENT '文件所属用户uuid',
     filename            varchar(255)    DEFAULT NULL COMMENT '文件名称',
     deep                int(10)         UNSIGNED DEFAULT 0 COMMENT '文件层级',
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS directory(
 
 # DROP TABLE IF EXISTS file;
 CREATE TABLE IF NOT EXISTS file(
-    uuid                varchar(32),
+    uuid                char(32),
     user_id             bigint(20)      UNSIGNED COMMENT '文件上传者',
     suffix              varchar(8)      DEFAULT NULL COMMENT '后缀名',
     type                varchar(64)     DEFAULT NULL COMMENT '文件类型',

@@ -4,10 +4,10 @@
 <mapper namespace="cn.maplerabbit.rlg.module.user.mapper.UserMapper">
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
-        uuid, username, password, avatar_uuid, real_name, gender, phone, email, birth, description, is_enable, last_login_ip, last_login_time, gmt_registered, gmt_created, gmt_modified
+        id, uuid, username, password, avatarUrl, real_name, gender, phone, email, birth, description, is_enable, sign_in_time, create_time, modified_time
     </sql>
     <sql id="save">
-        #{uuid}, #{username}, #{password}, #{avatarUuid}, #{realName}, #{gender}, #{phone}, #{email}, #{birth}, #{description}, #{isEnable}, #{lastLoginIp}, #{lastLoginTime}, #{gmtRegistered}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+        null, #{uuid}, #{username}, #{password}, #{avatarUuid}, #{realName}, #{gender}, #{phone}, #{email}, #{birth}, #{description}, #{isEnable}, #{}, #{lastLoginTime}, #{gmtRegistered}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
     </sql>
     <sql id="saveBatch">
         (#{i.uuid}, #{i.username}, #{i.password}, #{i.avatarUuid}, #{i.realName}, #{i.gender}, #{i.phone}, #{i.email}, #{i.birth}, #{i.description}, #{i.isEnable}, #{i.lastLoginIp}, #{i.lastLoginTime}, #{i.gmtRegistered}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)

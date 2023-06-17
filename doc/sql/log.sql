@@ -7,9 +7,9 @@ CREATE TABLE IF NOT EXISTS user_login_log(
     id                  bigint(20)      UNSIGNED NOT NULL  AUTO_INCREMENT,
     user_id             bigint(20)      UNSIGNED DEFAULT NULL,
     username            varchar(32)     DEFAULT NULL COMMENT '用户名（冗余）',
-    ip                  varchar(32)     DEFAULT NULL COMMENT '登录IP地址',
+    ip                  varchar(255)    DEFAULT NULL COMMENT '登录IP地址',
     engine              varchar(255)    DEFAULT NULL COMMENT '浏览器内核',
-    gmt_login           datetime        DEFAULT NULL COMMENT '登录时间',
+    time                datetime        DEFAULT NULL COMMENT '登录时间',
     create_time         datetime        DEFAULT NULL COMMENT '创建时间',
     modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间',
     PRIMARY KEY (id)
