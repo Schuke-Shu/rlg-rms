@@ -19,5 +19,11 @@
             <groupId>cn.maplerabbit</groupId>
             <artifactId>rlg-backend-pojo</artifactId>
         </dependency>
+
+        <!-- rlg-backend-utils -->
+        <dependency>
+            <groupId>cn.maplerabbit</groupId>
+            <artifactId>rlg-backend-utils</artifactId>
+        </dependency>
     </dependencies>
 </project>

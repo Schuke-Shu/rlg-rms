@@ -10,37 +10,67 @@ import lombok.experimental.Accessors;
 /**
  * Json响应数据承载类
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Accessors(chain = true)
-public class JsonResult
+public class JsonResult<T>
 {
     /**
      * 业务状态码
      */
-    private Integer code;
+    private final Integer code;
     /**
      * 失败时的提示信息
      */
-    private String message;
+    private final String message;
     /**
      * 成功时的返回数据
      */
-    private Object data;
+    private final T data;
 
-    public JsonResult(Integer code, String message) {this(code, message, null);}
-    public JsonResult(Integer code, Object data) {this(code, null, data);}
-
-    public static JsonResult ok() {return ok(null);}
-    public static JsonResult ok(Object data)
+    /**
+     * 全参构造
+     */
+    public JsonResult(ServiceCode code, String message, T data)
     {
-        return new JsonResult(ServiceCode.SUCCESS.value(), data);
+        this.code = code.value();
+        this.message = message;
+        this.data = data;
     }
-    public static JsonResult fail(RlgException e) {
-        return fail(e.code(), e.getMessage());
+    /**
+     * 请求成功的构造方法
+     */
+    public JsonResult(ServiceCode code, String message) {this(code, message, null);}
+    /**
+     * 请求失败的构造方法
+     */
+    public JsonResult(ServiceCode code, T data) {this(code, null, data);}
+
+    /**
+     * 请求成功（无响应数据）
+     */
+    public static <T> JsonResult<T> ok() {return ok(null);}
+    /**
+     * 请求成功
+     */
+    public static <T> JsonResult<T> ok(T data) {return new JsonResult<>(ServiceCode.SUCCESS, data);}
+    /**
+     * 请求失败
+     */
+    public static <T> JsonResult<T> fail(RlgException e) {return fail(e.code(), e.getMessage());}
+    /**
+     * 请求失败
+     */
+    public static <T> JsonResult<T> fail(ServiceCode code, String message) {return new JsonResult<>(code, message);}
+
+    public Integer getCode()
+    {
+        return code;
     }
-    public static JsonResult fail(ServiceCode code, String message) {
-        return new JsonResult(code.value(), message);
+    public String getMessage()
+    {
+        return message;
+    }
+    public T getData()
+    {
+        return data;
     }
 }
