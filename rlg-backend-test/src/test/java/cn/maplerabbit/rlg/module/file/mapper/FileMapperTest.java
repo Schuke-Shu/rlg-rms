@@ -21,7 +21,7 @@ public class FileMapperTest
                 mapper.save(
                         new File()
                                 .setUuid("1")
-                                .setUserUuid("1")
+                                .setUserId(1L)
                                 .setSize(0L)
                 )
         );
@@ -35,11 +35,11 @@ public class FileMapperTest
                         Arrays.asList(
                                 new File()
                                         .setUuid("2")
-                                        .setUserUuid("2")
+                                        .setUserId(2L)
                                         .setSize(0L),
                                 new File()
                                         .setUuid("3")
-                                        .setUserUuid("3")
+                                        .setUserId(3L)
                                         .setSize(0L)
                         )
                 )
@@ -73,7 +73,7 @@ public class FileMapperTest
                 mapper.update(
                         new File()
                                 .setUuid("1")
-                                .setUserUuid("123")
+                                .setUserId(123L)
                 )
         );
     }

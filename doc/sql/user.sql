@@ -4,7 +4,7 @@ USE rlg_rms;
 
 # DROP TABLE IF EXISTS user;
 CREATE TABLE IF NOT EXISTS user(
-    id                  bigint          UNSIGNED NOT NULL  AUTO_INCREMENT,
+    id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
     uuid                char(32)        DEFAULT NULL,
     username            varchar(32)     DEFAULT NULL COMMENT '用户名',
     password            varchar(128)    DEFAULT NULL COMMENT '密码',
@@ -32,34 +32,42 @@ INSERT INTO user(id, uuid, username, password, real_name, description, sign_up_t
 
 # DROP TABLE IF EXISTS user_with_role;
 CREATE TABLE IF NOT EXISTS user_with_role(
-    user_id             bigint          UNSIGNED NOT NULL ,
-    role_flag           varchar(32)     NOT NULL COMMENT '用户角色唯一标识符',
+    id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
+    user_id             bigint          UNSIGNED NOT NULL COMMENT '用户id',
+    role_id             bigint          UNSIGNED NOT NULL COMMENT '用户角色id',
     create_time         datetime        DEFAULT NULL COMMENT '创建时间',
-    modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间'
+    modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间',
+    PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户-用户角色关联表';
 
 # DROP TABLE IF EXISTS user_role;
 CREATE TABLE IF NOT EXISTS user_role(
+    id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
     flag                varchar(32)     NOT NULL COMMENT '用户角色唯一标识符',
     description         text            DEFAULT NULL COMMENT '描述',
     create_time         datetime        DEFAULT NULL COMMENT '创建时间',
     modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间',
-    PRIMARY KEY (flag)
+    PRIMARY KEY (id),
+    UNIQUE KEY (flag)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '用户角色表';
 
 # DROP TABLE IF EXISTS user_role_with_permission;
 CREATE TABLE IF NOT EXISTS user_role_with_permission(
-    role_flag           varchar(32)     NOT NULL COMMENT '用户角色唯一标识符',
-    permission_flag     varchar(32)     NOT NULL COMMENT '用户权限唯一标识符',
+    id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
+    role_id             bigint          UNSIGNED NOT NULL COMMENT '用户角色id',
+    permission_id       bigint          UNSIGNED NOT NULL COMMENT '用户权限id',
     create_time         datetime        DEFAULT NULL COMMENT '创建时间',
-    modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间'
+    modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间',
+    PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '用户角色-用户权限关联表';
 
 # DROP TABLE IF EXISTS user_permission;
 CREATE TABLE IF NOT EXISTS user_permission(
+    id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
     flag                varchar(32)     NOT NULL COMMENT '用户权限唯一标识符',
     description         text            DEFAULT NULL COMMENT '描述',
     create_time         datetime        DEFAULT NULL COMMENT '创建时间',
     modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间',
-    PRIMARY KEY (flag)
+    PRIMARY KEY (id),
+    UNIQUE KEY (flag)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '用户权限表';

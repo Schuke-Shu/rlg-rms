@@ -20,7 +20,7 @@ public class DirectoryMapperTest
 
         Directory test1 = new Directory()
                 .setFileUuid("1")
-                .setUserUuid("1")
+                .setUserId(1L)
                 .setFilename("测试1");
 
         System.out.println(
@@ -34,11 +34,11 @@ public class DirectoryMapperTest
     {
         Directory test2 = new Directory()
                 .setFileUuid("2")
-                .setUserUuid("2")
+                .setUserId(2L)
                 .setFilename("测试2");
         Directory test3 = new Directory()
                 .setFileUuid("3")
-                .setUserUuid("3")
+                .setUserId(3L)
                 .setFilename("测试3");
 
         System.out.println(

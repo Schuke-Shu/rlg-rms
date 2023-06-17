@@ -7,10 +7,10 @@
         uuid, user_id, suffix, type, size, upload_time, association_count, create_time, modified_time
     </sql>
     <sql id="save">
-        #{uuid}, #{userId}, #{suffix}, #{type}, #{size}, #{uploadTime}, #{associationCount}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+        #{uuid}, #{userId}, #{suffix}, #{type}, #{size}, #{uploadTime}, #{associationCount}
     </sql>
     <sql id="saveBatch">
-        (#{i.uuid}, #{i.userId}, #{i.suffix}, #{i.type}, #{i.size}, #{i.uploadTime}, #{i.associationCount}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        #{i.uuid}, #{i.userId}, #{i.suffix}, #{i.type}, #{i.size}, #{i.uploadTime}, #{i.associationCount}
     </sql>
 
     <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.file.entity.File">
@@ -29,7 +29,7 @@
         insert into file(
             <include refid="BaseColumns" />
         ) values (
-            <include refid="save" />
+            <include refid="save" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
         )
     </insert>
 
@@ -38,7 +38,7 @@
             <include refid="BaseColumns" />
         ) values
         <foreach collection="list" item="i" separator=", ">
-            <include refid="saveBatch" />
+            (<include refid="saveBatch" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
         </foreach>
     </insert>
 
@@ -84,5 +84,9 @@
             uuid in
             <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
         </where>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from file
     </select>
 </mapper>

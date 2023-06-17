@@ -33,40 +33,48 @@ INSERT INTO admin(id, admin_name, password, real_name, description, sign_up_time
 
 # DROP TABLE IF EXISTS admin_with_role;
 CREATE TABLE IF NOT EXISTS admin_with_role(
-    admin_id            bigint          UNSIGNED NOT NULL ,
-    role_flag           varchar(32)     NOT NULL COMMENT '管理员角色唯一标识符',
+    id                  bigint          UNSIGNED NOT NULL  AUTO_INCREMENT,
+    admin_id            bigint          UNSIGNED NOT NULL COMMENT '管理员id',
+    role_id             bigint          UNSIGNED NOT NULL COMMENT '管理员角色id',
     create_time         datetime        DEFAULT NULL COMMENT '创建时间',
-    modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间'
+    modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间',
+    PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='管理员-管理员角色关联表';
 
-INSERT INTO admin_with_role(admin_id, role_flag) VALUES
-    (2, 'boss');
+INSERT INTO admin_with_role(admin_id, role_id) VALUES
+    (2, 1);
 
 # DROP TABLE IF EXISTS admin_role;
 CREATE TABLE IF NOT EXISTS admin_role(
+    id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
     flag                varchar(32)     NOT NULL COMMENT '管理员角色唯一标识符',
     description         text            DEFAULT NULL COMMENT '描述',
     create_time         datetime        DEFAULT NULL COMMENT '创建时间',
     modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间',
-    PRIMARY KEY (flag)
+    PRIMARY KEY (id),
+    UNIQUE KEY (flag)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '管理员角色表';
 
-INSERT INTO admin_role(flag, description, create_time, modified_time) VALUES
-    ('boss', '顶级管理员', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO admin_role(id, flag, description, create_time, modified_time) VALUES
+    (1, 'boss', '顶级管理员', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 # DROP TABLE IF EXISTS admin_role_with_permission;
 CREATE TABLE IF NOT EXISTS admin_role_with_permission(
-    role_flag           varchar(32)     NOT NULL COMMENT '管理员角色唯一标识符',
-    permission_flag     varchar(32)     NOT NULL COMMENT '管理员权限唯一标识符',
+    id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
+    role_id             bigint          UNSIGNED NOT NULL COMMENT '管理员角色id',
+    permission_id       bigint          UNSIGNED NOT NULL COMMENT '管理员权限id',
     create_time         datetime        DEFAULT NULL COMMENT '创建时间',
-    modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间'
+    modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间',
+    PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '管理员角色-管理员权限关联表';
 
 # DROP TABLE IF EXISTS admin_permission;
 CREATE TABLE IF NOT EXISTS admin_permission(
+    id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
     flag                varchar(32)     NOT NULL COMMENT '管理员权限唯一标识符',
     description         text            DEFAULT NULL COMMENT '描述',
     create_time         datetime        DEFAULT NULL COMMENT '创建时间',
     modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间',
-    PRIMARY KEY (flag)
+    PRIMARY KEY (id),
+    UNIQUE KEY (flag)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '管理员权限表';

@@ -6,10 +6,10 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * mapper类的基础增删改查模板
+ * 模型表映射类的基础增删改查模板
  * @param <T> 被操作对象
  */
-public interface mapperTemplate<T, K extends Serializable>
+public interface ModelMapperTemplate<T, K extends Serializable>
 {
     /**
      * 单个添加
@@ -54,4 +54,9 @@ public interface mapperTemplate<T, K extends Serializable>
      * @param pks primary keys
      */
     List<T> queryBatch(List<K> pks);
+
+    /**
+     * 统计
+     */
+    int count();
 }

@@ -7,10 +7,10 @@
         id, uuid, username, password, avatar_url, real_name, gender, phone, email, birth, description, is_enable, sign_up_time, create_time, modified_time
     </sql>
     <sql id="save">
-        null, #{uuid}, #{username}, #{password}, #{avatarUrl}, #{realName}, #{gender}, #{phone}, #{email}, #{birth}, #{description}, #{isEnable}, #{signUpTime}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+        null, #{uuid}, #{username}, #{password}, #{avatarUrl}, #{realName}, #{gender}, #{phone}, #{email}, #{birth}, #{description}, #{isEnable}, #{signUpTime}
     </sql>
     <sql id="saveBatch">
-        (null, #{i.uuid}, #{i.username}, #{i.password}, #{i.avatarUrl}, #{i.realName}, #{i.gender}, #{i.phone}, #{i.email}, #{i.birth}, #{i.description}, #{i.isEnable}, #{i.signUpTime}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        null, #{i.uuid}, #{i.username}, #{i.password}, #{i.avatarUrl}, #{i.realName}, #{i.gender}, #{i.phone}, #{i.email}, #{i.birth}, #{i.description}, #{i.isEnable}, #{i.signUpTime}
     </sql>
 
     <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.user.entity.User">
@@ -31,20 +31,20 @@
         <result column="modified_time" property="modifiedTime" />
     </resultMap>
 
-    <insert id="save">
+    <insert id="save" useGeneratedKeys="true" keyColumn="" keyProperty="">
         insert into user(
             <include refid="BaseColumns" />
         ) values (
-            <include refid="save" />
+            <include refid="save" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
         )
     </insert>
 
-    <insert id="saveBatch">
+    <insert id="saveBatch" useGeneratedKeys="true" keyColumn="" keyProperty="">
         insert into user(
             <include refid="BaseColumns" />
         ) values
         <foreach collection="list" item="i" separator=", ">
-            <include refid="saveBatch" />
+            (<include refid="saveBatch" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
         </foreach>
     </insert>
 
@@ -95,5 +95,9 @@
             id in
             <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
         </where>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from user
     </select>
 </mapper>

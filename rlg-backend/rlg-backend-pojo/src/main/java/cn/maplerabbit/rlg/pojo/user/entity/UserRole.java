@@ -1,4 +1,4 @@
-package cn.maplerabbit.rlg.pojo.log.entity;
+package cn.maplerabbit.rlg.pojo.user.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,26 +13,17 @@ import java.util.StringJoiner;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class UserLoginLog implements Serializable
+public class UserRole implements Serializable
 {
     private Long id;
-    private Long userId;
     /**
-     * 用户名（冗余）
+     * 用户角色唯一标识符
      */
-    private String username;
+    private String flag;
     /**
-     * 登录IP地址
+     * 描述
      */
-    private String ip;
-    /**
-     * 浏览器内核
-     */
-    private String engine;
-    /**
-     * 登录时间
-     */
-    private LocalDateTime time;
+    private String description;
     /**
      * 创建时间
      */
@@ -45,13 +36,10 @@ public class UserLoginLog implements Serializable
     @Override
     public String toString()
     {
-        return new StringJoiner(", ", UserLoginLog.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", UserRole.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
-                .add("userId=" + userId)
-                .add("username='" + username + "'")
-                .add("ip='" + ip + "'")
-                .add("engine='" + engine + "'")
-                .add("time=" + time)
+                .add("flag='" + flag + "'")
+                .add("description='" + description + "'")
                 .add("createTime=" + createTime)
                 .add("modifiedTime=" + modifiedTime)
                 .toString();

@@ -7,13 +7,20 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="log-main" />
         <module name="rlg-backend-common" />
         <module name="user-main" />
+        <module name="rlg-backend-test" />
+        <module name="admin-api" />
+        <module name="admin-main" />
+        <module name="file-main" />
         <module name="user-api" />
         <module name="rlg-backend-pojo" />
-        <module name="rlg-backend-test" />
+        <module name="front-main" />
+        <module name="rlg-backend-utils" />
         <module name="rlg-backend-main" />
-        <module name="file-main" />
+        <module name="log-api" />
+        <module name="front-api" />
         <module name="file-api" />
       </profile>
     </annotationProcessing>
@@ -26,10 +33,17 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="admin-api" options="-parameters" />
+      <module name="admin-main" options="-parameters" />
       <module name="file-api" options="-parameters" />
       <module name="file-main" options="-parameters" />
       <module name="file-module" options="" />
       <module name="file-prov" options="-parameters" />
+      <module name="front-api" options="-parameters" />
+      <module name="front-main" options="-parameters" />
+      <module name="log-api" options="-parameters" />
+      <module name="log-main" options="-parameters" />
+      <module name="log-module" options="" />
       <module name="module-prov" options="-parameters" />
       <module name="modules-prov" options="-parameters" />
       <module name="rlg-backend" options="" />
@@ -38,6 +52,7 @@
       <module name="rlg-backend-modules" options="" />
       <module name="rlg-backend-pojo" options="-parameters" />
       <module name="rlg-backend-test" options="-parameters" />
+      <module name="rlg-backend-utils" options="-parameters" />
       <module name="user-api" options="-parameters" />
       <module name="user-main" options="-parameters" />
       <module name="user-module" options="" />

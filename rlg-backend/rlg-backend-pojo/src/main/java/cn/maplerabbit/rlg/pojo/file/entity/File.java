@@ -1,14 +1,13 @@
 package cn.maplerabbit.rlg.pojo.file.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.StringJoiner;
 
 @Data
 @NoArgsConstructor
@@ -53,17 +52,16 @@ public class File implements Serializable
     @Override
     public String toString()
     {
-        final StringBuilder sb = new StringBuilder("File{");
-        sb.append("uuid='").append(uuid).append('\'');
-        sb.append(", userId='").append(userId).append('\'');
-        sb.append(", suffix='").append(suffix).append('\'');
-        sb.append(", type='").append(type).append('\'');
-        sb.append(", size=").append(size);
-        sb.append(", associationCount=").append(associationCount);
-        sb.append(", uploadTime=").append(uploadTime);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", modifiedTime=").append(modifiedTime);
-        sb.append('}');
-        return sb.toString();
+        return new StringJoiner(", ", File.class.getSimpleName() + "[", "]")
+                .add("uuid='" + uuid + "'")
+                .add("userId=" + userId)
+                .add("suffix='" + suffix + "'")
+                .add("type='" + type + "'")
+                .add("size=" + size)
+                .add("associationCount=" + associationCount)
+                .add("uploadTime=" + uploadTime)
+                .add("createTime=" + createTime)
+                .add("modifiedTime=" + modifiedTime)
+                .toString();
     }
 }

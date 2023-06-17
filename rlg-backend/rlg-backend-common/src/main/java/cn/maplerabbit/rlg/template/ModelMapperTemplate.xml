@@ -2,16 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- modify namespace -->
-<mapper namespace="cn.maplerabbit.rlg.template.mapperTemplate">
+<mapper namespace="cn.maplerabbit.rlg.template.ModelMapperTemplate">
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
         <!-- add base columns -->
     </sql>
     <sql id="save">
-        , CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+
     </sql>
     <sql id="saveBatch">
-        (, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+
     </sql>
 
     <resultMap id="BaseResultMap" type="">
@@ -23,16 +23,16 @@
         insert into xxx(
             <include refid="BaseColumns" />
         ) values (
-            <include refid="save" />
+            <include refid="save" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
         )
     </insert>
 
-    <insert id="saveBatch">
+    <insert id="saveBatch" useGeneratedKeys="true" keyColumn="" keyProperty="">
         insert into xxx(
             <include refid="BaseColumns" />
         ) values
         <foreach collection="list" item="i" separator=", ">
-            <include refid="saveBatch" />
+            (<include refid="saveBatch" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
         </foreach>
     </insert>
 
@@ -73,5 +73,9 @@
             xxx in
             <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
         </where>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from xxx
     </select>
 </mapper>

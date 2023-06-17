@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- modify namespace -->
+<mapper namespace="cn.maplerabbit.rlg.template.AssociateMapperTemplate">
+    <!-- ========== Associate Table Base CUD ========== -->
+    <sql id="BaseColumns">
+        <!-- add base columns -->
+    </sql>
+    <sql id="save">
+
+    </sql>
+    <sql id="saveBatch">
+
+    </sql>
+
+    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into xxx(
+            <include refid="BaseColumns" />
+        ) values (
+            <include refid="save" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+        )
+    </insert>
+
+    <insert id="saveBatch" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into xxx(
+            <include refid="BaseColumns" />
+        ) values
+        <foreach collection="list" item="i" separator=", ">
+            (<include refid="saveBatch" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        </foreach>
+    </insert>
+
+    <delete id="remove">
+        delete from xxx where xxx = #{pk}
+    </delete>
+
+    <delete id="removeBatch">
+        delete from xxx where xxx in
+        <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
+    </delete>
+
+    <update id="update">
+        update xxx
+        <set>
+            <if test="xxx">xxx,</if>
+            <if test="xxx">xxx</if>
+            modified_time = CURRENT_TIMESTAMP
+        </set>
+        <where>
+            xxx = #{xxx}
+        </where>
+    </update>
+
+    <select id="count" resultType="int">
+        select count(*) from xxx
+    </select>
+</mapper>

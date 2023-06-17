@@ -1,4 +1,4 @@
-package cn.maplerabbit.rlg.pojo.user.entity;
+package cn.maplerabbit.rlg.pojo.admin.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,14 +14,17 @@ import java.util.StringJoiner;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class User implements Serializable
+public class Admin implements Serializable
 {
     private Long id;
-    private String uuid;
+    /**
+     * 创建者id
+     */
+    private String creatorId;
     /**
      * 昵称
      */
-    private String username;
+    private String adminName;
     /**
      * 密码
      */
@@ -74,10 +77,10 @@ public class User implements Serializable
     @Override
     public String toString()
     {
-        return new StringJoiner(", ", User.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", Admin.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
-                .add("uuid='" + uuid + "'")
-                .add("username='" + username + "'")
+                .add("creatorId='" + creatorId + "'")
+                .add("adminName='" + adminName + "'")
                 .add("password='" + password + "'")
                 .add("avatarUrl='" + avatarUrl + "'")
                 .add("realName='" + realName + "'")

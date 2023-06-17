@@ -3,11 +3,11 @@ package cn.maplerabbit.rlg.pojo.file.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.StringJoiner;
 
 @Data
 @NoArgsConstructor
@@ -61,4 +61,22 @@ public class Directory implements Serializable
      */
     private LocalDateTime modifiedTime;
 
+    @Override
+    public String toString()
+    {
+        return new StringJoiner(", ", Directory.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("fileUuid='" + fileUuid + "'")
+                .add("userId=" + userId)
+                .add("filename='" + filename + "'")
+                .add("deep=" + deep)
+                .add("parentId=" + parentId)
+                .add("isDirectory=" + isDirectory)
+                .add("isDeleted=" + isDeleted)
+                .add("deleteTime=" + deleteTime)
+                .add("isHidden=" + isHidden)
+                .add("createTime=" + createTime)
+                .add("modifiedTime=" + modifiedTime)
+                .toString();
+    }
 }

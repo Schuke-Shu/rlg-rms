@@ -7,10 +7,10 @@
         id, file_uuid, user_id, filename, deep, parent_id, is_directory, is_deleted, delete_time, is_hidden, create_time, modified_time
     </sql>
     <sql id="save">
-        null, #{fileUuid}, #{userId}, #{filename}, #{deep}, #{parentId}, #{isDirectory}, #{isDeleted}, #{deleteTime}, #{isHidden}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+        null, #{fileUuid}, #{userId}, #{filename}, #{deep}, #{parentId}, #{isDirectory}, #{isDeleted}, #{deleteTime}, #{isHidden}
     </sql>
     <sql id="saveBatch">
-        (null, #{i.fileUuid}, #{i.userId}, #{i.filename}, #{i.deep}, #{i.parentId}, #{i.isDirectory}, #{i.isDeleted}, #{i.deleteTime}, #{i.isHidden}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        null, #{i.fileUuid}, #{i.userId}, #{i.filename}, #{i.deep}, #{i.parentId}, #{i.isDirectory}, #{i.isDeleted}, #{i.deleteTime}, #{i.isHidden}
     </sql>
 
     <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.file.entity.Directory">
@@ -32,7 +32,7 @@
         insert into directory(
             <include refid="BaseColumns" />
         ) values (
-        <include refid="save" />
+            <include refid="save" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
         )
     </insert>
 
@@ -41,7 +41,7 @@
             <include refid="BaseColumns" />
         ) values
         <foreach collection="list" item="i" separator=", ">
-            <include refid="saveBatch" />
+            (<include refid="saveBatch" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
         </foreach>
     </insert>
 
@@ -89,5 +89,9 @@
             id in
             <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
         </where>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from directory
     </select>
 </mapper>
