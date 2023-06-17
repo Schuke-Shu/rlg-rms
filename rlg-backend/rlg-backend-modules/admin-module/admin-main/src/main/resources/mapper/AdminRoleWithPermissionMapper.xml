@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- modify namespace -->
-<mapper namespace="cn.maplerabbit.rlg.template.AssociateMapperTemplate">
+<mapper namespace="cn.maplerabbit.rlg.module.admin.mapper.AdminRoleWithPermissionMapper">
     <!-- ========== Associate Table Base CUD ========== -->
     <sql id="BaseColumns">
-        <!-- add base columns -->, create_time, modified_time
+        role_id, permission_id, create_time, modified_time
     </sql>
     <sql id="save">
-
+        #{left}, #{right}
     </sql>
     <sql id="saveBatch">
-
+        #{i.left}, #{i.right}
     </sql>
 
     <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into xxx(
+        insert into admin_role_with_permission(
             <include refid="BaseColumns" />
         ) values (
             <include refid="save" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
@@ -23,7 +22,7 @@
     </insert>
 
     <insert id="saveBatch" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into xxx(
+        insert into admin_role_with_permission(
             <include refid="BaseColumns" />
         ) values
         <foreach collection="list" item="i" separator=", ">
@@ -32,19 +31,19 @@
     </insert>
 
     <delete id="remove">
-        delete from xxx where id = #{id}
+        delete from admin_role_with_permission where id = #{id}
     </delete>
 
     <delete id="removeBatch">
-        delete from xxx where id in
+        delete from admin_role_with_permission where id in
         <foreach collection="list" item="id" open="(" close=")" separator=", ">#{id}</foreach>
     </delete>
 
     <update id="update">
-        update xxx
+        update admin_role_with_permission
         <set>
-            <if test="left != null">xxx = #{left},</if>
-            <if test="right != null">xxx = #{right},</if>
+            <if test="left != null">role_id = #{left},</if>
+            <if test="right != null">permission_id = #{right},</if>
             modified_time = CURRENT_TIMESTAMP
         </set>
         <where>
@@ -53,6 +52,6 @@
     </update>
 
     <select id="count" resultType="int">
-        select count(*) from xxx
+        select count(*) from admin_role_with_permission
     </select>
 </mapper>

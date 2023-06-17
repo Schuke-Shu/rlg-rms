@@ -2,9 +2,6 @@ package cn.maplerabbit.rlg.web;
 
 import cn.maplerabbit.rlg.enumpak.ServiceCode;
 import cn.maplerabbit.rlg.exception.RlgException;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -31,7 +28,7 @@ public class JsonResult<T>
      */
     public JsonResult(ServiceCode code, String message, T data)
     {
-        this.code = code.value();
+        this.code = code.getValue();
         this.message = message;
         this.data = data;
     }

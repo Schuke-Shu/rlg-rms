@@ -14,5 +14,5 @@ public enum ServiceCode
 
     ServiceCode(Integer value) {this.value = value;}
 
-    public Integer value() {return value;}
+    public Integer getValue() {return value;}
 }

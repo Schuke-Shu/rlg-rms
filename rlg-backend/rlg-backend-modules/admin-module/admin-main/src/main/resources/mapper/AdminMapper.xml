@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.maplerabbit.rlg.module.user.mapper.UserMapper">
+<mapper namespace="cn.maplerabbit.rlg.module.admin.mapper.AdminMapper">
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
-        id, uuid, username, password, avatar_url, real_name, gender, phone, email, birth, description, is_enable, sign_up_time, create_time, modified_time
+        id, creator_id, admin_name, password, avatar_url, real_name, gender, phone, email, birth, description, is_enable, sign_up_time, create_time, modified_time
     </sql>
     <sql id="save">
         null, #{uuid}, #{username}, #{password}, #{avatarUrl}, #{realName}, #{gender}, #{phone}, #{email}, #{birth}, #{description}, #{isEnable}, #{signUpTime}
@@ -13,10 +13,10 @@
         null, #{i.uuid}, #{i.username}, #{i.password}, #{i.avatarUrl}, #{i.realName}, #{i.gender}, #{i.phone}, #{i.email}, #{i.birth}, #{i.description}, #{i.isEnable}, #{i.signUpTime}
     </sql>
 
-    <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.user.entity.User">
+    <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.admin.entity.Admin">
         <id column="id" property="id" />
-        <result column="uuid" property="uuid" />
-        <result column="username" property="username" />
+        <result column="creator_id" property="creatorId" />
+        <result column="admin_name" property="adminName" />
         <result column="password" property="password" />
         <result column="avatar_url" property="avatarUrl" />
         <result column="real_name" property="realName" />
@@ -32,7 +32,7 @@
     </resultMap>
 
     <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into user(
+        insert into admin(
             <include refid="BaseColumns" />
         ) values (
             <include refid="save" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
@@ -40,7 +40,7 @@
     </insert>
 
     <insert id="saveBatch" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into user(
+        insert into admin(
             <include refid="BaseColumns" />
         ) values
         <foreach collection="list" item="i" separator=", ">
@@ -49,19 +49,19 @@
     </insert>
 
     <delete id="remove">
-        delete from user where id = #{pk}
+        delete from admin where id = #{pk}
     </delete>
 
     <delete id="removeBatch">
-        delete from user where id in
+        delete from admin where id in
         <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
     </delete>
 
     <update id="update">
-        update user
+        update admin
         <set>
-            <if test="uuid != null">uuid = #{uuid},</if>
-            <if test="username != null">username = #{username},</if>
+            <if test="creatorId != null">creator_id = #{creatorId},</if>
+            <if test="adminName != null">admin_name = #{adminName},</if>
             <if test="password != null">password = #{password},</if>
             <if test="avatarUrl != null">avatar_url = #{avatarUrl},</if>
             <if test="realName != null">real_name = #{realName},</if>
@@ -82,7 +82,7 @@
     <select id="query" resultMap="BaseResultMap">
         select
             <include refid="BaseColumns" />
-        from user
+        from admin
         <where>
             id = #{pk}
         </where>
@@ -91,7 +91,7 @@
     <select id="queryBatch" resultMap="BaseResultMap">
         select
             <include refid="BaseColumns" />
-        from user
+        from admin
         <where>
             id in
             <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
@@ -99,6 +99,6 @@
     </select>
 
     <select id="count" resultType="int">
-        select count(*) from user
+        select count(*) from admin
     </select>
 </mapper>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.maplerabbit.rlg.module.admin.mapper.AdminRoleMapper">
+    <!-- ========== Base CRUD ========== -->
+    <sql id="BaseColumns">
+        id, flag, description, create_time, modified_time
+    </sql>
+    <sql id="save">
+        null, #{flag}, #{description}
+    </sql>
+    <sql id="saveBatch">
+        null, #{i.flag}, #{i.description}
+    </sql>
+
+    <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.admin.entity.AdminRole">
+        <id column="id" property="id" />
+        <result column="flag" property="flag" />
+        <result column="description" property="description" />
+        <result column="create_time" property="createTime" />
+        <result column="modified_time" property="modifiedTime" />
+    </resultMap>
+
+    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into admin_role(
+            <include refid="BaseColumns" />
+        ) values (
+            <include refid="save" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+        )
+    </insert>
+
+    <insert id="saveBatch" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into admin_role(
+        <include refid="BaseColumns" />
+        ) values
+        <foreach collection="list" item="i" separator=", ">
+            (<include refid="saveBatch" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        </foreach>
+    </insert>
+
+    <delete id="remove">
+        delete from admin_role where id = #{pk}
+    </delete>
+
+    <delete id="removeBatch">
+        delete from admin_role where id in
+        <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
+    </delete>
+
+    <update id="update">
+        update admin_role
+        <set>
+            <if test="flag != null">flag = #{flag},</if>
+            <if test="description != null">description = #{description},</if>
+            modified_time = CURRENT_TIMESTAMP
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <select id="query" resultMap="BaseResultMap">
+        select
+            <include refid="BaseColumns" />
+        from admin_role
+        <where>
+            id = #{pk}
+        </where>
+    </select>
+
+    <select id="queryBatch" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumns" />
+        from admin_role
+        <where>
+            id in
+            <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
+        </where>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from admin_role
+    </select>
+</mapper>

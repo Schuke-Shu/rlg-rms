@@ -7,7 +7,7 @@ spring:
   # Profile相关配置
   profiles:
     # 激活指定名称的Profile配置
-    active: dev
+    active: local
   # 邮箱配置
   mail:
     protocol: smtp

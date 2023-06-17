@@ -15,25 +15,25 @@ import java.util.StringJoiner;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class AssociateUnit<X extends Serializable, Y extends Serializable> implements Serializable
+public class AssociateUnit<L extends Serializable, R extends Serializable> implements Serializable
 {
     private Long id;
     /**
      * 左数据
      */
-    private X x;
+    private L left;
     /**
      * 右数据
      */
-    private Y y;
+    private R right;
 
     @Override
     public String toString()
     {
         return new StringJoiner(", ", AssociateUnit.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
-                .add("x=" + x)
-                .add("y=" + y)
+                .add("left=" + left)
+                .add("right=" + right)
                 .toString();
     }
 }
