@@ -69,6 +69,12 @@
             <version>${mybatis.version}</version>
         </dependency>
 
+        <!-- Spring Boot Mail -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
         <!-- Spring Boot Knife4j：在线API -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
@@ -92,9 +98,9 @@
         </dependency>
     </dependencies>
 
+    <!-- version management of self -->
     <dependencyManagement>
         <dependencies>
-            <!-- ========== rlg-self dependencies ========== -->
             <!-- rlg-backend-common -->
             <dependency>
                 <groupId>cn.maplerabbit</groupId>
@@ -130,6 +136,30 @@
             <dependency>
                 <groupId>cn.maplerabbit</groupId>
                 <artifactId>file-main</artifactId>
+                <version>${rlg-backend.version}</version>
+            </dependency>
+
+            <!-- log module -->
+            <dependency>
+                <groupId>cn.maplerabbit</groupId>
+                <artifactId>log-api</artifactId>
+                <version>${rlg-backend.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.maplerabbit</groupId>
+                <artifactId>log-main</artifactId>
+                <version>${rlg-backend.version}</version>
+            </dependency>
+
+            <!-- front module -->
+            <dependency>
+                <groupId>cn.maplerabbit</groupId>
+                <artifactId>front-api</artifactId>
+                <version>${rlg-backend.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.maplerabbit</groupId>
+                <artifactId>front-main</artifactId>
                 <version>${rlg-backend.version}</version>
             </dependency>
         </dependencies>

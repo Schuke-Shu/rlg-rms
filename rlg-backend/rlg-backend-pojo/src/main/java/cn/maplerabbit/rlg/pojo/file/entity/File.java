@@ -49,4 +49,21 @@ public class File implements Serializable
      * 最后修改时间
      */
     private LocalDateTime gmtModified;
+
+    @Override
+    public String toString()
+    {
+        final StringBuilder sb = new StringBuilder("File{");
+        sb.append("uuid='").append(uuid).append('\'');
+        sb.append(", userUuid='").append(userUuid).append('\'');
+        sb.append(", suffix='").append(suffix).append('\'');
+        sb.append(", type='").append(type).append('\'');
+        sb.append(", size=").append(size);
+        sb.append(", uploadTime=").append(uploadTime);
+        sb.append(", associationCount=").append(associationCount);
+        sb.append(", gmtCreated=").append(gmtCreated);
+        sb.append(", gmtModified=").append(gmtModified);
+        sb.append('}');
+        return sb.toString();
+    }
 }

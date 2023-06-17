@@ -76,4 +76,28 @@ public class User implements Serializable
      * 最后修改时间
      */
     private LocalDateTime gmtModified;
+
+    @Override
+    public String toString()
+    {
+        final StringBuilder sb = new StringBuilder("User{");
+        sb.append("uuid='").append(uuid).append('\'');
+        sb.append(", username='").append(username).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", avatarUuid='").append(avatarUuid).append('\'');
+        sb.append(", realName='").append(realName).append('\'');
+        sb.append(", gender=").append(gender);
+        sb.append(", phone='").append(phone).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", birth=").append(birth);
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", isEnable=").append(isEnable);
+        sb.append(", lastLoginIp='").append(lastLoginIp).append('\'');
+        sb.append(", lastLoginTime=").append(lastLoginTime);
+        sb.append(", gmtRegistered=").append(gmtRegistered);
+        sb.append(", gmtCreated=").append(gmtCreated);
+        sb.append(", gmtModified=").append(gmtModified);
+        sb.append('}');
+        return sb.toString();
+    }
 }

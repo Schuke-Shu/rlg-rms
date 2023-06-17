@@ -8,10 +8,12 @@ spring:
   profiles:
     # 激活指定名称的Profile配置
     active: dev
+  # 邮箱配置
+  mail:
+    protocol: smtp
   # 数据源配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/rlg_rms?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Chongqing
   # web配置
   web:
     # 静态资源配置
@@ -19,7 +21,9 @@ spring:
       # 静态资源根路径
       static-locations:
         - classpath:static
-        - file:${rlg.file.directory.static}
+        - file:/${rlg.file.root-location}/static
+  mvc:
+    static-path-pattern: /static/**
 
 # MyBatis配置
 mybatis:
@@ -36,3 +40,9 @@ logging:
 knife4j:
   setting:
     language: zh-CN
+
+# 项目全局配置
+rlg:
+  # 文件系统相关配置
+  file:
+    store: ${rlg.file.root-location}/store

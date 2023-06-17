@@ -13,7 +13,7 @@ module.exports = {
         'error',
       {
         ignores: [
-            'Rlg'
+            'Rlg',
         ]
       }
     ]

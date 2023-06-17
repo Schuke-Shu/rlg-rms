@@ -40,4 +40,20 @@ public class UserLoginLog implements Serializable
      * 最后修改时间
      */
     private LocalDateTime gmtModified;
+
+    @Override
+    public String toString()
+    {
+        final StringBuilder sb = new StringBuilder("UserLoginLog{");
+        sb.append("id=").append(id);
+        sb.append(", userUuid='").append(userUuid).append('\'');
+        sb.append(", username='").append(username).append('\'');
+        sb.append(", ip='").append(ip).append('\'');
+        sb.append(", engine='").append(engine).append('\'');
+        sb.append(", gmtLogin=").append(gmtLogin);
+        sb.append(", gmtCreated=").append(gmtCreated);
+        sb.append(", gmtModified=").append(gmtModified);
+        sb.append('}');
+        return sb.toString();
+    }
 }

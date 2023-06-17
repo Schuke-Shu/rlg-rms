@@ -19,14 +19,28 @@
 			<artifactId>rlg-backend-common</artifactId>
 		</dependency>
 
+		<!-- file module -->
 		<dependency>
 			<groupId>cn.maplerabbit</groupId>
 			<artifactId>file-main</artifactId>
 		</dependency>
 
+		<!-- user module -->
 		<dependency>
 			<groupId>cn.maplerabbit</groupId>
 			<artifactId>user-main</artifactId>
+		</dependency>
+
+		<!-- log module -->
+		<dependency>
+			<groupId>cn.maplerabbit</groupId>
+			<artifactId>log-main</artifactId>
+		</dependency>
+
+		<!-- front module -->
+		<dependency>
+			<groupId>cn.maplerabbit</groupId>
+			<artifactId>front-main</artifactId>
 		</dependency>
 	</dependencies>
 

@@ -3,6 +3,7 @@ package cn.maplerabbit.rlg.pojo.file.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -59,4 +60,24 @@ public class Directory implements Serializable
      * 最后修改时间
      */
     private LocalDateTime gmtModified;
+
+    @Override
+    public String toString()
+    {
+        final StringBuilder sb = new StringBuilder("Directory{");
+        sb.append("id=").append(id);
+        sb.append(", fileUuid='").append(fileUuid).append('\'');
+        sb.append(", userUuid='").append(userUuid).append('\'');
+        sb.append(", filename='").append(filename).append('\'');
+        sb.append(", deep=").append(deep);
+        sb.append(", parentId=").append(parentId);
+        sb.append(", isDirectory=").append(isDirectory);
+        sb.append(", isDeleted=").append(isDeleted);
+        sb.append(", deleteTime=").append(deleteTime);
+        sb.append(", isHidden=").append(isHidden);
+        sb.append(", gmtCreated=").append(gmtCreated);
+        sb.append(", gmtModified=").append(gmtModified);
+        sb.append('}');
+        return sb.toString();
+    }
 }

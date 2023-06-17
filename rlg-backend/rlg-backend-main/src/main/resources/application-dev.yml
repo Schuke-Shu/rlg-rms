@@ -12,12 +12,18 @@ server:
 
 # Spring配置
 spring:
+  # 配置系统邮箱账户
+  mail:
+    host: smtp.qq.com
+    username: schuke@foxmail.com
+    password: lkwydyooqanydihb
+    properties:
+      mail.smtp.timeout: 60000
   # 数据源配置
   datasource:
-    # 用户名
     username: root
-    # 密码
     password: root
+    url: jdbc:mysql://localhost:3306/rlg_rms?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Chongqing
 
 # 日志配置
 logging:
@@ -34,8 +40,5 @@ knife4j:
 rlg:
   # 文件系统相关配置
   file:
-    directory:
-      # 系统静态目录
-      static: D:/rlg/static
-      # 用户文件根目录
-      user: D:/rlg/user
+    # 文件根目录
+    root-location: D:/rlg
