@@ -5,28 +5,18 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cn.maplerabbit</groupId>
-        <artifactId>rlg-backend</artifactId>
+        <artifactId>admin-module</artifactId>
         <version>1</version>
     </parent>
 
-    <artifactId>rlg-backend-modules</artifactId>
+    <artifactId>admin-main</artifactId>
 
-    <description>RedLeafGarden Backend service modules</description>
-
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>admin-module</module>
-        <module>user-module</module>
-        <module>file-module</module>
-        <module>log-module</module>
-        <module>front-module</module>
-    </modules>
+    <description>Admin module's main program</description>
 
     <dependencies>
         <dependency>
             <groupId>cn.maplerabbit</groupId>
-            <artifactId>rlg-backend-common</artifactId>
+            <artifactId>admin-api</artifactId>
         </dependency>
     </dependencies>
 </project>
