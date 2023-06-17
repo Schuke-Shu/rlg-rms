@@ -4,8 +4,8 @@ USE rlg_rms;
 
 # DROP TABLE IF EXISTS user_login_log;
 CREATE TABLE IF NOT EXISTS user_login_log(
-    id                  bigint(20)      UNSIGNED NOT NULL  AUTO_INCREMENT,
-    user_id             bigint(20)      UNSIGNED DEFAULT NULL,
+    id                  bigint          UNSIGNED NOT NULL  AUTO_INCREMENT,
+    user_id             bigint          UNSIGNED DEFAULT NULL,
     username            varchar(32)     DEFAULT NULL COMMENT '用户名（冗余）',
     ip                  varchar(255)    DEFAULT NULL COMMENT '登录IP地址',
     engine              varchar(255)    DEFAULT NULL COMMENT '浏览器内核',

@@ -8,10 +8,10 @@
         <!-- add base columns -->
     </sql>
     <sql id="save">
-        , null, null
+        , CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
     </sql>
     <sql id="saveBatch">
-        (, null, null)
+        (, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     </sql>
 
     <resultMap id="BaseResultMap" type="">
@@ -49,7 +49,7 @@
         update xxx
         <set>
             <if test="xxx">xxx</if>
-            gmt_modified = CURRENT_TIMESTAMP
+            modified_time = CURRENT_TIMESTAMP
         </set>
         <where>
             xxx = #{xxx}

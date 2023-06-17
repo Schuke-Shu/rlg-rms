@@ -1,5 +1,6 @@
 package cn.maplerabbit.rlg.module.user.mapper;
 
+import cn.maplerabbit.rlg.module.log.mapper.UserLoginLogMapper;
 import cn.maplerabbit.rlg.pojo.log.entity.UserLoginLog;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class UserLoginLogMapperTest
     void testSave() // ok
     {
         UserLoginLog test1 = new UserLoginLog()
-                .setUserUuid("1")
+                .setUserId(1L)
                 .setUsername("测试");
 
         System.out.println(
@@ -32,10 +33,10 @@ public class UserLoginLogMapperTest
     void testSaveBatch() // ok
     {
         UserLoginLog test2 = new UserLoginLog()
-                .setUserUuid("1")
+                .setUserId(1L)
                 .setUsername("测试");
         UserLoginLog test3 = new UserLoginLog()
-                .setUserUuid("2")
+                .setUserId(2L)
                 .setUsername("root");
 
         System.out.println(
@@ -77,7 +78,7 @@ public class UserLoginLogMapperTest
                 mapper.update(
                         new UserLoginLog()
                                 .setId(1L)
-                                .setUserUuid("123456")
+                                .setUserId(123L)
                 )
         );
     }

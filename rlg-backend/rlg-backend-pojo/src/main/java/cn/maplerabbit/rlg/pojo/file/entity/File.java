@@ -20,7 +20,7 @@ public class File implements Serializable
     /**
      * 文件上传者
      */
-    private String userUuid;
+    private Long userId;
     /**
      * 后缀名
      */
@@ -34,35 +34,35 @@ public class File implements Serializable
      */
     private Long size;
     /**
-     * 文件上传时间
-     */
-    private LocalDateTime uploadTime;
-    /**
      * 关联到此文件的记录数
      */
     private Integer associationCount;
     /**
+     * 文件上传时间
+     */
+    private LocalDateTime uploadTime;
+    /**
      * 创建时间
      */
-    private LocalDateTime gmtCreated;
+    private LocalDateTime createTime;
     /**
      * 最后修改时间
      */
-    private LocalDateTime gmtModified;
+    private LocalDateTime modifiedTime;
 
     @Override
     public String toString()
     {
         final StringBuilder sb = new StringBuilder("File{");
         sb.append("uuid='").append(uuid).append('\'');
-        sb.append(", userUuid='").append(userUuid).append('\'');
+        sb.append(", userId='").append(userId).append('\'');
         sb.append(", suffix='").append(suffix).append('\'');
         sb.append(", type='").append(type).append('\'');
         sb.append(", size=").append(size);
-        sb.append(", uploadTime=").append(uploadTime);
         sb.append(", associationCount=").append(associationCount);
-        sb.append(", gmtCreated=").append(gmtCreated);
-        sb.append(", gmtModified=").append(gmtModified);
+        sb.append(", uploadTime=").append(uploadTime);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", modifiedTime=").append(modifiedTime);
         sb.append('}');
         return sb.toString();
     }

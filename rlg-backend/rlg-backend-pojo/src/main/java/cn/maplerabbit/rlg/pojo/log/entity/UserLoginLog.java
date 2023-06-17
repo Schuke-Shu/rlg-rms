@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class UserLoginLog implements Serializable
 {
     private Long id;
-    private String userUuid;
+    private Long userId;
     /**
      * 用户名（冗余）
      */
@@ -31,29 +31,15 @@ public class UserLoginLog implements Serializable
     /**
      * 登录时间
      */
-    private LocalDateTime gmtLogin;
+    private LocalDateTime time;
     /**
      * 创建时间
      */
-    private LocalDateTime gmtCreated;
+    private LocalDateTime createTime;
     /**
      * 最后修改时间
      */
-    private LocalDateTime gmtModified;
+    private LocalDateTime modifiedTime;
 
-    @Override
-    public String toString()
-    {
-        final StringBuilder sb = new StringBuilder("UserLoginLog{");
-        sb.append("id=").append(id);
-        sb.append(", userUuid='").append(userUuid).append('\'');
-        sb.append(", username='").append(username).append('\'');
-        sb.append(", ip='").append(ip).append('\'');
-        sb.append(", engine='").append(engine).append('\'');
-        sb.append(", gmtLogin=").append(gmtLogin);
-        sb.append(", gmtCreated=").append(gmtCreated);
-        sb.append(", gmtModified=").append(gmtModified);
-        sb.append('}');
-        return sb.toString();
-    }
+
 }

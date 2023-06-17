@@ -23,7 +23,7 @@ public class Directory implements Serializable
     /**
      * 所属用户uuid
      */
-    private String userUuid;
+    private Long userId;
     /**
      * 文件名称
      */
@@ -55,29 +55,10 @@ public class Directory implements Serializable
     /**
      * 创建时间
      */
-    private LocalDateTime gmtCreated;
+    private LocalDateTime createTime;
     /**
      * 最后修改时间
      */
-    private LocalDateTime gmtModified;
+    private LocalDateTime modifiedTime;
 
-    @Override
-    public String toString()
-    {
-        final StringBuilder sb = new StringBuilder("Directory{");
-        sb.append("id=").append(id);
-        sb.append(", fileUuid='").append(fileUuid).append('\'');
-        sb.append(", userUuid='").append(userUuid).append('\'');
-        sb.append(", filename='").append(filename).append('\'');
-        sb.append(", deep=").append(deep);
-        sb.append(", parentId=").append(parentId);
-        sb.append(", isDirectory=").append(isDirectory);
-        sb.append(", isDeleted=").append(isDeleted);
-        sb.append(", deleteTime=").append(deleteTime);
-        sb.append(", isHidden=").append(isHidden);
-        sb.append(", gmtCreated=").append(gmtCreated);
-        sb.append(", gmtModified=").append(gmtModified);
-        sb.append('}');
-        return sb.toString();
-    }
 }

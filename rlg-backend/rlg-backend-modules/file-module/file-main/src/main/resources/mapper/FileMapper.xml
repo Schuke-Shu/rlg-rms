@@ -4,25 +4,25 @@
 <mapper namespace="cn.maplerabbit.rlg.module.file.mapper.FileMapper">
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
-        uuid, user_uuid, suffix, type, size, upload_time, association_count, gmt_created, gmt_modified
+        uuid, user_id, suffix, type, size, upload_time, association_count, create_time, modified_time
     </sql>
     <sql id="save">
-        #{uuid}, #{userUuid}, #{suffix}, #{type}, #{size}, #{uploadTime}, #{associationCount}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+        #{uuid}, #{userId}, #{suffix}, #{type}, #{size}, #{uploadTime}, #{associationCount}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
     </sql>
     <sql id="saveBatch">
-        (#{i.uuid}, #{i.userUuid}, #{i.suffix}, #{i.type}, #{i.size}, #{i.uploadTime}, #{i.associationCount}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        (#{i.uuid}, #{i.userId}, #{i.suffix}, #{i.type}, #{i.size}, #{i.uploadTime}, #{i.associationCount}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     </sql>
 
     <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.file.entity.File">
         <id column="uuid" property="uuid" />
-        <result column="user_uuid" property="userUuid" />
+        <result column="user_id" property="userId" />
         <result column="suffix" property="suffix" />
         <result column="type" property="type" />
         <result column="size" property="size" />
         <result column="upload_time" property="uploadTime" />
         <result column="association_count" property="associationCount" />
-        <result column="gmt_created" property="gmtCreated" />
-        <result column="gmt_modified" property="gmtModified" />
+        <result column="create_time" property="createTime" />
+        <result column="modified_time" property="modifiedTime" />
     </resultMap>
 
     <insert id="save">
@@ -54,13 +54,13 @@
     <update id="update">
         update file
         <set>
-            <if test="userUuid != null">user_uuid = #{userUuid},</if>
+            <if test="userId != null">user_id = #{userId},</if>
             <if test="suffix != null">suffix = #{suffix},</if>
             <if test="type != null">type = #{type},</if>
             <if test="size != null">size = #{size},</if>
             <if test="uploadTime != null">upload_time = #{uploadTime},</if>
             <if test="associationCount != null">association_count = #{associationCount},</if>
-            gmt_modified = CURRENT_TIMESTAMP
+            modified_time = CURRENT_TIMESTAMP
         </set>
         <where>
             uuid = #{uuid}

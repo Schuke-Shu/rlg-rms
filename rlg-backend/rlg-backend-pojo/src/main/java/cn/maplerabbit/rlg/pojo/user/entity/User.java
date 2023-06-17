@@ -58,23 +58,38 @@ public class User implements Serializable
      */
     private Integer isEnable;
     /**
-     * 最后登录IP地址（冗余）
-     */
-    private String lastLoginIp;
-    /**
-     * 最后登录时间（冗余）
-     */
-    private LocalDateTime lastLoginTime;
-    /**
      * 注册时间
      */
-    private LocalDateTime gmtRegistered;
+    private LocalDateTime signUpTime;
     /**
      * 创建时间
      */
-    private LocalDateTime gmtCreated;
+    private LocalDateTime createTime;
     /**
      * 最后修改时间
      */
-    private LocalDateTime gmtModified;
+    private LocalDateTime modifiedTime;
+
+    @Override
+    public String toString()
+    {
+        final StringBuilder sb = new StringBuilder("User{");
+        sb.append("id=").append(id);
+        sb.append(", uuid='").append(uuid).append('\'');
+        sb.append(", username='").append(username).append('\'');
+        sb.append(", password='").append(password).append('\'');
+        sb.append(", avatarUrl='").append(avatarUrl).append('\'');
+        sb.append(", realName='").append(realName).append('\'');
+        sb.append(", gender=").append(gender);
+        sb.append(", phone='").append(phone).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", birth=").append(birth);
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", isEnable=").append(isEnable);
+        sb.append(", signUpTime=").append(signUpTime);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", modifiedTime=").append(modifiedTime);
+        sb.append('}');
+        return sb.toString();
+    }
 }
