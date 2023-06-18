@@ -41,11 +41,11 @@ rlg:
   # 文件系统相关配置
   file:
     # 文件根目录
-    root-location: D:/rlg
+    root: D:/rlg
   # JWT相关配置
   jwt:
     # 生成与解析JWT的key，管理员与普通用户采用不同的key值
-    admin-key: RedLeafGarden-JsonWebToken-Admin-Key
-    user-key: RedLeafGarden-JsonWebToken-User-Key
+    adminKey: RedLeafGarden-JsonWebToken-Admin-Key
+    userKey: RedLeafGarden-JsonWebToken-User-Key
     # JWT的有效时长（单位分钟）：一星期
-    usable-minutes: 10080
+    usableMinutes: 10080

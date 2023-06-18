@@ -39,7 +39,7 @@ rlg:
   # 文件系统相关配置
   file:
     # 文件根目录
-    root-location: D:/rlg
+    root: D:/rlg
   # JWT相关配置
   jwt:
     # 生成与解析JWT的key，管理员与普通用户采用不同的key值

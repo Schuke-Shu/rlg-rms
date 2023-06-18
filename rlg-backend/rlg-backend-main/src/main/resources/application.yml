@@ -21,7 +21,7 @@ spring:
       # 静态资源根路径
       static-locations:
         - classpath:static
-        - file:/${rlg.file.root-location}/static
+        - file:/${rlg.file.root}/static
   mvc:
     static-path-pattern: /static/**
 
@@ -45,4 +45,4 @@ knife4j:
 rlg:
   # 文件系统相关配置
   file:
-    store: ${rlg.file.root-location}/store
+    store: ${rlg.file.root}/store

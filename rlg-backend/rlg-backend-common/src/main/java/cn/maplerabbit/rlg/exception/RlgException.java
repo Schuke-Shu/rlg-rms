@@ -15,7 +15,7 @@ public class RlgException extends RuntimeException
         this.code = code;
     }
 
-    public ServiceCode code() {
+    public ServiceCode getCode() {
         return code;
     }
 }

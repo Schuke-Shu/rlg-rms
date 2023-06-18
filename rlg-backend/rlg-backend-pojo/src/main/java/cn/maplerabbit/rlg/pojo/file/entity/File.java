@@ -7,7 +7,6 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.StringJoiner;
 
 @Data
 @NoArgsConstructor
@@ -52,16 +51,17 @@ public class File implements Serializable
     @Override
     public String toString()
     {
-        return new StringJoiner(", ", File.class.getSimpleName() + "[", "]")
-                .add("uuid='" + uuid + "'")
-                .add("userId=" + userId)
-                .add("suffix='" + suffix + "'")
-                .add("type='" + type + "'")
-                .add("size=" + size)
-                .add("associationCount=" + associationCount)
-                .add("uploadTime=" + uploadTime)
-                .add("createTime=" + createTime)
-                .add("modifiedTime=" + modifiedTime)
+        return new StringBuilder("File{")
+                .append("uuid='").append(uuid).append('\'')
+                .append(", userId=").append(userId)
+                .append(", suffix='").append(suffix).append('\'')
+                .append(", type='").append(type).append('\'')
+                .append(", size=").append(size)
+                .append(", associationCount=").append(associationCount)
+                .append(", uploadTime=").append(uploadTime)
+                .append(", createTime=").append(createTime)
+                .append(", modifiedTime=").append(modifiedTime)
+                .append('}')
                 .toString();
     }
 }

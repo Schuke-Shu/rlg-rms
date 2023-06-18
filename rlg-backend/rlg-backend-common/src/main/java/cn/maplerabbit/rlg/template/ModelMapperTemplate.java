@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 模型表映射类的基础增删改查模板
+ * 模型表映射的基础增删改查模板
  * @param <T> 被操作对象
  */
 public interface ModelMapperTemplate<T, K extends Serializable>

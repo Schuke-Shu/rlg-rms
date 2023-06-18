@@ -7,13 +7,12 @@ import lombok.experimental.Accessors;
 /**
  * Json响应数据承载类
  */
-@Accessors(chain = true)
 public class JsonResult<T>
 {
     /**
      * 业务状态码
      */
-    private final Integer code;
+    private final Integer status;
     /**
      * 失败时的提示信息
      */
@@ -28,7 +27,7 @@ public class JsonResult<T>
      */
     public JsonResult(ServiceCode code, String message, T data)
     {
-        this.code = code.getValue();
+        this.status = code.getValue();
         this.message = message;
         this.data = data;
     }
@@ -52,15 +51,15 @@ public class JsonResult<T>
     /**
      * 请求失败
      */
-    public static <T> JsonResult<T> fail(RlgException e) {return fail(e.code(), e.getMessage());}
+    public static <T> JsonResult<T> fail(RlgException e) {return fail(e.getCode(), e.getMessage());}
     /**
      * 请求失败
      */
     public static <T> JsonResult<T> fail(ServiceCode code, String message) {return new JsonResult<>(code, message);}
 
-    public Integer getCode()
+    public Integer getStatus()
     {
-        return code;
+        return status;
     }
     public String getMessage()
     {

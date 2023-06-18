@@ -7,9 +7,9 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 关联表映射类的增删改模板
- * @param <X> 关联表左数据
- * @param <Y> 关联表右数据
+ * 关联表映射的增删改模板
+ * @param <L> 关联表左数据
+ * @param <R> 关联表右数据
  */
 public interface AssociateMapperTemplate<L extends Serializable, R extends Serializable>
 {

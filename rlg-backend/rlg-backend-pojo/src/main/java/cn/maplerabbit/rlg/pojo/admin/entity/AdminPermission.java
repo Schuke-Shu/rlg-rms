@@ -7,7 +7,6 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.StringJoiner;
 
 @Data
 @NoArgsConstructor
@@ -36,12 +35,13 @@ public class AdminPermission implements Serializable
     @Override
     public String toString()
     {
-        return new StringJoiner(", ", AdminPermission.class.getSimpleName() + "[", "]")
-                .add("id=" + id)
-                .add("flag='" + flag + "'")
-                .add("description='" + description + "'")
-                .add("createTime=" + createTime)
-                .add("modifiedTime=" + modifiedTime)
+        return new StringBuilder("AdminPermission{")
+                .append("id=").append(id)
+                .append(", flag='").append(flag).append('\'')
+                .append(", description='").append(description).append('\'')
+                .append(", createTime=").append(createTime)
+                .append(", modifiedTime=").append(modifiedTime)
+                .append('}')
                 .toString();
     }
 }

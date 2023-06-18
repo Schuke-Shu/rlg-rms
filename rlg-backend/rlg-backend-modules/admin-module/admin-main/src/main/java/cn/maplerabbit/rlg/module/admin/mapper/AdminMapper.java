@@ -1,8 +1,8 @@
 package cn.maplerabbit.rlg.module.admin.mapper;
 
 import cn.maplerabbit.rlg.pojo.admin.entity.Admin;
-import cn.maplerabbit.rlg.template.ModelMapperTemplate;
+import cn.maplerabbit.rlg.template.LongTemplate;
 
-public interface AdminMapper extends ModelMapperTemplate<Admin, Long>
+public interface AdminMapper extends LongTemplate<Admin>
 {
 }

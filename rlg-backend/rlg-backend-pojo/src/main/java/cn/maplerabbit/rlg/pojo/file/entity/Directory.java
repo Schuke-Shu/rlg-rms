@@ -7,7 +7,6 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.StringJoiner;
 
 @Data
 @NoArgsConstructor
@@ -64,19 +63,20 @@ public class Directory implements Serializable
     @Override
     public String toString()
     {
-        return new StringJoiner(", ", Directory.class.getSimpleName() + "[", "]")
-                .add("id=" + id)
-                .add("fileUuid='" + fileUuid + "'")
-                .add("userId=" + userId)
-                .add("filename='" + filename + "'")
-                .add("deep=" + deep)
-                .add("parentId=" + parentId)
-                .add("isDirectory=" + isDirectory)
-                .add("isDeleted=" + isDeleted)
-                .add("deleteTime=" + deleteTime)
-                .add("isHidden=" + isHidden)
-                .add("createTime=" + createTime)
-                .add("modifiedTime=" + modifiedTime)
+        return new StringBuilder("Directory{")
+                .append("id=").append(id)
+                .append(", fileUuid='").append(fileUuid).append('\'')
+                .append(", userId=").append(userId)
+                .append(", filename='").append(filename).append('\'')
+                .append(", deep=").append(deep)
+                .append(", parentId=").append(parentId)
+                .append(", isDirectory=").append(isDirectory)
+                .append(", isDeleted=").append(isDeleted)
+                .append(", deleteTime=").append(deleteTime)
+                .append(", isHidden=").append(isHidden)
+                .append(", createTime=").append(createTime)
+                .append(", modifiedTime=").append(modifiedTime)
+                .append('}')
                 .toString();
     }
 }

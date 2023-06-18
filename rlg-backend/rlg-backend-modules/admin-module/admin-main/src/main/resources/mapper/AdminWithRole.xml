@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.maplerabbit.rlg.module.user.mapper.UserWithRoleMapper">
+<mapper namespace="cn.maplerabbit.rlg.module.admin.mapper.AdminWithRole">
     <!-- ========== Associate Table Base CUD ========== -->
     <sql id="BaseColumns">
-        user_id, role_id, create_time, modified_time
+        admin_id, role_id, create_time, modified_time
     </sql>
     <sql id="save">
         #{left}, #{right}
@@ -13,7 +13,7 @@
     </sql>
 
     <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into user_with_role(
+        insert into admin_with_role(
         <include refid="BaseColumns" />
         ) values (
         <include refid="save" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
@@ -21,7 +21,7 @@
     </insert>
 
     <insert id="saveBatch" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into user_with_role(
+        insert into admin_with_role(
         <include refid="BaseColumns" />
         ) values
         <foreach collection="list" item="i" separator=", ">
@@ -30,18 +30,18 @@
     </insert>
 
     <delete id="remove">
-        delete from user_with_role where id = #{id}
+        delete from admin_with_role where id = #{id}
     </delete>
 
     <delete id="removeBatch">
-        delete from user_with_role where id in
+        delete from admin_with_role where id in
         <foreach collection="list" item="id" open="(" close=")" separator=", ">#{id}</foreach>
     </delete>
 
     <update id="update">
-        update user_with_role
+        update admin_with_role
         <set>
-            <if test="left != null">user_id = #{left},</if>
+            <if test="left != null">admin_id = #{left},</if>
             <if test="right != null">role_id = #{right},</if>
             modified_time = CURRENT_TIMESTAMP
         </set>
@@ -51,6 +51,6 @@
     </update>
 
     <select id="count" resultType="int">
-        select count(*) from user_with_role
+        select count(*) from admin_with_role
     </select>
 </mapper>

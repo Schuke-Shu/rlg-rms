@@ -7,7 +7,6 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.StringJoiner;
 
 @Data
 @NoArgsConstructor
@@ -45,15 +44,16 @@ public class UserLoginLog implements Serializable
     @Override
     public String toString()
     {
-        return new StringJoiner(", ", UserLoginLog.class.getSimpleName() + "[", "]")
-                .add("id=" + id)
-                .add("userId=" + userId)
-                .add("username='" + username + "'")
-                .add("ip='" + ip + "'")
-                .add("engine='" + engine + "'")
-                .add("time=" + time)
-                .add("createTime=" + createTime)
-                .add("modifiedTime=" + modifiedTime)
+        return new StringBuilder("UserLoginLog{")
+                .append("id=").append(id)
+                .append(", userId=").append(userId)
+                .append(", username='").append(username).append('\'')
+                .append(", ip='").append(ip).append('\'')
+                .append(", engine='").append(engine).append('\'')
+                .append(", time=").append(time)
+                .append(", createTime=").append(createTime)
+                .append(", modifiedTime=").append(modifiedTime)
+                .append('}')
                 .toString();
     }
 }

@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.StringJoiner;
 
 /**
- * 关联单元，用于批量增删关联表的数据
+ * 关联单元，用于关联表数据的增删改
  */
 @Data
 @NoArgsConstructor

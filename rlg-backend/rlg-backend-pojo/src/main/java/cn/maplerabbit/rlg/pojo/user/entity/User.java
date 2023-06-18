@@ -8,7 +8,6 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.StringJoiner;
 
 @Data
 @NoArgsConstructor
@@ -74,22 +73,23 @@ public class User implements Serializable
     @Override
     public String toString()
     {
-        return new StringJoiner(", ", User.class.getSimpleName() + "[", "]")
-                .add("id=" + id)
-                .add("uuid='" + uuid + "'")
-                .add("username='" + username + "'")
-                .add("password='" + password + "'")
-                .add("avatarUrl='" + avatarUrl + "'")
-                .add("realName='" + realName + "'")
-                .add("gender=" + gender)
-                .add("phone='" + phone + "'")
-                .add("email='" + email + "'")
-                .add("birth=" + birth)
-                .add("description='" + description + "'")
-                .add("isEnable=" + isEnable)
-                .add("signUpTime=" + signUpTime)
-                .add("createTime=" + createTime)
-                .add("modifiedTime=" + modifiedTime)
+        return new StringBuilder("User{")
+                .append("id=").append(id)
+                .append(", uuid='").append(uuid).append('\'')
+                .append(", username='").append(username).append('\'')
+                .append(", password='").append(password).append('\'')
+                .append(", avatarUrl='").append(avatarUrl).append('\'')
+                .append(", realName='").append(realName).append('\'')
+                .append(", gender=").append(gender)
+                .append(", phone='").append(phone).append('\'')
+                .append(", email='").append(email).append('\'')
+                .append(", birth=").append(birth)
+                .append(", description='").append(description).append('\'')
+                .append(", isEnable=").append(isEnable)
+                .append(", signUpTime=").append(signUpTime)
+                .append(", createTime=").append(createTime)
+                .append(", modifiedTime=").append(modifiedTime)
+                .append('}')
                 .toString();
     }
 }
