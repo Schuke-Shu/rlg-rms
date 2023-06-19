@@ -7,10 +7,10 @@
         id, creator_id, admin_name, password, avatar_url, real_name, gender, phone, email, birth, description, is_enable, sign_up_time, create_time, modified_time
     </sql>
     <sql id="save">
-        null, #{uuid}, #{username}, #{password}, #{avatarUrl}, #{realName}, #{gender}, #{phone}, #{email}, #{birth}, #{description}, #{isEnable}, #{signUpTime}
+        null, #{creatorId}, #{adminName}, #{password}, #{avatarUrl}, #{realName}, #{gender}, #{phone}, #{email}, #{birth}, #{description}, #{isEnable}, #{signUpTime}
     </sql>
     <sql id="saveBatch">
-        null, #{i.uuid}, #{i.username}, #{i.password}, #{i.avatarUrl}, #{i.realName}, #{i.gender}, #{i.phone}, #{i.email}, #{i.birth}, #{i.description}, #{i.isEnable}, #{i.signUpTime}
+        null, #{i.creatorId}, #{i.adminName}, #{i.password}, #{i.avatarUrl}, #{i.realName}, #{i.gender}, #{i.phone}, #{i.email}, #{i.birth}, #{i.description}, #{i.isEnable}, #{i.signUpTime}
     </sql>
 
     <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.admin.entity.Admin">

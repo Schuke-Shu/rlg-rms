@@ -1,17 +1,17 @@
 package cn.maplerabbit.rlg.pojo.admin.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
+@Getter
+@Setter
 @Accessors(chain = true)
 public class Admin implements Serializable
 {
@@ -19,7 +19,7 @@ public class Admin implements Serializable
     /**
      * 创建者id
      */
-    private String creatorId;
+    private Long creatorId;
     /**
      * 昵称
      */
@@ -74,11 +74,11 @@ public class Admin implements Serializable
     private LocalDateTime modifiedTime;
 
     @Override
-    public String toString()
-    {
-        return new StringBuilder("Admin{")
+    public String toString() {
+        return new StringBuilder(this.getClass().getSimpleName())
+                .append('{')
                 .append("id=").append(id)
-                .append(", creatorId='").append(creatorId).append('\'')
+                .append(", creatorId=").append(creatorId)
                 .append(", adminName='").append(adminName).append('\'')
                 .append(", password='").append(password).append('\'')
                 .append(", avatarUrl='").append(avatarUrl).append('\'')

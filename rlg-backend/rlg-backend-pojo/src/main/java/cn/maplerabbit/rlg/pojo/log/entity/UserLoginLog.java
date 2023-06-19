@@ -1,16 +1,16 @@
 package cn.maplerabbit.rlg.pojo.log.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
+@Getter
+@Setter
 @Accessors(chain = true)
 public class UserLoginLog implements Serializable
 {
@@ -42,9 +42,9 @@ public class UserLoginLog implements Serializable
     private LocalDateTime modifiedTime;
 
     @Override
-    public String toString()
-    {
-        return new StringBuilder("UserLoginLog{")
+    public String toString() {
+        return new StringBuilder(this.getClass().getSimpleName())
+                .append('{')
                 .append("id=").append(id)
                 .append(", userId=").append(userId)
                 .append(", username='").append(username).append('\'')

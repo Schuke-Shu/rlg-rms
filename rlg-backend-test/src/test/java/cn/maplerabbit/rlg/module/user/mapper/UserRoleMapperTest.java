@@ -1,7 +1,8 @@
 package cn.maplerabbit.rlg.module.user.mapper;
 
 import cn.maplerabbit.rlg.BaseCrudTest;
-import cn.maplerabbit.rlg.pojo.user.entity.User;
+import cn.maplerabbit.rlg.pojo.user.entity.UserPermission;
+import cn.maplerabbit.rlg.pojo.user.entity.UserRole;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,43 +13,40 @@ import java.util.List;
 
 @SpringBootTest
 @Slf4j
-public class UserMapperTest implements BaseCrudTest
+public class UserRoleMapperTest implements BaseCrudTest
 {
     @Autowired
-    UserMapper mapper;
+    UserRoleMapper mapper;
 
     /* ========== Base CRUD ========== */
     @Test
     public void testSave()
     {
-        User user = new User()
-                .setUuid("2")
-                .setUsername("测试2")
-                .setPassword("123456");
-        System.out.println(user);
-        log.debug("插入{}条数据：\n{}", mapper.save(user), user);
+        UserRole role = new UserRole()
+                .setFlag("测试1")
+                .setDescription("这是一条测试数据");
+        System.out.println(role);
+        log.debug("插入{}条数据：\n{}", mapper.save(role), role);
     }
 
     @Test
     public void testSaveBatch()
     {
-        User u1 = new User()
-                .setUuid("3")
-                .setUsername("测试3")
-                .setPassword("123456");
-        System.out.println(u1);
-        User u2 = new User()
-                .setUuid("4")
-                .setUsername("测试4")
-                .setPassword("123456");
-        System.out.println(u2);
+        UserRole r2 = new UserRole()
+                .setFlag("测试2")
+                .setDescription("这是一条测试数据");
+        System.out.println(r2);
+        UserRole r3 = new UserRole()
+                .setFlag("测试3")
+                .setDescription("这是一条测试数据");
+        System.out.println(r3);
 
         log.debug(
                 "插入{}条数据：\n{}",
                 mapper.saveBatch(
-                        Arrays.asList(u1, u2)
+                        Arrays.asList(r2, r3)
                 ),
-                u1 + "\n" + u2
+                r2 + "\n" + r3
         );
     }
 
@@ -56,7 +54,7 @@ public class UserMapperTest implements BaseCrudTest
     public void testRemove()
     {
         System.out.println(
-                mapper.remove(2L)
+                mapper.remove(1L)
         );
     }
 
@@ -64,7 +62,7 @@ public class UserMapperTest implements BaseCrudTest
     public void testRemoveBatch()
     {
         List<Long> list = Arrays.asList(
-                3L, 4L
+                2L, 3L
         );
 
         log.debug("想要删除{}条数据，删除了{}条数据", list.size(), mapper.removeBatch(list));
@@ -73,12 +71,12 @@ public class UserMapperTest implements BaseCrudTest
     @Test
     public void testUpdate()
     {
-        User user = new User()
-                .setId(2L)
-                .setUuid("10")
-                .setUsername("更新测试");
-        System.out.println(user);
-        log.debug("更新{}条数据", mapper.update(user));
+        UserRole role = new UserRole()
+                .setId(1L)
+                .setFlag("更新测试1")
+                .setDescription("这是一条测试数据");
+        System.out.println(role);
+        log.debug("更新{}条数据", mapper.update(role));
     }
 
     @Test
@@ -95,10 +93,10 @@ public class UserMapperTest implements BaseCrudTest
         List<Long> list = Arrays.asList(
                 2L, 3L
         );
-        List<User> users = mapper.queryBatch(list);
+        List<UserRole> roles = mapper.queryBatch(list);
 
-        log.debug("想要查询{}条数据，查询到{}条数据：\n", list.size(), users.size());
-        users.forEach(System.out::println);
+        log.debug("想要查询{}条数据，查询到{}条数据：\n", list.size(), roles.size());
+        roles.forEach(System.out::println);
     }
 
     @Test

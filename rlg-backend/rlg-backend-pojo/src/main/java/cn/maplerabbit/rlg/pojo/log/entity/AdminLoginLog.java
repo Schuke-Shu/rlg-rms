@@ -1,4 +1,4 @@
-package cn.maplerabbit.rlg.pojo.admin.entity;
+package cn.maplerabbit.rlg.pojo.log.entity;
 
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -12,17 +12,26 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class AdminRole implements Serializable
+public class AdminLoginLog implements Serializable
 {
     private Long id;
+    private Long adminId;
     /**
-     * 用户角色唯一标识符
+     * 管理员名（冗余）
      */
-    private String flag;
+    private String adminName;
     /**
-     * 描述
+     * 登录IP地址
      */
-    private String description;
+    private String ip;
+    /**
+     * 浏览器内核
+     */
+    private String engine;
+    /**
+     * 登录时间
+     */
+    private LocalDateTime time;
     /**
      * 创建时间
      */
@@ -37,8 +46,11 @@ public class AdminRole implements Serializable
         return new StringBuilder(this.getClass().getSimpleName())
                 .append('{')
                 .append("id=").append(id)
-                .append(", flag='").append(flag).append('\'')
-                .append(", description='").append(description).append('\'')
+                .append(", adminId=").append(adminId)
+                .append(", adminName='").append(adminName).append('\'')
+                .append(", ip='").append(ip).append('\'')
+                .append(", engine='").append(engine).append('\'')
+                .append(", time=").append(time)
                 .append(", createTime=").append(createTime)
                 .append(", modifiedTime=").append(modifiedTime)
                 .append('}')

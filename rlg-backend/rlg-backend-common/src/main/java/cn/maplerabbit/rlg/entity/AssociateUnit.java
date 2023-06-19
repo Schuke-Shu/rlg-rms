@@ -1,21 +1,20 @@
 package cn.maplerabbit.rlg.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.StringJoiner;
 
 /**
  * 关联单元，用于关联表数据的增删改
  */
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
+@Getter
+@Setter
 @Accessors(chain = true)
-public class AssociateUnit<L extends Serializable, R extends Serializable> implements Serializable
+public class AssociateUnit<L, R> implements Serializable
 {
     private Long id;
     /**
@@ -28,12 +27,13 @@ public class AssociateUnit<L extends Serializable, R extends Serializable> imple
     private R right;
 
     @Override
-    public String toString()
-    {
-        return new StringJoiner(", ", AssociateUnit.class.getSimpleName() + "[", "]")
-                .add("id=" + id)
-                .add("left=" + left)
-                .add("right=" + right)
+    public String toString() {
+        return new StringBuilder(this.getClass().getSimpleName())
+                .append('{')
+                .append("id=").append(id)
+                .append(", left=").append(left)
+                .append(", right=").append(right)
+                .append('}')
                 .toString();
     }
 }

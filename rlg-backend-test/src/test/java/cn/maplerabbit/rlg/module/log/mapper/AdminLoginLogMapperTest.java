@@ -1,7 +1,7 @@
-package cn.maplerabbit.rlg.module.file.mapper;
+package cn.maplerabbit.rlg.module.log.mapper;
 
 import cn.maplerabbit.rlg.BaseCrudTest;
-import cn.maplerabbit.rlg.pojo.file.entity.Directory;
+import cn.maplerabbit.rlg.pojo.log.entity.AdminLoginLog;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,40 +12,40 @@ import java.util.List;
 
 @SpringBootTest
 @Slf4j
-public class DirectoryMapperTest implements BaseCrudTest
+public class AdminLoginLogMapperTest implements BaseCrudTest
 {
     @Autowired
-    DirectoryMapper mapper;
+    AdminLoginLogMapper mapper;
 
     /* ========== Base CRUD ========== */
     @Test
     public void testSave()
     {
-        Directory directory = new Directory()
-                .setUserId(2L)
-                .setFilename("测试1");
-        System.out.println(directory);
-        log.debug("插入{}条数据：\n{}", mapper.save(directory), directory);
+        AdminLoginLog loginLog = new AdminLoginLog()
+                .setAdminId(1L)
+                .setEngine("这是一条测试数据");
+        System.out.println(loginLog);
+        log.debug("插入{}条数据：\n{}", mapper.save(loginLog), loginLog);
     }
 
     @Test
     public void testSaveBatch()
     {
-        Directory d1 = new Directory()
-                .setUserId(1L)
-                .setFilename("测试2");
-        System.out.println(d1);
-        Directory d2 = new Directory()
-                .setUserId(2L)
-                .setFilename("测试3");
-        System.out.println(d2);
+        AdminLoginLog a1 = new AdminLoginLog()
+                .setAdminId(1L)
+                .setEngine("这是一条测试数据");
+        System.out.println(a1);
+        AdminLoginLog a2 = new AdminLoginLog()
+                .setAdminId(1L)
+                .setEngine("这是一条测试数据");
+        System.out.println(a2);
 
         log.debug(
                 "插入{}条数据：\n{}",
                 mapper.saveBatch(
-                        Arrays.asList(d1, d2)
+                        Arrays.asList(a1, a2)
                 ),
-                d1 + "\n" + d2
+                a1 + "\n" + a2
         );
     }
 
@@ -70,12 +70,12 @@ public class DirectoryMapperTest implements BaseCrudTest
     @Test
     public void testUpdate()
     {
-        Directory directory = new Directory()
+        AdminLoginLog loginLog = new AdminLoginLog()
                 .setId(4L)
-                .setUserId(2L)
-                .setFilename("更新测试");
-        System.out.println(directory);
-        log.debug("更新{}条数据", mapper.update(directory));
+                .setAdminId(1L)
+                .setEngine("更新测试");
+        System.out.println(loginLog);
+        log.debug("更新{}条数据", mapper.update(loginLog));
     }
 
     @Test
@@ -92,10 +92,10 @@ public class DirectoryMapperTest implements BaseCrudTest
         List<Long> list = Arrays.asList(
                 4L, 5L
         );
-        List<Directory> directories = mapper.queryBatch(list);
+        List<AdminLoginLog> logs = mapper.queryBatch(list);
 
-        log.debug("想要查询{}条数据，查询到{}条数据：\n", list.size(), directories.size());
-        directories.forEach(System.out::println);
+        log.debug("想要查询{}条数据，查询到{}条数据：\n", list.size(), logs.size());
+        logs.forEach(System.out::println);
     }
 
     @Test

@@ -1,16 +1,16 @@
 package cn.maplerabbit.rlg.pojo.file.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
+@Getter
+@Setter
 @Accessors(chain = true)
 public class File implements Serializable
 {
@@ -30,7 +30,11 @@ public class File implements Serializable
     /**
      * 文件大小
      */
-    private Long size;
+    private Integer size;
+    /**
+     * 文件大小单位
+     */
+    private String sizeUnit;
     /**
      * 关联到此文件的记录数
      */
@@ -49,14 +53,15 @@ public class File implements Serializable
     private LocalDateTime modifiedTime;
 
     @Override
-    public String toString()
-    {
-        return new StringBuilder("File{")
+    public String toString() {
+        return new StringBuilder(this.getClass().getSimpleName())
+                .append('{')
                 .append("uuid='").append(uuid).append('\'')
                 .append(", userId=").append(userId)
                 .append(", suffix='").append(suffix).append('\'')
                 .append(", type='").append(type).append('\'')
                 .append(", size=").append(size)
+                .append(", sizeUnit='").append(sizeUnit).append('\'')
                 .append(", associationCount=").append(associationCount)
                 .append(", uploadTime=").append(uploadTime)
                 .append(", createTime=").append(createTime)

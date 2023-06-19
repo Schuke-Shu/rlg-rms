@@ -25,11 +25,11 @@ CREATE TABLE IF NOT EXISTS admin(
     UNIQUE KEY (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='管理员表';
 
-INSERT INTO admin(id, admin_name, password, real_name, description, sign_up_time, create_time, modified_time) VALUES
+INSERT INTO admin(id, admin_name, password, real_name, description, is_enable, sign_up_time, create_time, modified_time) VALUES
     # 测试账号初始密码 P@ssw0rdTest
-    (1, '测试', '$2a$10$YRKVkleUHpRt9QcBz6iO9udH9MEy7Z9zzbmQyScE7ibVYTnvv9GIC', '测试', '测试账号', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    (1, '测试', '$2a$10$YRKVkleUHpRt9QcBz6iO9udH9MEy7Z9zzbmQyScE7ibVYTnvv9GIC', '测试', '测试账号', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     # root账号初始密码 P@ssw0rdRoot
-    (2, 'rlg_root', '$2a$10$ncZjrWoZe/N0vwdDydo/ue7sKvwea2JxBLXmhQWZMEnhOZUv1wtj2', 'BOSS', '顶级管理员', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+    (2, 'rlg_root', '$2a$10$ncZjrWoZe/N0vwdDydo/ue7sKvwea2JxBLXmhQWZMEnhOZUv1wtj2', 'BOSS', '顶级管理员', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 # DROP TABLE IF EXISTS admin_with_role;
 CREATE TABLE IF NOT EXISTS admin_with_role(

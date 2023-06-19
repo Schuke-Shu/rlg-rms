@@ -1,17 +1,17 @@
 package cn.maplerabbit.rlg.pojo.user.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
+@Getter
+@Setter
 @Accessors(chain = true)
 public class User implements Serializable
 {
@@ -71,9 +71,9 @@ public class User implements Serializable
     private LocalDateTime modifiedTime;
 
     @Override
-    public String toString()
-    {
-        return new StringBuilder("User{")
+    public String toString() {
+        return new StringBuilder(this.getClass().getSimpleName())
+                .append('{')
                 .append("id=").append(id)
                 .append(", uuid='").append(uuid).append('\'')
                 .append(", username='").append(username).append('\'')

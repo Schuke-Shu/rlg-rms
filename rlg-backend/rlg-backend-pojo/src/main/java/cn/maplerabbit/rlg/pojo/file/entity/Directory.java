@@ -1,16 +1,16 @@
 package cn.maplerabbit.rlg.pojo.file.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
+@Getter
+@Setter
 @Accessors(chain = true)
 public class Directory implements Serializable
 {
@@ -61,9 +61,9 @@ public class Directory implements Serializable
     private LocalDateTime modifiedTime;
 
     @Override
-    public String toString()
-    {
-        return new StringBuilder("Directory{")
+    public String toString() {
+        return new StringBuilder(this.getClass().getSimpleName())
+                .append('{')
                 .append("id=").append(id)
                 .append(", fileUuid='").append(fileUuid).append('\'')
                 .append(", userId=").append(userId)
