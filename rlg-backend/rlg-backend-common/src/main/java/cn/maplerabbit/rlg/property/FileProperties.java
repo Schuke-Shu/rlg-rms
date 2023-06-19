@@ -1,14 +1,16 @@
 package cn.maplerabbit.rlg.property;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-@Data
-@AllArgsConstructor
+import java.io.File;
+
+@Getter
+@Setter
 @Accessors(chain = true)
 @Slf4j
 @Component
@@ -16,23 +18,27 @@ import org.springframework.stereotype.Component;
 public class FileProperties
 {
     /**
-     * 用户文件仓库目录
-     */
-    private String store;
-    /**
-     * 项目文件根目录
+     * 项目根目录路径
      */
     private String root;
 
-    public FileProperties() {log.debug("FileProperties()...");}
+    /**
+     * 项目根目录
+     */
+    private File rootDir;
+    /**
+     * 静态资源目录
+     */
+    private File staticDir;
+    /**
+     * 仓库目录
+     */
+    private File storeDir;
 
-    @Override
-    public String toString() {
-        return new StringBuilder(this.getClass().getSimpleName())
-                .append('{')
-                .append("store='").append(store).append('\'')
-                .append(", root='").append(root).append('\'')
-                .append('}')
-                .toString();
-    }
+    /**
+     * 是否初始化过
+     */
+    private boolean initialized = false;
+
+    public FileProperties() {log.debug("FileProperties()...");}
 }

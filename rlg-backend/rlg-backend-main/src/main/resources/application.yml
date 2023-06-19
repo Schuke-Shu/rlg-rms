@@ -2,31 +2,48 @@
 #  配置文件主体  #
 # ============ #
 
+# Web服务配置
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+
 # Spring配置
 spring:
   # Profile相关配置
   profiles:
     # 激活指定名称的Profile配置
     active: local
+  # servlet配置
+  servlet:
+    # multipart文件传输配置
+    multipart:
+      enabled: true
+      file-size-threshold: 0
   # 邮箱配置
   mail:
     protocol: smtp
   # 数据源配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+  # mvc配置
+  mvc:
+    # static开头的url才会认为是请求静态资源
+    static-path-pattern: /static/**
   # web配置
   web:
     # 静态资源配置
     resources:
       # 静态资源根路径
       static-locations:
-        - classpath:static
-        - file:/${rlg.file.root}/static
-  mvc:
-    static-path-pattern: /static/**
+      - classpath:static
+      - file:/${rlg.file.root}/static
 
 # MyBatis配置
 mybatis:
+  configuration:
+    # 下划线与驼峰命名法映射
+    map-underscore-to-camel-case: true
   # Mapper.xml文件位置
   mapper-locations: classpath*:mapper/*.xml
 
@@ -40,9 +57,3 @@ logging:
 knife4j:
   setting:
     language: zh-CN
-
-# 项目全局配置
-rlg:
-  # 文件系统相关配置
-  file:
-    store: ${rlg.file.root}/store
