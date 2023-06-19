@@ -31,9 +31,9 @@ public class JwtProperties
     public JwtProperties() {log.debug("JwtProperties()...");}
 
     @Override
-    public String toString()
-    {
-        return new StringBuilder("JwtProperties{")
+    public String toString() {
+        return new StringBuilder(this.getClass().getSimpleName())
+                .append('{')
                 .append("adminKey='").append(adminKey).append('\'')
                 .append(", userKey='").append(userKey).append('\'')
                 .append(", usableMinutes='").append(usableMinutes).append('\'')

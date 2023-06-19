@@ -27,9 +27,9 @@ public class FileProperties
     public FileProperties() {log.debug("FileProperties()...");}
 
     @Override
-    public String toString()
-    {
-        return new StringBuilder("FileProperties{")
+    public String toString() {
+        return new StringBuilder(this.getClass().getSimpleName())
+                .append('{')
                 .append("store='").append(store).append('\'')
                 .append(", root='").append(root).append('\'')
                 .append('}')
