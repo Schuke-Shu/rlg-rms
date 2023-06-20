@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.maplerabbit.rlg.module.user.mapper.UserPermissionMapper">
+<mapper namespace="cn.maplerabbit.rlg.module.user.mapper.PermissionMapper">
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
-        id, flag, description, create_time, modified_time
+        id, flag, name, description, create_time, modified_time
     </sql>
     <sql id="save">
-        null, #{flag}, #{description}
+        null, #{flag}, #{name}, #{description}
     </sql>
     <sql id="saveBatch">
-        null, #{i.flag}, #{i.description}
+        null, #{i.flag}, #{i.name}, #{i.description}
     </sql>
 
-    <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.user.entity.UserPermission">
+    <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.user.entity.Permission">
         <id column="id" property="id" />
         <result column="flag" property="flag" />
+        <result column="name" property="name" />
         <result column="description" property="description" />
         <result column="create_time" property="createTime" />
         <result column="modified_time" property="modifiedTime" />
     </resultMap>
 
     <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into user_permission(
+        insert into permission(
             <include refid="BaseColumns" />
         ) values (
             <include refid="save" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
@@ -30,7 +31,7 @@
     </insert>
 
     <insert id="saveBatch" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into user_permission(
+        insert into permission(
         <include refid="BaseColumns" />
         ) values
         <foreach collection="list" item="i" separator=", ">
@@ -39,18 +40,19 @@
     </insert>
 
     <delete id="remove">
-        delete from user_permission where id = #{pk}
+        delete from permission where id = #{pk}
     </delete>
 
     <delete id="removeBatch">
-        delete from user_permission where id in
+        delete from permission where id in
         <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
     </delete>
 
     <update id="update">
-        update user_permission
+        update permission
         <set>
             <if test="flag != null">flag = #{flag},</if>
+            <if test="name != null">name = #{name},</if>
             <if test="description != null">description = #{description},</if>
             modified_time = CURRENT_TIMESTAMP
         </set>
@@ -62,7 +64,7 @@
     <select id="query" resultMap="BaseResultMap">
         select
             <include refid="BaseColumns" />
-        from user_permission
+        from permission
         <where>
             id = #{pk}
         </where>
@@ -71,7 +73,7 @@
     <select id="queryBatch" resultMap="BaseResultMap">
         select
         <include refid="BaseColumns" />
-        from user_permission
+        from permission
         <where>
             id in
             <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
@@ -79,6 +81,6 @@
     </select>
 
     <select id="count" resultType="int">
-        select count(*) from user_permission
+        select count(*) from permission
     </select>
 </mapper>

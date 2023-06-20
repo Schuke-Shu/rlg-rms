@@ -1,7 +1,7 @@
 package cn.maplerabbit.rlg.module.user.mapper;
 
 import cn.maplerabbit.rlg.BaseCrudTest;
-import cn.maplerabbit.rlg.pojo.user.entity.UserRole;
+import cn.maplerabbit.rlg.pojo.user.entity.Role;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class UserRoleMapperTest implements BaseCrudTest
     @Test
     public void testSave()
     {
-        UserRole role = new UserRole()
+        Role role = new Role()
                 .setFlag("测试1")
                 .setDescription("这是一条测试数据");
         System.out.println(role);
@@ -31,11 +31,11 @@ public class UserRoleMapperTest implements BaseCrudTest
     @Test
     public void testSaveBatch()
     {
-        UserRole r2 = new UserRole()
+        Role r2 = new Role()
                 .setFlag("测试2")
                 .setDescription("这是一条测试数据");
         System.out.println(r2);
-        UserRole r3 = new UserRole()
+        Role r3 = new Role()
                 .setFlag("测试3")
                 .setDescription("这是一条测试数据");
         System.out.println(r3);
@@ -70,7 +70,7 @@ public class UserRoleMapperTest implements BaseCrudTest
     @Test
     public void testUpdate()
     {
-        UserRole role = new UserRole()
+        Role role = new Role()
                 .setId(1L)
                 .setFlag("更新测试1")
                 .setDescription("这是一条测试数据");
@@ -92,7 +92,7 @@ public class UserRoleMapperTest implements BaseCrudTest
         List<Long> list = Arrays.asList(
                 2L, 3L
         );
-        List<UserRole> roles = mapper.queryBatch(list);
+        List<Role> roles = mapper.queryBatch(list);
 
         log.debug("想要查询{}条数据，查询到{}条数据：\n", list.size(), roles.size());
         roles.forEach(System.out::println);

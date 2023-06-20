@@ -1,7 +1,7 @@
 package cn.maplerabbit.rlg.module.user.mapper;
 
 import cn.maplerabbit.rlg.BaseCrudTest;
-import cn.maplerabbit.rlg.pojo.user.entity.UserPermission;
+import cn.maplerabbit.rlg.pojo.user.entity.Permission;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +15,13 @@ import java.util.List;
 public class UserPermissionMapperTest implements BaseCrudTest
 {
     @Autowired
-    UserPermissionMapper mapper;
+    PermissionMapper mapper;
 
     /* ========== Base CRUD ========== */
     @Test
     public void testSave()
     {
-        UserPermission permission = new UserPermission()
+        Permission permission = new Permission()
                 .setFlag("测试1")
                 .setDescription("这是一条测试数据");
         System.out.println(permission);
@@ -31,11 +31,11 @@ public class UserPermissionMapperTest implements BaseCrudTest
     @Test
     public void testSaveBatch()
     {
-        UserPermission p2 = new UserPermission()
+        Permission p2 = new Permission()
                 .setFlag("测试2")
                 .setDescription("这是一条测试数据");
         System.out.println(p2);
-        UserPermission p3 = new UserPermission()
+        Permission p3 = new Permission()
                 .setFlag("测试3")
                 .setDescription("这是一条测试数据");
         System.out.println(p3);
@@ -70,7 +70,7 @@ public class UserPermissionMapperTest implements BaseCrudTest
     @Test
     public void testUpdate()
     {
-        UserPermission permission = new UserPermission()
+        Permission permission = new Permission()
                 .setId(1L)
                 .setFlag("更新测试1")
                 .setDescription("这是一条测试数据");
@@ -92,7 +92,7 @@ public class UserPermissionMapperTest implements BaseCrudTest
         List<Long> list = Arrays.asList(
                 2L, 3L
         );
-        List<UserPermission> permissions = mapper.queryBatch(list);
+        List<Permission> permissions = mapper.queryBatch(list);
 
         log.debug("想要查询{}条数据，查询到{}条数据：\n", list.size(), permissions.size());
         permissions.forEach(System.out::println);

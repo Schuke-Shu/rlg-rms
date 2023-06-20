@@ -13,7 +13,7 @@
         null, #{i.flag}, #{i.name}, #{i.description}
     </sql>
 
-    <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.user.entity.UserRole">
+    <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.user.entity.Role">
         <id column="id" property="id" />
         <result column="flag" property="flag" />
         <result column="name" property="name" />

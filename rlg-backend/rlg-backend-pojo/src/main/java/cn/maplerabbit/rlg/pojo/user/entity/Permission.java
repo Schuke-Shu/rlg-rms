@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class UserPermission implements Serializable
+public class Permission implements Serializable
 {
     private Long id;
     /**
@@ -37,11 +37,13 @@ public class UserPermission implements Serializable
     private LocalDateTime modifiedTime;
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return new StringBuilder(this.getClass().getSimpleName())
                 .append('{')
                 .append("id=").append(id)
                 .append(", flag='").append(flag).append('\'')
+                .append(", name='").append(name).append('\'')
                 .append(", description='").append(description).append('\'')
                 .append(", createTime=").append(createTime)
                 .append(", modifiedTime=").append(modifiedTime)

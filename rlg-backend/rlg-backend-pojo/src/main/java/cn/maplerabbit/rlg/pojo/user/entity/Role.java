@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class UserRole implements Serializable
+public class Role implements Serializable
 {
     private Long id;
     /**
