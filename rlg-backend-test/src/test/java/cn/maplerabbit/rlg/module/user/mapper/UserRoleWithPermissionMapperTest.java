@@ -15,7 +15,7 @@ import java.util.List;
 public class UserRoleWithPermissionMapperTest implements BaseCudTest
 {
     @Autowired
-    UserRoleWithPermissionMapper mapper;
+    RolePermissionMapper mapper;
 
     /* ========== Base CUD ========== */
     @Test

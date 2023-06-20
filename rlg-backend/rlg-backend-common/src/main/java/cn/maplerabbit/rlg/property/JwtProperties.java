@@ -18,13 +18,9 @@ import org.springframework.stereotype.Component;
 public class JwtProperties
 {
     /**
-     * 解析管理员token使用的key
+     * 解析token使用的key
      */
-    private String adminKey;
-    /**
-     * 解析用户token使用的key
-     */
-    private String userKey;
+    private String secretKey;
     /**
      * token有效时长（单位分钟）
      */

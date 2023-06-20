@@ -54,8 +54,8 @@ rlg:
     root: D:/rlg
   # JWT相关配置
   jwt:
-    # 生成与解析JWT的key，管理员与普通用户采用不同的key值
-    adminKey: RedLeafGarden-JsonWebToken-Admin-Key
-    userKey: RedLeafGarden-JsonWebToken-User-Key
+    secretKey: RedLeafGarden-JsonWebToken-SecretKey
     # JWT的有效时长（单位分钟）：一星期
     usableMinutes: 10080
+  # 验证码超时时间（单位分钟）
+  validation-code-timeout: 10

@@ -39,34 +39,4 @@ public class JsonResult<T>
      * 请求失败的构造方法
      */
     public JsonResult(ServiceCode code, T data) {this(code, null, data);}
-
-    /**
-     * 请求成功（无响应数据）
-     */
-    public static <T> JsonResult<T> ok() {return ok(null);}
-    /**
-     * 请求成功
-     */
-    public static <T> JsonResult<T> ok(T data) {return new JsonResult<>(ServiceCode.SUCCESS, data);}
-    /**
-     * 请求失败
-     */
-    public static <T> JsonResult<T> fail(RlgException e) {return fail(e.getCode(), e.getMessage());}
-    /**
-     * 请求失败
-     */
-    public static <T> JsonResult<T> fail(ServiceCode code, String message) {return new JsonResult<>(code, message);}
-
-    public Integer getStatus()
-    {
-        return status;
-    }
-    public String getMessage()
-    {
-        return message;
-    }
-    public T getData()
-    {
-        return data;
-    }
 }

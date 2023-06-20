@@ -20,6 +20,10 @@ public class UserPermission implements Serializable
      */
     private String flag;
     /**
+     * 用户权限名称
+     */
+    private String name;
+    /**
      * 描述
      */
     private String description;

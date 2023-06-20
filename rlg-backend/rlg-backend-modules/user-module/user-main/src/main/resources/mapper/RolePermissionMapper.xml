@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.maplerabbit.rlg.module.admin.mapper.AdminRoleWithPermissionMapper">
+<mapper namespace="cn.maplerabbit.rlg.module.user.mapper.RolePermissionMapper">
     <!-- ========== Associate Table Base CUD ========== -->
     <sql id="BaseColumns">
         role_id, permission_id, create_time, modified_time
@@ -14,7 +14,7 @@
     </sql>
 
     <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into admin_role_with_permission(
+        insert into role_permission(
             <include refid="BaseColumns" />
         ) values (
             <include refid="save" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
@@ -22,7 +22,7 @@
     </insert>
 
     <insert id="saveBatch" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into admin_role_with_permission(
+        insert into role_permission(
             <include refid="BaseColumns" />
         ) values
         <foreach collection="list" item="i" separator=", ">
@@ -31,16 +31,16 @@
     </insert>
 
     <delete id="remove">
-        delete from admin_role_with_permission where id = #{id}
+        delete from role_permission where id = #{id}
     </delete>
 
     <delete id="removeBatch">
-        delete from admin_role_with_permission where id in
+        delete from role_permission where id in
         <foreach collection="list" item="id" open="(" close=")" separator=", ">#{id}</foreach>
     </delete>
 
     <update id="update">
-        update admin_role_with_permission
+        update role_permission
         <set>
             <if test="left != null">role_id = #{left},</if>
             <if test="right != null">permission_id = #{right},</if>
@@ -52,6 +52,6 @@
     </update>
 
     <select id="count" resultType="int">
-        select count(*) from admin_role_with_permission
+        select count(*) from role_permission
     </select>
 </mapper>

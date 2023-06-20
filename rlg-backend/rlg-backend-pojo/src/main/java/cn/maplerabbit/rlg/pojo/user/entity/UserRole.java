@@ -20,6 +20,10 @@ public class UserRole implements Serializable
      */
     private String flag;
     /**
+     * 用户角色名称
+     */
+    private String name;
+    /**
      * 描述
      */
     private String description;
@@ -33,11 +37,13 @@ public class UserRole implements Serializable
     private LocalDateTime modifiedTime;
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return new StringBuilder(this.getClass().getSimpleName())
                 .append('{')
                 .append("id=").append(id)
                 .append(", flag='").append(flag).append('\'')
+                .append(", name='").append(name).append('\'')
                 .append(", description='").append(description).append('\'')
                 .append(", createTime=").append(createTime)
                 .append(", modifiedTime=").append(modifiedTime)

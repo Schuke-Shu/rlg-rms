@@ -1,7 +1,6 @@
 package cn.maplerabbit.rlg.module.user.mapper;
 
 import cn.maplerabbit.rlg.BaseCrudTest;
-import cn.maplerabbit.rlg.pojo.user.entity.UserPermission;
 import cn.maplerabbit.rlg.pojo.user.entity.UserRole;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,7 @@ import java.util.List;
 public class UserRoleMapperTest implements BaseCrudTest
 {
     @Autowired
-    UserRoleMapper mapper;
+    RoleMapper mapper;
 
     /* ========== Base CRUD ========== */
     @Test

@@ -25,12 +25,6 @@
 			<artifactId>file-main</artifactId>
 		</dependency>
 
-		<!-- admin module -->
-		<dependency>
-			<groupId>cn.maplerabbit</groupId>
-			<artifactId>admin-main</artifactId>
-		</dependency>
-
 		<!-- user module -->
 		<dependency>
 			<groupId>cn.maplerabbit</groupId>

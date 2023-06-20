@@ -19,7 +19,7 @@ spring:
     # multipart文件传输配置
     multipart:
       enabled: true
-      file-size-threshold: 0
+      file-size-threshold: 5MB
   # 邮箱配置
   mail:
     protocol: smtp

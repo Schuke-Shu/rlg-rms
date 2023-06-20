@@ -11,9 +11,8 @@
         <module name="rlg-backend-common" />
         <module name="user-main" />
         <module name="rlg-backend-test" />
-        <module name="admin-api" />
-        <module name="admin-main" />
         <module name="file-main" />
+        <module name="valicode-main" />
         <module name="user-api" />
         <module name="rlg-backend-pojo" />
         <module name="front-main" />
@@ -25,10 +24,16 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="admin-api" target="1.8" />
+      <module name="admin-main" target="1.8" />
+      <module name="admin-module" target="1.8" />
       <module name="file-prov" target="1.8" />
       <module name="module-prov" target="1.8" />
       <module name="modules-prov" target="1.8" />
       <module name="user-prov" target="1.8" />
+      <module name="valicode-api" target="1.8" />
+      <module name="valicode-main" target="1.8" />
+      <module name="valicode-module" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -57,6 +62,9 @@
       <module name="user-main" options="-parameters" />
       <module name="user-module" options="" />
       <module name="user-prov" options="-parameters" />
+      <module name="valicode-api" options="-parameters" />
+      <module name="valicode-main" options="-parameters" />
+      <module name="valicode-module" options="" />
     </option>
   </component>
 </project>

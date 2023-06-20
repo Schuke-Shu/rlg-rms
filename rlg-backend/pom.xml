@@ -130,18 +130,6 @@
                 <version>${rlg-backend.version}</version>
             </dependency>
 
-            <!-- admin module -->
-            <dependency>
-                <groupId>cn.maplerabbit</groupId>
-                <artifactId>admin-api</artifactId>
-                <version>${rlg-backend.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.maplerabbit</groupId>
-                <artifactId>admin-main</artifactId>
-                <version>${rlg-backend.version}</version>
-            </dependency>
-
             <!-- user module -->
             <dependency>
                 <groupId>cn.maplerabbit</groupId>

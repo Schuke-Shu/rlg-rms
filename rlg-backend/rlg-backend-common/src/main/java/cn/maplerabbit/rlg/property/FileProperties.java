@@ -35,10 +35,5 @@ public class FileProperties
      */
     private File storeDir;
 
-    /**
-     * 是否初始化过
-     */
-    private boolean initialized = false;
-
     public FileProperties() {log.debug("FileProperties()...");}
 }
