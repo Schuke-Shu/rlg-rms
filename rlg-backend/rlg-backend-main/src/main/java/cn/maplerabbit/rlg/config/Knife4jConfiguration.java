@@ -1,15 +1,24 @@
 package cn.maplerabbit.rlg.config;
 
+import cn.maplerabbit.rlg.entity.ServiceCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.annotation.RequestMethod;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.builders.ResponseMessageBuilder;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.ResponseMessage;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * knife4j配置
@@ -19,10 +28,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 @EnableSwagger2WebMvc
 public class Knife4jConfiguration
 {
-    public Knife4jConfiguration() {
-        log.debug("Knife4jConfiguration()...");
-    }
-
     /**
      * 【重要】指定Controller包路径
      */
@@ -64,10 +69,32 @@ public class Knife4jConfiguration
      */
     private String version = "1";
 
+    public Knife4jConfiguration() {
+        log.debug("Knife4jConfiguration()...");
+    }
+
     @Bean
     public Docket docket()
     {
+        ArrayList<ResponseMessage> responseMessages = Arrays.stream(ServiceCode.values())
+                .collect(
+                        ArrayList::new,
+                        (l, v) -> l.add(
+                                new ResponseMessageBuilder()
+                                        .code(v.getStatus())
+                                        .message(v.getMsg())
+                                        .responseModel(
+                                                new ModelRef(v.getMsg())
+                                        )
+                                        .build()
+                        ),
+                        ArrayList::addAll
+                );
+
         return new Docket(DocumentationType.SWAGGER_2)
+                // 添加全局响应状态码
+                .globalResponseMessage(RequestMethod.GET, responseMessages)
+                .globalResponseMessage(RequestMethod.POST, responseMessages)
                 .host(host)
                 .apiInfo(
                         new ApiInfoBuilder()

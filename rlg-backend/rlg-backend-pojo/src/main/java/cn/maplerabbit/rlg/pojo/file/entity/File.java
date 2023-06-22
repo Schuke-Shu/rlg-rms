@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class File implements Serializable
 {
+    private Integer id;
     private String uuid;
     /**
      * 文件上传者
@@ -53,10 +54,12 @@ public class File implements Serializable
     private LocalDateTime modifiedTime;
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return new StringBuilder(this.getClass().getSimpleName())
                 .append('{')
-                .append("uuid='").append(uuid).append('\'')
+                .append("id=").append(id)
+                .append(", uuid='").append(uuid).append('\'')
                 .append(", userId=").append(userId)
                 .append(", suffix='").append(suffix).append('\'')
                 .append(", type='").append(type).append('\'')

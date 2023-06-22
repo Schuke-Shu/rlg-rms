@@ -33,6 +33,7 @@
         <mysql.version>8.0.28</mysql.version>
         <jjwt.version>0.9.1</jjwt.version>
         <lombok.version>1.18.20</lombok.version>
+        <fastjson.version>1.2.75</fastjson.version>
 
         <rlg-backend.version>1</rlg-backend.version>
     </properties>
@@ -53,10 +54,10 @@
         </dependency>
 
         <!-- Spring Boot Security -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-security</artifactId>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
 
         <!-- Spring Boot WEB -->
         <dependency>
@@ -83,6 +84,12 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
+        <!-- Spring Boot AOP -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
         <!-- Spring Boot Knife4j：在线API -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
@@ -103,6 +110,13 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
             <version>${jjwt.version}</version>
+        </dependency>
+
+        <!-- alibaba fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
     </dependencies>
 

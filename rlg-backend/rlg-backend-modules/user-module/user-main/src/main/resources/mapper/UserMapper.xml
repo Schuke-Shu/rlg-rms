@@ -2,15 +2,58 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.maplerabbit.rlg.module.user.mapper.UserMapper">
+    <resultMap id="LoginInfoResultMap" type="cn.maplerabbit.rlg.pojo.user.vo.UserLoginVO">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="phone" property="phone" />
+        <result column="email" property="email" />
+        <result column="enable" property="enable" />
+        <collection property="permissions" ofType="java.lang.String">
+            <constructor>
+                <arg column="flag" />
+            </constructor>
+        </collection>
+    </resultMap>
+
+    <!-- UserLoginVO getLoginInfoByUserName(String username); -->
+    <select id="getLoginInfoByUserName" resultMap="LoginInfoResultMap">
+        select
+            user.id,
+            user.username,
+            user.password,
+            user.phone,
+            user.email,
+            user.enable,
+            permission.flag
+        from user
+        left join user_role on user.id = user_role.user_id
+        left join role_permission on user_role.role_id = role_permission.role_id
+        left join permission on permission.id = role_permission.permission_id
+        <where>
+            user.username = #{username}
+        </where>
+    </select>
+
+    <!-- User queryByUsername(String username); -->
+    <select id="queryByUsername" resultMap="BaseResultMap">
+        select
+            <include refid="BaseColumns" />
+        from user
+        <where>
+            username = #{username}
+        </where>
+    </select>
+
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
-        id, uuid, username, password, avatar_url, real_name, gender, phone, email, birth, description, is_enable, sign_up_time, create_time, modified_time
+        id, uuid, username, password, avatar_url, real_name, gender, phone, email, birth, description, enable, sign_up_time, create_time, modified_time
     </sql>
     <sql id="save">
-        null, #{uuid}, #{username}, #{password}, #{avatarUrl}, #{realName}, #{gender}, #{phone}, #{email}, #{birth}, #{description}, #{isEnable}, #{signUpTime}
+        null, #{uuid}, #{username}, #{password}, #{avatarUrl}, #{realName}, #{gender}, #{phone}, #{email}, #{birth}, #{description}, #{enable}, #{signUpTime}
     </sql>
     <sql id="saveBatch">
-        null, #{i.uuid}, #{i.username}, #{i.password}, #{i.avatarUrl}, #{i.realName}, #{i.gender}, #{i.phone}, #{i.email}, #{i.birth}, #{i.description}, #{i.isEnable}, #{i.signUpTime}
+        null, #{i.uuid}, #{i.username}, #{i.password}, #{i.avatarUrl}, #{i.realName}, #{i.gender}, #{i.phone}, #{i.email}, #{i.birth}, #{i.description}, #{i.enable}, #{i.signUpTime}
     </sql>
 
     <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.user.entity.User">
@@ -25,7 +68,7 @@
         <result column="email" property="email" />
         <result column="birth" property="birth" />
         <result column="description" property="description" />
-        <result column="is_enable" property="isEnable" />
+        <result column="enable" property="enable" />
         <result column="sign_up_time" property="signUpTime" />
         <result column="create_time" property="createTime" />
         <result column="modified_time" property="modifiedTime" />
@@ -70,7 +113,7 @@
             <if test="email != null">email = #{email},</if>
             <if test="birth != null">birth = #{birth},</if>
             <if test="description != null">description = #{description},</if>
-            <if test="isEnable != null">is_enable = #{isEnable},</if>
+            <if test="enable != null">enable = #{enable},</if>
             <if test="signUpTime != null">sign_up_time = #{signUpTime},</if>
             modified_time = CURRENT_TIMESTAMP
         </set>

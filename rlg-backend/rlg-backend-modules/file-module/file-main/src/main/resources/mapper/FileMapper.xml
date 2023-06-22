@@ -4,17 +4,18 @@
 <mapper namespace="cn.maplerabbit.rlg.module.file.mapper.FileMapper">
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
-        uuid, user_id, suffix, type, size, upload_time, association_count, create_time, modified_time
+        id, uuid, user_id, suffix, type, size, upload_time, association_count, create_time, modified_time
     </sql>
     <sql id="save">
-        #{uuid}, #{userId}, #{suffix}, #{type}, #{size}, #{uploadTime}, #{associationCount}
+        #{id}, #{uuid}, #{userId}, #{suffix}, #{type}, #{size}, #{uploadTime}, #{associationCount}
     </sql>
     <sql id="saveBatch">
-        #{i.uuid}, #{i.userId}, #{i.suffix}, #{i.type}, #{i.size}, #{i.uploadTime}, #{i.associationCount}
+        #{i.id}, #{i.uuid}, #{i.userId}, #{i.suffix}, #{i.type}, #{i.size}, #{i.uploadTime}, #{i.associationCount}
     </sql>
 
     <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.file.entity.File">
-        <id column="uuid" property="uuid" />
+        <id column="id" property="id" />
+        <result column="uuid" property="uuid" />
         <result column="user_id" property="userId" />
         <result column="suffix" property="suffix" />
         <result column="type" property="type" />
@@ -43,17 +44,18 @@
     </insert>
 
     <delete id="remove">
-        delete from file where uuid = #{pk}
+        delete from file where id = #{pk}
     </delete>
 
     <delete id="removeBatch">
-        delete from file where uuid in
+        delete from file where id in
         <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
     </delete>
 
     <update id="update">
         update file
         <set>
+            <if test="uuid != null">uuid = #{uuid},</if>
             <if test="userId != null">user_id = #{userId},</if>
             <if test="suffix != null">suffix = #{suffix},</if>
             <if test="type != null">type = #{type},</if>
@@ -63,7 +65,7 @@
             modified_time = CURRENT_TIMESTAMP
         </set>
         <where>
-            uuid = #{uuid}
+            id = #{id}
         </where>
     </update>
 
@@ -72,7 +74,7 @@
             <include refid="BaseColumns" />
         from file
         <where>
-            uuid = #{pk}
+            id = #{pk}
         </where>
     </select>
 
@@ -81,7 +83,7 @@
             <include refid="BaseColumns" />
         from file
         <where>
-            uuid in
+            id in
             <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
         </where>
     </select>

@@ -1,5 +1,6 @@
 package cn.maplerabbit.rlg.config;
 
+import cn.maplerabbit.rlg.constpak.DirectoryNameConst;
 import cn.maplerabbit.rlg.property.FileProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -13,19 +14,12 @@ import java.io.File;
  */
 @Slf4j
 @Configuration
-public class FileConfiguration implements InitializingBean
+public class FileConfiguration
+        implements InitializingBean,
+                   DirectoryNameConst
 {
     @Autowired
-    private FileProperties properties;
-
-    /**
-     * 静态资源文件夹名称
-     */
-    private static final String STATIC_DIR = "static";
-    /**
-     * 仓库文件夹名称
-     */
-    private static final String STORE_DIR = "store";
+    private FileProperties fileProperties;
 
     public FileConfiguration() {log.debug("DirectoryConfiguration()...");}
 
@@ -33,17 +27,19 @@ public class FileConfiguration implements InitializingBean
      * 创建项目文件夹
      */
     @Override
-    public void afterPropertiesSet() throws Exception
+    public void afterPropertiesSet()
+            throws
+            Exception
     {
-        String root = properties.getRoot();
+        String root = fileProperties.getRoot();
 
         File rootDir = new File(root);
-        File storeDir = new File(root, STORE_DIR);
         File staticDir = new File(root, STATIC_DIR);
+        File storeDir = new File(root, STORE_DIR);
 
-        properties.setRootDir(rootDir);
-        properties.setRootDir(storeDir);
-        properties.setRootDir(staticDir);
+        fileProperties.put("root", rootDir);
+        fileProperties.put("static", staticDir);
+        fileProperties.put("store", storeDir);
 
         mkdirs(rootDir);
         mkdirs(storeDir);
@@ -53,6 +49,9 @@ public class FileConfiguration implements InitializingBean
     private void mkdirs(File file)
     {
         if (!file.exists())
+        {
+            log.trace("create file【{}】", file.getAbsolutePath());
             file.mkdirs();
+        }
     }
 }

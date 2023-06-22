@@ -43,8 +43,8 @@ logging:
 
 # knife4j配置
 knife4j:
-  # 开关
-  enable: false
+  # 生产环境屏蔽文档资源
+  production: true
 
 # 项目全局配置
 rlg:
@@ -57,5 +57,3 @@ rlg:
     secretKey: RedLeafGarden-JsonWebToken-SecretKey
     # JWT的有效时长（单位分钟）：一星期
     usableMinutes: 10080
-  # 验证码超时时间（单位分钟）
-  validation-code-timeout: 10

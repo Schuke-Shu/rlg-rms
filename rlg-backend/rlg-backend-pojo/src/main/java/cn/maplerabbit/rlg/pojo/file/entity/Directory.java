@@ -38,11 +38,11 @@ public class Directory implements Serializable
     /**
      * 是否为目录，1:是，0:否
      */
-    private Integer isDirectory;
+    private Integer directory;
     /**
      * 是否在回收站中，1:是，0:否
      */
-    private Integer isDeleted;
+    private Integer deleted;
     /**
      * 进入回收站时间
      */
@@ -50,7 +50,7 @@ public class Directory implements Serializable
     /**
      * 是否隐藏
      */
-    private Integer isHidden;
+    private Integer hidden;
     /**
      * 创建时间
      */
@@ -61,7 +61,8 @@ public class Directory implements Serializable
     private LocalDateTime modifiedTime;
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return new StringBuilder(this.getClass().getSimpleName())
                 .append('{')
                 .append("id=").append(id)
@@ -70,10 +71,10 @@ public class Directory implements Serializable
                 .append(", filename='").append(filename).append('\'')
                 .append(", deep=").append(deep)
                 .append(", parentId=").append(parentId)
-                .append(", isDirectory=").append(isDirectory)
-                .append(", isDeleted=").append(isDeleted)
+                .append(", directory=").append(directory)
+                .append(", deleted=").append(deleted)
                 .append(", deleteTime=").append(deleteTime)
-                .append(", isHidden=").append(isHidden)
+                .append(", hidden=").append(hidden)
                 .append(", createTime=").append(createTime)
                 .append(", modifiedTime=").append(modifiedTime)
                 .append('}')

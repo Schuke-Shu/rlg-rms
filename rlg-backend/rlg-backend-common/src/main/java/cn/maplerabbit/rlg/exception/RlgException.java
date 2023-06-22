@@ -1,21 +1,33 @@
 package cn.maplerabbit.rlg.exception;
 
-import cn.maplerabbit.rlg.enumpak.ServiceCode;
-
 /**
  * 自定义运行时异常
  */
-public class RlgException extends RuntimeException
+public class RlgException
+        extends RuntimeException
 {
-    private final ServiceCode code;
-
-    public RlgException(ServiceCode code, String message)
+    public RlgException()
     {
-        super(message);
-        this.code = code;
+        super();
     }
 
-    public ServiceCode getCode() {
-        return code;
+    public RlgException(String message)
+    {
+        super(message);
+    }
+
+    public RlgException(String message, Throwable cause)
+    {
+        super(message, cause);
+    }
+
+    public RlgException(Throwable cause)
+    {
+        super(cause);
+    }
+
+    protected RlgException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace)
+    {
+        super(message, cause, enableSuppression, writableStackTrace);
     }
 }

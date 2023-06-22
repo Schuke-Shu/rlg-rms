@@ -12,4 +12,11 @@
     <artifactId>rlg-backend-pojo</artifactId>
 
     <description>RedLeafGarden Backend pojo module</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>cn.maplerabbit</groupId>
+            <artifactId>rlg-backend-common</artifactId>
+        </dependency>
+    </dependencies>
 </project>

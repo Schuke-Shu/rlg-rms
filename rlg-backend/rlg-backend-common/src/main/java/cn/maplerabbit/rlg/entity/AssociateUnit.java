@@ -14,7 +14,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class AssociateUnit<L, R> implements Serializable
+public class AssociateUnit<L, R>
+        implements Serializable
 {
     private Long id;
     /**
@@ -26,8 +27,15 @@ public class AssociateUnit<L, R> implements Serializable
      */
     private R right;
 
+    public AssociateUnit(L l, R r)
+    {
+        this.left = l;
+        this.right = r;
+    }
+
     @Override
-    public String toString() {
+    public String toString()
+    {
         return new StringBuilder(this.getClass().getSimpleName())
                 .append('{')
                 .append("id=").append(id)

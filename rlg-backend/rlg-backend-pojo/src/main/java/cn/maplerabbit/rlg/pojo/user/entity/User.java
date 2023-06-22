@@ -18,7 +18,7 @@ public class User implements Serializable
     private Long id;
     private String uuid;
     /**
-     * 昵称
+     * 用户名
      */
     private String username;
     /**
@@ -56,7 +56,7 @@ public class User implements Serializable
     /**
      * 是否启用，1:启用，0:禁用
      */
-    private Integer isEnable;
+    private Integer enable;
     /**
      * 注册时间
      */
@@ -71,7 +71,8 @@ public class User implements Serializable
     private LocalDateTime modifiedTime;
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return new StringBuilder(this.getClass().getSimpleName())
                 .append('{')
                 .append("id=").append(id)
@@ -85,7 +86,7 @@ public class User implements Serializable
                 .append(", email='").append(email).append('\'')
                 .append(", birth=").append(birth)
                 .append(", description='").append(description).append('\'')
-                .append(", isEnable=").append(isEnable)
+                .append(", enable=").append(enable)
                 .append(", signUpTime=").append(signUpTime)
                 .append(", createTime=").append(createTime)
                 .append(", modifiedTime=").append(modifiedTime)

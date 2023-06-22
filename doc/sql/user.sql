@@ -2,7 +2,7 @@
 # CREATE DATABASE IF NOT EXISTS rlg_rms CHARSET utf8mb4;
 USE rlg_rms;
 
-# DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS user;
 CREATE TABLE IF NOT EXISTS user(
     id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
     uuid                char(32)        DEFAULT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS user(
     email               varchar(32)     DEFAULT NULL COMMENT '电子邮箱',
     birth               date            DEFAULT NULL COMMENT '生日',
     description         text            DEFAULT NULL COMMENT '个人简介',
-    is_enable           tinyint         UNSIGNED DEFAULT 0 COMMENT '是否启用，1:启用，0:禁用',
+    enable           tinyint         UNSIGNED DEFAULT 0 COMMENT '是否启用，1:启用，0:禁用',
     sign_up_time        datetime        DEFAULT NULL COMMENT '注册时间',
     create_time         datetime        DEFAULT NULL COMMENT '创建时间',
     modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间',
@@ -26,13 +26,13 @@ CREATE TABLE IF NOT EXISTS user(
     UNIQUE KEY (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
-INSERT INTO user(id, uuid, username, password, real_name, gender, description, is_enable, sign_up_time, create_time, modified_time) VALUES
+INSERT INTO user(id, uuid, username, password, real_name, gender, description, enable, sign_up_time, create_time, modified_time) VALUES
     # 测试账号初始密码 P@ssw0rdTest
     (1, 'ef01e9a591a04f7d8c3a89644b727892', '测试', '$2a$10$YRKVkleUHpRt9QcBz6iO9udH9MEy7Z9zzbmQyScE7ibVYTnvv9GIC', '测试', 1, '测试账号', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     # root账号初始密码 P@ssw0rdRoot
     (2, '151d3d54031140019237af35d874b4fd', 'rlgroot', '$2a$10$NbOqv/eIJCQl/i2z57ZDeuqh7KIwarT6r8BLk6Wj4HKq7A52N2rXu', 'BOSS', 1, '顶级管理员', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-# DROP TABLE IF EXISTS user_role;
+DROP TABLE IF EXISTS user_role;
 CREATE TABLE IF NOT EXISTS user_role(
     id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
     user_id             bigint          UNSIGNED NOT NULL COMMENT '用户id',
@@ -42,11 +42,14 @@ CREATE TABLE IF NOT EXISTS user_role(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户-用户角色关联表';
 
-# DROP TABLE IF EXISTS role;
+INSERT INTO user_role VALUES
+    (1, 1, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    (2, 2, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+DROP TABLE IF EXISTS role;
 CREATE TABLE IF NOT EXISTS role(
     id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
     flag                varchar(32)     DEFAULT NULL COMMENT '用户角色唯一标识符',
-    name                varchar(32)     DEFAULT NULL COMMENT '用户角色名称',
     description         text            DEFAULT NULL COMMENT '描述',
     create_time         datetime        DEFAULT NULL COMMENT '创建时间',
     modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间',
@@ -54,7 +57,11 @@ CREATE TABLE IF NOT EXISTS role(
     UNIQUE KEY (flag)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '用户角色表';
 
-# DROP TABLE IF EXISTS role_permission;
+INSERT INTO role VALUES
+    (1, 'ROLE_USER', '普通用户', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    (2, 'ROLE_ADMIN_TOP', '顶级管理员', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+DROP TABLE IF EXISTS role_permission;
 CREATE TABLE IF NOT EXISTS role_permission(
     id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
     role_id             bigint          UNSIGNED NOT NULL COMMENT '用户角色id',
@@ -64,11 +71,10 @@ CREATE TABLE IF NOT EXISTS role_permission(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '用户角色-用户权限关联表';
 
-# DROP TABLE IF EXISTS permission;
+DROP TABLE IF EXISTS permission;
 CREATE TABLE IF NOT EXISTS permission(
     id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
     flag                varchar(32)     DEFAULT NULL COMMENT '用户权限唯一标识符',
-    name                varchar(32)     DEFAULT NULL COMMENT '用户权限名称',
     description         text            DEFAULT NULL COMMENT '描述',
     create_time         datetime        DEFAULT NULL COMMENT '创建时间',
     modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间',

@@ -28,5 +28,10 @@
             <groupId>cn.maplerabbit</groupId>
             <artifactId>rlg-backend-common</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>cn.maplerabbit</groupId>
+            <artifactId>rlg-backend-pojo</artifactId>
+        </dependency>
     </dependencies>
 </project>

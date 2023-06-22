@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+/**
+ * jwt相关配置属性类
+ */
 @Getter
 @Setter
 @Accessors(chain = true)
@@ -24,7 +27,7 @@ public class JwtProperties
     /**
      * token有效时长（单位分钟）
      */
-    private String usableMinutes;
+    private int usableMinutes;
 
     public JwtProperties() {log.debug("JwtProperties()...");}
 }

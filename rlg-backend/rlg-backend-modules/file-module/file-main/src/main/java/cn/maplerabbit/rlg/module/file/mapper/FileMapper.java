@@ -1,8 +1,8 @@
 package cn.maplerabbit.rlg.module.file.mapper;
 
 import cn.maplerabbit.rlg.pojo.file.entity.File;
-import cn.maplerabbit.rlg.template.ModelMapperTemplate;
+import cn.maplerabbit.rlg.template.LongTemplate;
 
-public interface FileMapper extends ModelMapperTemplate<File, String>
+public interface FileMapper extends LongTemplate<File>
 {
 }

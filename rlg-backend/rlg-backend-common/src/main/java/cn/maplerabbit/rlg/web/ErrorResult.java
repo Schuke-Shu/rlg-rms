@@ -1,9 +1,13 @@
 package cn.maplerabbit.rlg.web;
 
-import cn.maplerabbit.rlg.enumpak.ServiceCode;
-import cn.maplerabbit.rlg.exception.RlgException;
+import cn.maplerabbit.rlg.entity.ServiceCode;
+import cn.maplerabbit.rlg.exception.ServiceException;
 
-public class ErrorResult extends JsonResult<Void>
+import java.io.Serializable;
+
+public class ErrorResult
+        extends JsonResult<Void>
+        implements Serializable
 {
     public ErrorResult(ServiceCode code, String message)
     {
@@ -13,7 +17,7 @@ public class ErrorResult extends JsonResult<Void>
     /**
      * 请求失败
      */
-    public static ErrorResult fail(RlgException e) {return fail(e.getCode(), e.getMessage());}
+    public static ErrorResult fail(ServiceException e) {return fail(e.getCode(), e.getMessage());}
     /**
      * 请求失败
      */

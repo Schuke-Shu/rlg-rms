@@ -5,12 +5,6 @@ package cn.maplerabbit.rlg.util;
  */
 public class ValidationCodeUtil
 {
-    public static String sendEmail()
-    {
-        // todo 发送email
-        return null;
-    }
-
     public static String generate()
     {
         String temp = "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";

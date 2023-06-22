@@ -5,4 +5,5 @@ import cn.maplerabbit.rlg.template.LongTemplate;
 
 public interface RoleMapper extends LongTemplate<Role>
 {
+    Role queryByFlag(String role);
 }

@@ -14,11 +14,6 @@
     <description>RedLeafGarden Backend common program</description>
 
     <dependencies>
-        <!-- rlg-backend-pojo -->
-        <dependency>
-            <groupId>cn.maplerabbit</groupId>
-            <artifactId>rlg-backend-pojo</artifactId>
-        </dependency>
 
         <!-- rlg-backend-utils -->
         <dependency>

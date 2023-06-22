@@ -41,11 +41,6 @@ logging:
   level:
     cn.maplerabbit.rlg: trace
 
-# knife4j配置
-knife4j:
-  # 开关
-  enable: true
-
 # 项目全局配置
 rlg:
   # 文件系统相关配置
@@ -57,5 +52,3 @@ rlg:
     secretKey: RedLeafGarden-JsonWebToken-SecretKey
     # JWT的有效时长（单位分钟）：一星期
     usableMinutes: 10080
-  # 验证码超时时间（单位分钟）
-  validation-code-timeout: 10

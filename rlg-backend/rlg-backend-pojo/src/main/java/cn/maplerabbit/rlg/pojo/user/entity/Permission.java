@@ -20,10 +20,6 @@ public class Permission implements Serializable
      */
     private String flag;
     /**
-     * 用户权限名称
-     */
-    private String name;
-    /**
      * 描述
      */
     private String description;
@@ -43,7 +39,6 @@ public class Permission implements Serializable
                 .append('{')
                 .append("id=").append(id)
                 .append(", flag='").append(flag).append('\'')
-                .append(", name='").append(name).append('\'')
                 .append(", description='").append(description).append('\'')
                 .append(", createTime=").append(createTime)
                 .append(", modifiedTime=").append(modifiedTime)

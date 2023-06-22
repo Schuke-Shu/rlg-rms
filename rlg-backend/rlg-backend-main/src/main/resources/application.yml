@@ -14,6 +14,13 @@ spring:
   profiles:
     # 激活指定名称的Profile配置
     active: local
+  # 配置资源信息
+  messages:
+    # 国际化资源文件名
+    basename: beanValidation
+    encoding: UTF-8
+    cache-duration: 60
+    always-use-message-format: true
   # servlet配置
   servlet:
     # multipart文件传输配置
@@ -26,10 +33,6 @@ spring:
   # 数据源配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-  # mvc配置
-  mvc:
-    # static开头的url才会认为是请求静态资源
-    static-path-pattern: /static/**
   # web配置
   web:
     # 静态资源配置
@@ -57,3 +60,16 @@ logging:
 knife4j:
   setting:
     language: zh-CN
+
+# 项目全局配置
+rlg:
+  security:
+    urlAllowList:
+      - /user/login
+      - /user/register
+      - /doc.html
+      - /**/*.css
+      - /**/*.js
+      - /favicon.ico
+      - /swagger-resources
+      - /v2/api-docs
