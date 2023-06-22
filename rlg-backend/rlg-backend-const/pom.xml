@@ -9,14 +9,7 @@
         <version>1</version>
     </parent>
 
-    <artifactId>rlg-backend-pojo</artifactId>
+    <artifactId>rlg-backend-const</artifactId>
 
-    <description>RedLeafGarden Backend pojo module</description>
-
-    <dependencies>
-        <dependency>
-            <groupId>cn.maplerabbit</groupId>
-            <artifactId>rlg-backend-const</artifactId>
-        </dependency>
-    </dependencies>
+    <description>RedLeafGarden Backend const package module</description>
 </project>

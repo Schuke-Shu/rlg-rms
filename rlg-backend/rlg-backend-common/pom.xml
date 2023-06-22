@@ -20,5 +20,11 @@
             <groupId>cn.maplerabbit</groupId>
             <artifactId>rlg-backend-utils</artifactId>
         </dependency>
+
+        <!-- rlg-backend-const -->
+        <dependency>
+            <groupId>cn.maplerabbit</groupId>
+            <artifactId>rlg-backend-const</artifactId>
+        </dependency>
     </dependencies>
 </project>
