@@ -1,7 +1,6 @@
 package cn.maplerabbit.rlg.module.file.mapper;
 
 import cn.maplerabbit.rlg.BaseCrudTest;
-import cn.maplerabbit.rlg.constpak.FileUnitConst;
 import cn.maplerabbit.rlg.pojo.file.entity.File;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,7 @@ import java.util.List;
 
 @SpringBootTest
 @Slf4j
-public class FileMapperTest implements BaseCrudTest, FileUnitConst
+public class FileMapperTest implements BaseCrudTest
 {
     @Autowired
     FileMapper mapper;
@@ -25,8 +24,7 @@ public class FileMapperTest implements BaseCrudTest, FileUnitConst
         File file = new File()
                 .setUuid("1")
                 .setUserId(1L)
-                .setSize(12)
-                .setSizeUnit(UNIT_KB);
+                .setSize(12L);
         System.out.println(file);
         log.debug("插入{}条数据：\n{}", mapper.save(file), file);
     }
@@ -37,14 +35,12 @@ public class FileMapperTest implements BaseCrudTest, FileUnitConst
         File f1 = new File()
                 .setUuid("4")
                 .setUserId(2L)
-                .setSize(45)
-                .setSizeUnit(UNIT_B);
+                .setSize(45L);
         System.out.println(f1);
         File f2 = new File()
                 .setUuid("5")
                 .setUserId(2L)
-                .setSize(78)
-                .setSizeUnit(UNIT_GB);
+                .setSize(78L);
         System.out.println(f2);
 
         log.debug(
@@ -60,15 +56,15 @@ public class FileMapperTest implements BaseCrudTest, FileUnitConst
     public void testRemove()
     {
         System.out.println(
-                mapper.remove("1")
+                mapper.remove(1L)
         );
     }
 
     @Test
     public void testRemoveBatch()
     {
-        List<String> list = Arrays.asList(
-                "2", "3"
+        List<Long> list = Arrays.asList(
+                2L, 3L
         );
 
         log.debug("想要删除{}条数据，删除了{}条数据", list.size(), mapper.removeBatch(list));
@@ -80,8 +76,7 @@ public class FileMapperTest implements BaseCrudTest, FileUnitConst
         File file = new File()
                 .setUuid("4")
                 .setUserId(1L)
-                .setSize(100)
-                .setSizeUnit(UNIT_TB);
+                .setSize(100L);
         System.out.println(file);
         log.debug("更新{}条数据", mapper.update(file));
     }
@@ -90,15 +85,15 @@ public class FileMapperTest implements BaseCrudTest, FileUnitConst
     public void testQuery()
     {
         System.out.println(
-                mapper.query("4")
+                mapper.query(4L)
         );
     }
 
     @Test
     public void testQueryBatch()
     {
-        List<String> list = Arrays.asList(
-                "4", "5"
+        List<Long> list = Arrays.asList(
+                4L, 5L
         );
         List<File> files = mapper.queryBatch(list);
 

@@ -29,13 +29,9 @@ public class File implements Serializable
      */
     private String type;
     /**
-     * 文件大小（冗余）
+     * 文件大小
      */
-    private Integer size;
-    /**
-     * 文件大小单位（冗余）
-     */
-    private String sizeUnit;
+    private Long size;
     /**
      * 文件上传时间
      */
@@ -60,7 +56,6 @@ public class File implements Serializable
                 .append(", suffix='").append(suffix).append('\'')
                 .append(", type='").append(type).append('\'')
                 .append(", size=").append(size)
-                .append(", sizeUnit='").append(sizeUnit).append('\'')
                 .append(", uploadTime=").append(uploadTime)
                 .append(", createTime=").append(createTime)
                 .append(", modifiedTime=").append(modifiedTime)
