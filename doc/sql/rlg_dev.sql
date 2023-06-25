@@ -2,6 +2,7 @@
 # CREATE DATABASE IF NOT EXISTS rlg_rms CHARSET utf8mb4;
 # USE rlg_rms;
 
+# 用户表
 DROP TABLE IF EXISTS user;
 CREATE TABLE IF NOT EXISTS user(
     id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -15,7 +16,7 @@ CREATE TABLE IF NOT EXISTS user(
     email               varchar(32)     DEFAULT NULL COMMENT '电子邮箱',
     birth               date            DEFAULT NULL COMMENT '生日',
     description         text            DEFAULT NULL COMMENT '个人简介',
-    enable           tinyint         UNSIGNED DEFAULT 0 COMMENT '是否启用，1:启用，0:禁用',
+    enable              tinyint         UNSIGNED DEFAULT 0 COMMENT '是否启用，1:启用，0:禁用',
     sign_up_time        datetime        DEFAULT NULL COMMENT '注册时间',
     create_time         datetime        DEFAULT NULL COMMENT '创建时间',
     modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间',
@@ -32,6 +33,7 @@ INSERT INTO user(id, uuid, username, password, real_name, gender, description, e
     # root账号初始密码 P@ssw0rdRoot
     (2, '151d3d54031140019237af35d874b4fd', 'rlgroot', '$2a$10$NbOqv/eIJCQl/i2z57ZDeuqh7KIwarT6r8BLk6Wj4HKq7A52N2rXu', 'BOSS', 1, '顶级管理员', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
+# 用户-用户角色关联表
 DROP TABLE IF EXISTS user_role;
 CREATE TABLE IF NOT EXISTS user_role(
     id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -46,6 +48,7 @@ INSERT INTO user_role VALUES
     (1, 1, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     (2, 2, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
+# 用户角色表
 DROP TABLE IF EXISTS role;
 CREATE TABLE IF NOT EXISTS role(
     id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -61,6 +64,7 @@ INSERT INTO role VALUES
     (1, 'ROLE_USER', '普通用户', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     (2, 'ROLE_ADMIN_TOP', '顶级管理员', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
+# 用户角色-用户权限关联表
 DROP TABLE IF EXISTS role_permission;
 CREATE TABLE IF NOT EXISTS role_permission(
     id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -71,6 +75,7 @@ CREATE TABLE IF NOT EXISTS role_permission(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '用户角色-用户权限关联表';
 
+# 用户权限表
 DROP TABLE IF EXISTS permission;
 CREATE TABLE IF NOT EXISTS permission(
     id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -82,6 +87,7 @@ CREATE TABLE IF NOT EXISTS permission(
     UNIQUE KEY (flag)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '用户权限表';
 
+# 用户登录日志表
 DROP TABLE IF EXISTS user_login_log;
 CREATE TABLE IF NOT EXISTS user_login_log(
     id                  bigint          UNSIGNED NOT NULL  AUTO_INCREMENT,
@@ -95,6 +101,7 @@ CREATE TABLE IF NOT EXISTS user_login_log(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户登录日志表';
 
+# 用户文件目录表
 DROP TABLE IF EXISTS directory;
 CREATE TABLE IF NOT EXISTS directory(
     id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -103,15 +110,18 @@ CREATE TABLE IF NOT EXISTS directory(
     filename            varchar(255)    DEFAULT NULL COMMENT '文件名称',
     deep                int             UNSIGNED DEFAULT 0 COMMENT '文件层级',
     parent_id           bigint          UNSIGNED DEFAULT 0 COMMENT '父目录id',
-    directory        tinyint            UNSIGNED DEFAULT 0 COMMENT '是否为目录，1:是，0:否',
-    deleted          tinyint            UNSIGNED DEFAULT 0 COMMENT '是否被删除（进入回收站），1:是，0:否',
+    directory           tinyint         UNSIGNED DEFAULT 0 COMMENT '是否为目录，1:是，0:否',
+    file_size           int             UNSIGNED DEFAULT 0 COMMENT '文件大小（冗余）',
+    file_size_unit      varchar(3)      DEFAULT NULL COMMENT '文件大小单位（冗余）',
+    deleted             tinyint         UNSIGNED DEFAULT 0 COMMENT '是否被删除（进入回收站），1:是，0:否',
     delete_time         datetime        DEFAULT NULL COMMENT '进入回收站时间',
-    hidden           tinyint            UNSIGNED DEFAULT 0 COMMENT '是否隐藏，1:是，0:否',
+    hidden              tinyint         UNSIGNED DEFAULT 0 COMMENT '是否隐藏，1:是，0:否',
     create_time         datetime        DEFAULT NULL COMMENT '创建时间',
     modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间',
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户文件目录表，存储用户的文件目录结构';
 
+# 文件表
 DROP TABLE IF EXISTS file;
 CREATE TABLE IF NOT EXISTS file(
     id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -120,8 +130,7 @@ CREATE TABLE IF NOT EXISTS file(
     suffix              varchar(8)      DEFAULT NULL COMMENT '后缀名',
     type                varchar(64)     DEFAULT NULL COMMENT '文件类型',
     size                int             UNSIGNED DEFAULT 0 COMMENT '文件大小',
-    size_unit           varchar(8)      DEFAULT NULL COMMENT '文件大小单位',
-    association_count   int             UNSIGNED DEFAULT 0 COMMENT '关联到此文件的记录数',
+    size_unit           varchar(3)      DEFAULT NULL COMMENT '文件大小单位',
     upload_time         datetime        DEFAULT NULL COMMENT '文件上传时间',
     create_time         datetime        DEFAULT NULL COMMENT '创建时间',
     modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间',

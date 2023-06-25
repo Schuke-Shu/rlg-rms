@@ -4,13 +4,13 @@
 <mapper namespace="cn.maplerabbit.rlg.module.file.mapper.FileMapper">
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
-        id, uuid, user_id, suffix, type, size, upload_time, association_count, create_time, modified_time
+        id, uuid, user_id, suffix, type, size, upload_time, create_time, modified_time
     </sql>
     <sql id="save">
-        #{id}, #{uuid}, #{userId}, #{suffix}, #{type}, #{size}, #{uploadTime}, #{associationCount}
+        #{id}, #{uuid}, #{userId}, #{suffix}, #{type}, #{size}, #{uploadTime}
     </sql>
     <sql id="saveBatch">
-        #{i.id}, #{i.uuid}, #{i.userId}, #{i.suffix}, #{i.type}, #{i.size}, #{i.uploadTime}, #{i.associationCount}
+        #{i.id}, #{i.uuid}, #{i.userId}, #{i.suffix}, #{i.type}, #{i.size}, #{i.uploadTime}
     </sql>
 
     <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.file.entity.File">
@@ -21,7 +21,6 @@
         <result column="type" property="type" />
         <result column="size" property="size" />
         <result column="upload_time" property="uploadTime" />
-        <result column="association_count" property="associationCount" />
         <result column="create_time" property="createTime" />
         <result column="modified_time" property="modifiedTime" />
     </resultMap>
@@ -61,7 +60,6 @@
             <if test="type != null">type = #{type},</if>
             <if test="size != null">size = #{size},</if>
             <if test="uploadTime != null">upload_time = #{uploadTime},</if>
-            <if test="associationCount != null">association_count = #{associationCount},</if>
             modified_time = CURRENT_TIMESTAMP
         </set>
         <where>

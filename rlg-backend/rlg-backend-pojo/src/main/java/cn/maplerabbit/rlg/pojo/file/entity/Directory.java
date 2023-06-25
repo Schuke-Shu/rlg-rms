@@ -40,6 +40,14 @@ public class Directory implements Serializable
      */
     private Integer directory;
     /**
+     * 文件大小
+     */
+    private Integer fileSize;
+    /**
+     * 文件大小单位
+     */
+    private String fileSizeUnit;
+    /**
      * 是否在回收站中，1:是，0:否
      */
     private Integer deleted;
@@ -72,6 +80,8 @@ public class Directory implements Serializable
                 .append(", deep=").append(deep)
                 .append(", parentId=").append(parentId)
                 .append(", directory=").append(directory)
+                .append(", fileSize=").append(fileSize)
+                .append(", fileSizeUnit='").append(fileSizeUnit).append('\'')
                 .append(", deleted=").append(deleted)
                 .append(", deleteTime=").append(deleteTime)
                 .append(", hidden=").append(hidden)

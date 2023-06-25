@@ -29,17 +29,13 @@ public class File implements Serializable
      */
     private String type;
     /**
-     * 文件大小
+     * 文件大小（冗余）
      */
     private Integer size;
     /**
-     * 文件大小单位
+     * 文件大小单位（冗余）
      */
     private String sizeUnit;
-    /**
-     * 关联到此文件的记录数
-     */
-    private Integer associationCount;
     /**
      * 文件上传时间
      */
@@ -65,7 +61,6 @@ public class File implements Serializable
                 .append(", type='").append(type).append('\'')
                 .append(", size=").append(size)
                 .append(", sizeUnit='").append(sizeUnit).append('\'')
-                .append(", associationCount=").append(associationCount)
                 .append(", uploadTime=").append(uploadTime)
                 .append(", createTime=").append(createTime)
                 .append(", modifiedTime=").append(modifiedTime)

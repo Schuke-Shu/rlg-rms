@@ -4,13 +4,13 @@
 <mapper namespace="cn.maplerabbit.rlg.module.file.mapper.DirectoryMapper">
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
-        id, file_uuid, user_id, filename, deep, parent_id, directory, deleted, delete_time, hidden, create_time, modified_time
+        id, file_uuid, user_id, filename, deep, parent_id, directory, file_size, file_size_unit, deleted, delete_time, hidden, create_time, modified_time
     </sql>
     <sql id="save">
-        null, #{fileUuid}, #{userId}, #{filename}, #{deep}, #{parentId}, #{directory}, #{deleted}, #{deleteTime}, #{hidden}
+        null, #{fileUuid}, #{userId}, #{filename}, #{deep}, #{parentId}, #{directory}, #{fileSize}, #{fileSizeUnit}, #{deleted}, #{deleteTime}, #{hidden}
     </sql>
     <sql id="saveBatch">
-        null, #{i.fileUuid}, #{i.userId}, #{i.filename}, #{i.deep}, #{i.parentId}, #{i.deleted}, #{i.isDeleted}, #{i.deleteTime}, #{i.hidden}
+        null, #{i.fileUuid}, #{i.userId}, #{i.filename}, #{i.deep}, #{i.parentId}, #{i.directory}, #{i.fileSize}, #{i.fileSizeUnit}, #{i.deleted}, #{i.deleteTime}, #{i.hidden}
     </sql>
 
     <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.file.entity.Directory">
@@ -21,6 +21,8 @@
         <result column="deep" property="deep" />
         <result column="parent_id" property="parentId" />
         <result column="directory" property="directory" />
+        <result column="file_size" property="fileSize" />
+        <result column="file_size_unit" property="fileSizeUnit" />
         <result column="deleted" property="deleted" />
         <result column="delete_time" property="deleteTime" />
         <result column="hidden" property="hidden" />
@@ -63,6 +65,8 @@
             <if test="deep != null">deep = #{deep},</if>
             <if test="parentId != null">parent_id = #{parentId},</if>
             <if test="directory != null">directory = #{directory},</if>
+            <if test="fileSize != null">file_size = #{fileSize},</if>
+            <if test="fileSizeUnit != null">file_size_unit = #{fileSizeUnit},</if>
             <if test="deleted != null">deleted = #{deleted},</if>
             <if test="deleteTime != null">delete_time = #{deleteTime},</if>
             <if test="hidden != null">hidden = #{hidden},</if>
