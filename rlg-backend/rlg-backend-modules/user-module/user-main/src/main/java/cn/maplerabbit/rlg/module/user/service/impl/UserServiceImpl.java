@@ -2,7 +2,7 @@ package cn.maplerabbit.rlg.module.user.service.impl;
 
 import cn.maplerabbit.rlg.constpak.LoginPrincipalConst;
 import cn.maplerabbit.rlg.entity.AssociateUnit;
-import cn.maplerabbit.rlg.entity.ServiceCode;
+import cn.maplerabbit.rlg.enumpak.ServiceCode;
 import cn.maplerabbit.rlg.exception.UserException;
 import cn.maplerabbit.rlg.module.user.mapper.RoleMapper;
 import cn.maplerabbit.rlg.module.user.mapper.UserMapper;
@@ -11,12 +11,14 @@ import cn.maplerabbit.rlg.module.user.service.IUserService;
 import cn.maplerabbit.rlg.pojo.user.dto.UserLoginDTO;
 import cn.maplerabbit.rlg.pojo.user.dto.UserRegisterDTO;
 import cn.maplerabbit.rlg.pojo.user.entity.User;
+import cn.maplerabbit.rlg.pojo.user.vo.UserInfoVO;
 import cn.maplerabbit.rlg.property.JwtProperties;
 import cn.maplerabbit.rlg.entity.UserDetails;
 import com.alibaba.fastjson.JSON;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -69,9 +71,11 @@ public class UserServiceImpl
     @Transactional
     public void register(UserRegisterDTO userRegisterDTO)
     {
-        if (userMapper.queryByUsername(userRegisterDTO.getUsername()) != null)
+        // 按照用户名查询用户个数，若查询到数据说明用户名已存在
+        if (userMapper.countByUsername(userRegisterDTO.getUsername()) > 0)
             throw new UserException(ServiceCode.ERR_CONFLICT, "用户名已存在");
 
+        // 创建新的用户对象
         User user = new User()
                 .setUuid(
                         UUID
@@ -91,7 +95,9 @@ public class UserServiceImpl
                 .setEnable(1)
                 .setSignUpTime(LocalDateTime.now());
 
+        // 向数据库写入用户
         userMapper.save(user);
+        // 向数据库写入用户与用户角色关联数据，默认为普通用户
         userRoleMapper.save(
                 new AssociateUnit<>(
                         user.getId(),
@@ -102,6 +108,7 @@ public class UserServiceImpl
 
     /**
      * 用户名登录
+     *
      * @return JWT字符串
      */
     @Override
@@ -115,7 +122,7 @@ public class UserServiceImpl
                                 userLoginDTO.getPassword()
                         )
                 );
-        log.trace("result: {}", authenticateResult);
+        log.trace("authenticateResult: {}", authenticateResult);
 
         // 取出数据
         UserDetails adminDetails = (UserDetails) authenticateResult.getPrincipal();
@@ -169,5 +176,24 @@ public class UserServiceImpl
                         jwtProperties.getSecretKey()
                 )
                 .compact(); // 获取JWT
+    }
+
+    /**
+     * 获取用户信息
+     */
+    @Override
+    public UserInfoVO getUserInfo(Long id)
+    {
+        // 查询user对象
+        User user = userMapper.query(id);
+        // 若user为null，抛出异常
+        if (user == null)
+            throw new UserException(ServiceCode.ERR_NOT_FOUND, "找不到该用户");
+        // 创建UserInfoVO
+        UserInfoVO vo = new UserInfoVO();
+        // 将user的属性复制给vo对象
+        BeanUtils.copyProperties(user, vo);
+        // 返回
+        return vo;
     }
 }

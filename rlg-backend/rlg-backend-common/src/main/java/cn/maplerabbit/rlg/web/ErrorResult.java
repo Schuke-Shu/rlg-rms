@@ -1,6 +1,6 @@
 package cn.maplerabbit.rlg.web;
 
-import cn.maplerabbit.rlg.entity.ServiceCode;
+import cn.maplerabbit.rlg.enumpak.ServiceCode;
 import cn.maplerabbit.rlg.exception.ServiceException;
 
 import java.io.Serializable;

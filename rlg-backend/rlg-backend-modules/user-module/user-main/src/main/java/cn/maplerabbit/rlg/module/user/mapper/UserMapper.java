@@ -8,5 +8,5 @@ public interface UserMapper extends LongTemplate<User>
 {
     UserLoginVO getLoginInfoByUserName(String username);
 
-    User queryByUsername(String username);
+    int countByUsername(String username);
 }

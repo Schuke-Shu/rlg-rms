@@ -1,12 +1,13 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 
-import Rlg from './Rlg.vue'
-import router from './router'
+import Rlg from './Rlg.vue';
+import router from './router';
 
-const rlg = createApp(Rlg)
+const rlg = createApp(Rlg);
+const pinia = createPinia();
 
-rlg.use(createPinia())
-rlg.use(router)
+rlg.use(pinia);
+rlg.use(router);
 
-rlg.mount('#rlg')
+rlg.mount('#rlg');

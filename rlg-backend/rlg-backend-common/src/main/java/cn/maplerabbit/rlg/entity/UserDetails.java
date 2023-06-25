@@ -24,6 +24,9 @@ public class UserDetails extends User implements Serializable
      * 邮箱
      */
     private final String email;
+    /**
+     * 用户当前登录的ip地址
+     */
     private final String ip;
 
     public UserDetails(

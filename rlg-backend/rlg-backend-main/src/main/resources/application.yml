@@ -17,7 +17,7 @@ spring:
   # 配置资源信息
   messages:
     # 国际化资源文件名
-    basename: beanValidation
+    basename: validator
     encoding: UTF-8
     cache-duration: 60
     always-use-message-format: true
@@ -41,6 +41,10 @@ spring:
       static-locations:
       - classpath:static
       - file:/${rlg.file.root}/static
+  # spring mvc配置
+  mvc:
+    servlet:
+      load-on-startup: 1
 
 # MyBatis配置
 mybatis:

@@ -10,6 +10,7 @@
         <module name="log-main" />
         <module name="rlg-backend-common" />
         <module name="user-main" />
+        <module name="rlg-backend-const" />
         <module name="rlg-backend-test" />
         <module name="file-main" />
         <module name="valicode-main" />
@@ -53,6 +54,7 @@
       <module name="modules-prov" options="-parameters" />
       <module name="rlg-backend" options="" />
       <module name="rlg-backend-common" options="-parameters" />
+      <module name="rlg-backend-const" options="-parameters" />
       <module name="rlg-backend-main" options="-parameters" />
       <module name="rlg-backend-modules" options="" />
       <module name="rlg-backend-pojo" options="-parameters" />

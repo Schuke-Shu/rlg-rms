@@ -1,46 +1,38 @@
 package cn.maplerabbit.rlg.pojo.user.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * 用户登录信息
- */
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 @Getter
 @Setter
 @Accessors(chain = true)
+
+@ApiModel("用户登录信息")
 public class UserLoginVO implements Serializable
 {
+    @ApiModelProperty("id")
     private Long id;
-    /**
-     * 用户名
-     */
+    @ApiModelProperty("用户名")
     private String username;
-    /**
-     * id
-     */
+    @ApiModelProperty("密码")
     private String password;
-    /**
-     * 手机号码
-     */
+    @ApiModelProperty("头像地址")
+    private String avatarUrl;
+    @ApiModelProperty("手机号码")
     private String phone;
-    /**
-     * 电子邮箱
-     */
+    @ApiModelProperty("电子邮箱")
     private String email;
-    /**
-     * 是否启用，1启用，0禁用
-     */
+    @ApiModelProperty("是否启用，1启用，0禁用")
     private Integer enable;
-    /**
-     * 权限集合
-     */
+    @ApiModelProperty("权限集合")
     private List<String> permissions;
 
     @Override

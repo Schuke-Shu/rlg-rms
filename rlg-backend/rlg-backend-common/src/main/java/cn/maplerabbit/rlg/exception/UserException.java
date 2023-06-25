@@ -1,6 +1,6 @@
 package cn.maplerabbit.rlg.exception;
 
-import cn.maplerabbit.rlg.entity.ServiceCode;
+import cn.maplerabbit.rlg.enumpak.ServiceCode;
 
 /**
  * 用户模块异常

@@ -1,11 +1,7 @@
-package cn.maplerabbit.rlg.entity;
+package cn.maplerabbit.rlg.enumpak;
 
 /**
- * <p>状态码</p>
- * <p>状态码应由模块层代码-控制层代码-服务层代码组成，每一部分是两位十六进制数</p>
- * <p>创建时由父到子创建，从父到子以此为模块层-控制层-服务层，创建时在构造方法传入父代码类即可</p>
- * <p>模块层代码由ModuleCodeProperties属性类维护，控制层和服务层代码由各控制器维护</p>
- * <p><strong>请求成功的代码是特殊的状态码，它的值为0</strong></p>
+ * 状态码
  */
 public enum ServiceCode
 {

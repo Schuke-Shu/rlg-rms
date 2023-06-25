@@ -1,6 +1,6 @@
 package cn.maplerabbit.rlg.web;
 
-import cn.maplerabbit.rlg.entity.ServiceCode;
+import cn.maplerabbit.rlg.enumpak.ServiceCode;
 
 /**
  * 请求成功

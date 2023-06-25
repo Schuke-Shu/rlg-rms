@@ -3,6 +3,7 @@
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/rlg-backend-test/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/rlg-backend/rlg-backend-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/rlg-backend/rlg-backend-const/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/rlg-backend/rlg-backend-main/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/rlg-backend/rlg-backend-modules/file-module/file-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/rlg-backend/rlg-backend-modules/file-module/file-main/src/main/java" charset="UTF-8" />

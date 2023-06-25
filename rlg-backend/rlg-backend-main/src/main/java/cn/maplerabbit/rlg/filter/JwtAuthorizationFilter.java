@@ -1,7 +1,7 @@
 package cn.maplerabbit.rlg.filter;
 
 import cn.maplerabbit.rlg.constpak.LoginPrincipalConst;
-import cn.maplerabbit.rlg.entity.ServiceCode;
+import cn.maplerabbit.rlg.enumpak.ServiceCode;
 import cn.maplerabbit.rlg.exception.TokenException;
 import cn.maplerabbit.rlg.property.JwtProperties;
 import cn.maplerabbit.rlg.entity.LoginPrincipal;
@@ -81,7 +81,7 @@ public class JwtAuthorizationFilter
         if (!StringUtils.hasText(jwt) || jwt.length() < JWT_MIN_LENGTH)
         {
             // JWT无效，放行
-            log.debug("JWT invalid, to next...");
+            log.debug("JWT is blank, to next...");
             filterChain.doFilter(request, response);
             return;
         }

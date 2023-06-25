@@ -29,12 +29,9 @@ public class LoginServiceImpl implements ILoginService
 
     @Override
     public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.debug("Spring Security call loadUserByUsername(), arg: {}", username);
-
         UserLoginVO loginInfo = userMapper.getLoginInfoByUserName(username);
-        if (loginInfo == null) {return null;}
 
-        log.debug("get LoginInfo matches username【{}】: {}", username, loginInfo);
+        log.trace("get LoginInfo matches username【{}】: {}", username, loginInfo);
 
         // 创建权限列表
         Collection<GrantedAuthority> authorities = loginInfo.getPermissions()
@@ -54,7 +51,7 @@ public class LoginServiceImpl implements ILoginService
                 authorities
         );
 
-        log.debug("return UserDetails: {}", userDetails);
+        log.trace("return UserDetails: {}", userDetails);
         return userDetails;
     }
 

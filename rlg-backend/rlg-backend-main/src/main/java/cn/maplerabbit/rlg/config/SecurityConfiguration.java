@@ -58,14 +58,17 @@ public class SecurityConfiguration
                 // 配置请求是否需要认证
                 .authorizeRequests()
                 .mvcMatchers(securityProperties.getUrlAllowList())  // 匹配白名单中的请求路径
-                .permitAll()                // 允许直接访问
-                .anyRequest()               // 其它任何请求
-                .authenticated()            // 需要通过认证
+                .permitAll()        // 允许直接访问
+                .anyRequest()       // 其它任何请求
+                .authenticated()    // 需要通过认证
                 .and()
                 // 禁用“防止伪造的跨域攻击”防御机制
                 .csrf().disable()
                 // 将JWT过滤器置于Spring Security的“用户名密码认证信息过滤器”之前
-                .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(
+                        jwtAuthorizationFilter,
+                        UsernamePasswordAuthenticationFilter.class
+                );
     }
 
 }
