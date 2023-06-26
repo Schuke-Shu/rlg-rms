@@ -23,8 +23,6 @@
         <module>rlg-backend-modules</module>
         <module>rlg-backend-common</module>
         <module>rlg-backend-pojo</module>
-        <module>rlg-backend-utils</module>
-        <module>rlg-backend-const</module>
     </modules>
 
     <properties>
@@ -135,13 +133,6 @@
             <dependency>
                 <groupId>cn.maplerabbit</groupId>
                 <artifactId>rlg-backend-pojo</artifactId>
-                <version>${rlg-backend.version}</version>
-            </dependency>
-
-            <!-- rlg-backend-utils -->
-            <dependency>
-                <groupId>cn.maplerabbit</groupId>
-                <artifactId>rlg-backend-utils</artifactId>
                 <version>${rlg-backend.version}</version>
             </dependency>
 

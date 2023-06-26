@@ -1,7 +1,7 @@
-package cn.maplerabbit.rlg.module.admin.mapper;
+package cn.maplerabbit.rlg.module.user.mapper;
 
 import cn.maplerabbit.rlg.BaseCrudTest;
-import cn.maplerabbit.rlg.pojo.admin.entity.AdminPermission;
+import cn.maplerabbit.rlg.pojo.user.entity.Role;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,40 +12,41 @@ import java.util.List;
 
 @SpringBootTest
 @Slf4j
-public class AdminPermissionMapperTest implements BaseCrudTest
+public class RoleMapperTest
+        implements BaseCrudTest
 {
     @Autowired
-    AdminPermissionMapper mapper;
+    RoleMapper mapper;
 
     /* ========== Base CRUD ========== */
     @Test
     public void testSave()
     {
-        AdminPermission permission = new AdminPermission()
+        Role role = new Role()
                 .setFlag("测试1")
                 .setDescription("这是一条测试数据");
-        System.out.println(permission);
-        log.debug("插入{}条数据：\n{}", mapper.save(permission), permission);
+        System.out.println(role);
+        log.debug("插入{}条数据：\n{}", mapper.save(role), role);
     }
 
     @Test
     public void testSaveBatch()
     {
-        AdminPermission p2 = new AdminPermission()
+        Role r2 = new Role()
                 .setFlag("测试2")
                 .setDescription("这是一条测试数据");
-        System.out.println(p2);
-        AdminPermission p3 = new AdminPermission()
+        System.out.println(r2);
+        Role r3 = new Role()
                 .setFlag("测试3")
                 .setDescription("这是一条测试数据");
-        System.out.println(p3);
+        System.out.println(r3);
 
         log.debug(
                 "插入{}条数据：\n{}",
                 mapper.saveBatch(
-                        Arrays.asList(p2, p3)
+                        Arrays.asList(r2, r3)
                 ),
-                p2 + "\n" + p3
+                r2 + "\n" + r3
         );
     }
 
@@ -70,12 +71,12 @@ public class AdminPermissionMapperTest implements BaseCrudTest
     @Test
     public void testUpdate()
     {
-        AdminPermission permission = new AdminPermission()
+        Role role = new Role()
                 .setId(1L)
                 .setFlag("更新测试1")
                 .setDescription("这是一条测试数据");
-        System.out.println(permission);
-        log.debug("更新{}条数据", mapper.update(permission));
+        System.out.println(role);
+        log.debug("更新{}条数据", mapper.update(role));
     }
 
     @Test
@@ -92,10 +93,10 @@ public class AdminPermissionMapperTest implements BaseCrudTest
         List<Long> list = Arrays.asList(
                 2L, 3L
         );
-        List<AdminPermission> permissions = mapper.queryBatch(list);
+        List<Role> roles = mapper.queryBatch(list);
 
-        log.debug("想要查询{}条数据，查询到{}条数据：\n", list.size(), permissions.size());
-        permissions.forEach(System.out::println);
+        log.debug("想要查询{}条数据，查询到{}条数据：\n", list.size(), roles.size());
+        roles.forEach(System.out::println);
     }
 
     @Test

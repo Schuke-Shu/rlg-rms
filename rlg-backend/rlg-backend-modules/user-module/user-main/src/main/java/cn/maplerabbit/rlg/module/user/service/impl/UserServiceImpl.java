@@ -7,16 +7,18 @@ import cn.maplerabbit.rlg.exception.UserException;
 import cn.maplerabbit.rlg.module.user.mapper.RoleMapper;
 import cn.maplerabbit.rlg.module.user.mapper.UserMapper;
 import cn.maplerabbit.rlg.module.user.mapper.UserRoleMapper;
+import cn.maplerabbit.rlg.module.user.service.ILoginInfoService;
 import cn.maplerabbit.rlg.module.user.service.IUserService;
-import cn.maplerabbit.rlg.pojo.user.dto.UserLoginDTO;
+import cn.maplerabbit.rlg.pojo.user.dto.UserEmailLoginDTO;
+import cn.maplerabbit.rlg.pojo.user.dto.UsernameLoginDTO;
 import cn.maplerabbit.rlg.pojo.user.dto.UserRegisterDTO;
 import cn.maplerabbit.rlg.pojo.user.entity.User;
 import cn.maplerabbit.rlg.pojo.user.vo.UserInfoVO;
 import cn.maplerabbit.rlg.property.JwtProperties;
 import cn.maplerabbit.rlg.entity.UserDetails;
+import cn.maplerabbit.rlg.util.ValidationCodeUtil;
 import com.alibaba.fastjson.JSON;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
@@ -51,22 +54,18 @@ public class UserServiceImpl
     private UserRoleMapper userRoleMapper;
     @Autowired
     private RoleMapper roleMapper;
-
-    /**
-     * 普通用户角色
-     */
-    private static final String ROLE_USER = "ROLE_USER";
+    @Autowired
+    private HttpSession session;
+    @Autowired
+    private ValidationCodeUtil validationCodeUtil;
+    @Autowired
+    private ILoginInfoService loginService;
 
     public UserServiceImpl()
     {
         log.debug("UserServiceImpl()...");
     }
 
-    /**
-     * 用户名注册
-     * @param userRegisterDTO
-     * @errorCode - adfads
-     */
     @Override
     @Transactional
     public void register(UserRegisterDTO userRegisterDTO)
@@ -106,81 +105,70 @@ public class UserServiceImpl
         );
     }
 
-    /**
-     * 用户名登录
-     *
-     * @return JWT字符串
-     */
     @Override
-    public String login(UserLoginDTO userLoginDTO)
+    public String login(UsernameLoginDTO userLoginDTO)
     {
         // 认证
-        Authentication authenticateResult =
-                authenticationManager.authenticate(
+        UserDetails userDetails =
+                (UserDetails) authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(
                                 userLoginDTO.getUsername(),
                                 userLoginDTO.getPassword()
                         )
                 );
-        log.trace("authenticateResult: {}", authenticateResult);
-
-        // 取出数据
-        UserDetails adminDetails = (UserDetails) authenticateResult.getPrincipal();
-        // 数据存入map
-        Map<String, Object> claims = new HashMap<>();
-        claims.put(CLAIMS_KEY_ID, adminDetails.getId());
-        claims.put(CLAIMS_KEY_USERNAME, adminDetails.getUsername());
-        claims.put(CLAIMS_KEY_PHONE, adminDetails.getPhone());
-        claims.put(CLAIMS_KEY_EMAIL, adminDetails.getEmail());
-        claims.put(CLAIMS_KEY_IP, adminDetails.getIp());
-        claims.put(CLAIMS_KEY_AUTHORITIES, JSON.toJSONString(adminDetails.getAuthorities()));
+        log.trace("Get UserDetails: {}", userDetails);
 
         // 存入JWT并返回
-        return generateJWT(claims);
+        return generateJWT(
+                getClaims(userDetails)
+        );
+    }
+
+    @Override
+    public void sendEmailLoginCode(String email)
+    {
+        // 向目标邮箱发送验证码
+        String code = validationCodeUtil.sendEmail(email);
+        // 将验证码绑定到session中
+        session.setAttribute(EMAIL_LOGIN_CODE_ID, code);
+    }
+
+    @Override
+    public String emailLogin(UserEmailLoginDTO userEmailLoginDTO)
+    {
+        // 获取存储在session中的验证码
+        String code = (String) session.getAttribute(EMAIL_LOGIN_CODE_ID);
+
+        // 验证
+        if (code == null)
+            throw new UserException(ServiceCode.ERR_NOT_FOUND, "请先获取验证码");
+        if (!code.equals(userEmailLoginDTO.getCode()))
+            throw new UserException(ServiceCode.ERR_BAD_REQUEST, "验证码不正确");
+
+        // 获取用户数据
+        UserDetails userDetails = loginService.loadUserByEmail(userEmailLoginDTO.getEmail());
+
+        log.debug("Get UserDetails: {}", userDetails);
+
+        // 存入JWT并返回
+        return generateJWT(
+                getClaims(userDetails)
+        );
     }
 
     @Override
     public String refresh(String jwt)
     {
-        return generateJWT(
-                Jwts
-                        .parser()
-                        .setSigningKey(jwtProperties.getSecretKey())
-                        .parseClaimsJws(jwt)
-                        .getBody()
-        );
+        Claims body = Jwts
+                .parser()
+                .setSigningKey(jwtProperties.getSecretKey())
+                .parseClaimsJws(jwt)
+                .getBody();
+
+        // 使用jwt中的数据重新生成jwt
+        return generateJWT(body);
     }
 
-    /**
-     * 生成jwt
-     *
-     * @param claims 要存储的数据
-     * @return JWT字符串
-     */
-    private String generateJWT(Map<String, Object> claims)
-    {
-        return Jwts.builder() // 获取JwtBuilder，用于构建JWT
-                // 配置Header
-                .setHeaderParam("alg", "HS256") // alg（algorithm：算法）
-                .setHeaderParam("typ", "JWT")   // typ（type：类型）
-                // 配置payload（存入数据）
-                .setClaims(claims)
-                // 配置Signature
-                .setExpiration(
-                        new Date(
-                                System.currentTimeMillis() + (long) jwtProperties.getUsableMinutes() * 60 * 1000
-                        )
-                ) // JWT过期时间
-                .signWith(
-                        SignatureAlgorithm.HS256, // 签名算法
-                        jwtProperties.getSecretKey()
-                )
-                .compact(); // 获取JWT
-    }
-
-    /**
-     * 获取用户信息
-     */
     @Override
     public UserInfoVO getUserInfo(Long id)
     {
@@ -195,5 +183,48 @@ public class UserServiceImpl
         BeanUtils.copyProperties(user, vo);
         // 返回
         return vo;
+    }
+
+    private Map<String, Object> getClaims(UserDetails userDetails)
+    {
+        Map<String, Object> claims = new HashMap<>();
+
+        // 获取用户数据并存入map
+        claims.put(CLAIMS_KEY_ID, userDetails.getId());
+        claims.put(CLAIMS_KEY_USERNAME, userDetails.getUsername());
+        claims.put(CLAIMS_KEY_PHONE, userDetails.getPhone());
+        claims.put(CLAIMS_KEY_EMAIL, userDetails.getEmail());
+        claims.put(CLAIMS_KEY_IP, userDetails.getIp());
+        claims.put(CLAIMS_KEY_AUTHORITIES, JSON.toJSONString(userDetails.getAuthorities()));
+
+        // 返回
+        return claims;
+    }
+
+    /**
+     * 生成jwt
+     *
+     * @param claims 要存储的数据
+     * @return JWT字符串
+     */
+    private String generateJWT(Map<String, Object> claims)
+    {
+        return Jwts.builder() // 获取JwtBuilder，用于构建JWT
+                // 配置Header
+                .setHeaderParam("alg", SignatureAlgorithm.HS256.getValue()) // alg（algorithm：算法）
+                .setHeaderParam("typ", JWT_TYPE)   // typ（type：类型）
+                // 配置payload（存入数据）
+                .setClaims(claims)
+                // 配置Signature
+                .setExpiration(
+                        new Date(
+                                System.currentTimeMillis() + (long) jwtProperties.getUsableMinutes() * 60 * 1000
+                        )
+                ) // JWT过期时间
+                .signWith(
+                        SignatureAlgorithm.HS256, // 签名算法
+                        jwtProperties.getSecretKey()
+                )
+                .compact(); // 获取JWT
     }
 }

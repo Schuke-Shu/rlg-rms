@@ -69,6 +69,8 @@ knife4j:
 rlg:
   security:
     urlAllowList:
+      - /user/email-login-code
+      - /user/email-login
       - /user/login
       - /user/register
       - /doc.html

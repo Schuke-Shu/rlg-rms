@@ -12,7 +12,8 @@ import java.util.List;
 
 @SpringBootTest
 @Slf4j
-public class UserPermissionMapperTest implements BaseCrudTest
+public class PermissionMapperTest
+        implements BaseCrudTest
 {
     @Autowired
     PermissionMapper mapper;

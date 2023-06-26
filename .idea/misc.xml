@@ -14,12 +14,14 @@
       <set>
         <option value="$PROJECT_DIR$/rlg-backend-mudules/pom.xml" />
         <option value="$PROJECT_DIR$/rlg-backend/rlg-backend-commen/pom.xml" />
+        <option value="$PROJECT_DIR$/rlg-backend/rlg-backend-const/pom.xml" />
         <option value="$PROJECT_DIR$/rlg-backend/rlg-backend-modules/admin-module/pom.xml" />
         <option value="$PROJECT_DIR$/rlg-backend/rlg-backend-modules/file-module/file-prov/pom.xml" />
         <option value="$PROJECT_DIR$/rlg-backend/rlg-backend-modules/module-prov/pom.xml" />
         <option value="$PROJECT_DIR$/rlg-backend/rlg-backend-modules/modules-prov/pom.xml" />
         <option value="$PROJECT_DIR$/rlg-backend/rlg-backend-modules/user-module/user-prov/pom.xml" />
         <option value="$PROJECT_DIR$/rlg-backend/rlg-backend-modules/valicode-module/pom.xml" />
+        <option value="$PROJECT_DIR$/rlg-backend/rlg-backend-utils/pom.xml" />
         <option value="$PROJECT_DIR$/rlg-backend/rlg-module-pojo/pom.xml" />
       </set>
     </option>

@@ -8,4 +8,6 @@ public interface ValidationMessageConst
     String USER_PASSWORD_NOTBLANK = "{user.password.notblank}";
     String USER_PASSWORD_SIZE = "{user.password.size}";
     String USER_PASSWORD_PATTERN = "{user.password.pattern}";
+    String USER_EMAIL = "{user.email}";
+    String VALIDATION_CODE_NOTBLANK = "{validationCode.notblank}";
 }

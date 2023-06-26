@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
@@ -13,7 +15,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 
 @ApiModel("用户信息")
-public class UserInfoVO
+public class UserInfoVO implements Serializable
 {
     @ApiModelProperty("id")
     private Long id;
