@@ -3,18 +3,20 @@ package cn.maplerabbit.rlg.aop;
 import cn.maplerabbit.rlg.enumpak.ServiceCode;
 import cn.maplerabbit.rlg.exception.ServiceException;
 import cn.maplerabbit.rlg.web.ErrorResult;
-import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.mail.MailException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import javax.validation.ConstraintViolationException;
+import java.util.StringJoiner;
 
 /**
  * 全局异常处理器
@@ -39,8 +41,23 @@ public class GlobalExceptionHandler
     public ErrorResult handleBindException(BindException e)
     {
         log.debug("-- BindException，msg：{}", e.getMessage());
-
         return ErrorResult.fail(ServiceCode.ERR_BAD_REQUEST, e.getFieldError().getDefaultMessage());
+    }
+
+    @ExceptionHandler
+    public ErrorResult handleConstraintViolationException(ConstraintViolationException e)
+    {
+        String msg;
+        StringJoiner joiner = new StringJoiner(", ");
+        e
+                .getConstraintViolations()
+                .forEach(ex -> {
+                    log.debug("-- ConstraintViolationException, msg:{}", ex.getMessage());
+                    joiner.add(ex.getMessage());
+                });
+
+        msg = joiner.toString();
+        return ErrorResult.fail(ServiceCode.ERR_BAD_REQUEST, msg);
     }
 
     @ExceptionHandler({
@@ -75,10 +92,10 @@ public class GlobalExceptionHandler
     }
 
     @ExceptionHandler
-    public ErrorResult handleExpiredJwtException(ExpiredJwtException e)
+    public ErrorResult handleMailException(MailException e)
     {
-        log.debug("-- ExpiredJwtException, msg: {}", e.getMessage());
-        return ErrorResult.fail(ServiceCode.ERR_JWT_EXPIRED, "您的登录信息已过期，请重新登录");
+        log.debug("-- MailException, msg: {}", e.getMessage());
+        return ErrorResult.fail(ServiceCode.ERR_REQUEST_FAIL, "邮件发送失败，请检查邮箱账号，或者稍后再试");
     }
 
     @ExceptionHandler

@@ -12,19 +12,4 @@
     <artifactId>rlg-backend-common</artifactId>
 
     <description>RedLeafGarden Backend common program</description>
-
-    <dependencies>
-
-        <!-- rlg-backend-utils -->
-        <dependency>
-            <groupId>cn.maplerabbit</groupId>
-            <artifactId>rlg-backend-utils</artifactId>
-        </dependency>
-
-        <!-- rlg-backend-const -->
-        <dependency>
-            <groupId>cn.maplerabbit</groupId>
-            <artifactId>rlg-backend-const</artifactId>
-        </dependency>
-    </dependencies>
 </project>

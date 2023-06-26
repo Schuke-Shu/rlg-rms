@@ -16,6 +16,7 @@ public enum ServiceCode
     ERR_DELETE(50010, "错误：删除数据错误"),
     ERR_UPDATE(50020, "错误：修改数据错误"),
     ERR_SELECT(50030, "错误：查询数据错误"),
+    ERR_REQUEST_FAIL(50100, "错误：请求失败"),
     ERR_JWT_EXPIRED(60100, "错误：JWT过期"),
     ERR_JWT_SIGNATURE(60200, "错误：JWT签名错误"),
     ERR_JWT_MALFORMED(60300, "错误：JWT格式错误"),

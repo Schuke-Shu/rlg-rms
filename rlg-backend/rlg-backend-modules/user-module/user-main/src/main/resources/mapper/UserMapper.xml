@@ -2,6 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.maplerabbit.rlg.module.user.mapper.UserMapper">
+    <sql id="count">
+        select count(*) from user
+    </sql>
+
+    <sql id="selectLoginInfo">
+        select
+            user.id,
+            user.username,
+            user.password,
+            user.avatar_url,
+            user.phone,
+            user.email,
+            user.enable,
+            permission.flag
+        from user
+                 left join user_role on user.id = user_role.user_id
+                 left join role_permission on user_role.role_id = role_permission.role_id
+                 left join permission on permission.id = role_permission.permission_id
+    </sql>
+
     <resultMap id="LoginInfoResultMap" type="cn.maplerabbit.rlg.pojo.user.vo.UserLoginVO">
         <id column="id" property="id" />
         <result column="username" property="username" />
@@ -19,31 +39,49 @@
 
     <!-- UserLoginVO getLoginInfoByUserName(String username); -->
     <select id="getLoginInfoByUserName" resultMap="LoginInfoResultMap">
-        select
-            user.id,
-            user.username,
-            user.password,
-            user.avatar_url,
-            user.phone,
-            user.email,
-            user.enable,
-            permission.flag
-        from user
-        left join user_role on user.id = user_role.user_id
-        left join role_permission on user_role.role_id = role_permission.role_id
-        left join permission on permission.id = role_permission.permission_id
+        <include refid="selectLoginInfo" />
         <where>
             user.username = #{username}
         </where>
     </select>
 
+    <!-- UserLoginVO getLoginInfoByEmail(String email); -->
+    <select id="getLoginInfoByEmail" resultMap="LoginInfoResultMap">
+        <include refid="selectLoginInfo" />
+        <where>
+            user.email = #{email}
+        </where>
+    </select>
+
+    <!-- UserLoginVO getLoginInfoByPhone(String phone); -->
+    <select id="getLoginInfoByPhone" resultMap="LoginInfoResultMap">
+        <include refid="selectLoginInfo" />
+        <where>
+            user.phone = #{phone}
+        </where>
+    </select>
+
     <!-- int countByUsername(String username); -->
     <select id="countByUsername" resultType="int">
-        select
-            count(*)
-        from user
+        <include refid="count" />
         <where>
             username = #{username}
+        </where>
+    </select>
+
+    <!-- int countByEmail(String email); -->
+    <select id="countByEmail" resultType="int">
+        <include refid="count" />
+        <where>
+            email = #{email}
+        </where>
+    </select>
+
+    <!-- int countByPhone(String phone); -->
+    <select id="countByPhone" resultType="int">
+        <include refid="count" />
+        <where>
+            phone = #{phone}
         </where>
     </select>
 

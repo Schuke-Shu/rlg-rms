@@ -12,7 +12,8 @@ import java.util.List;
 
 @SpringBootTest
 @Slf4j
-public class UserRoleWithPermissionMapperTest implements BaseCudTest
+public class RolePermissionMapperTest
+        implements BaseCudTest
 {
     @Autowired
     RolePermissionMapper mapper;

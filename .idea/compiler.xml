@@ -10,14 +10,12 @@
         <module name="log-main" />
         <module name="rlg-backend-common" />
         <module name="user-main" />
-        <module name="rlg-backend-const" />
         <module name="rlg-backend-test" />
         <module name="file-main" />
         <module name="valicode-main" />
         <module name="user-api" />
         <module name="rlg-backend-pojo" />
         <module name="front-main" />
-        <module name="rlg-backend-utils" />
         <module name="rlg-backend-main" />
         <module name="log-api" />
         <module name="front-api" />
@@ -31,6 +29,8 @@
       <module name="file-prov" target="1.8" />
       <module name="module-prov" target="1.8" />
       <module name="modules-prov" target="1.8" />
+      <module name="rlg-backend-const" target="1.8" />
+      <module name="rlg-backend-utils" target="1.8" />
       <module name="user-prov" target="1.8" />
       <module name="valicode-api" target="1.8" />
       <module name="valicode-main" target="1.8" />

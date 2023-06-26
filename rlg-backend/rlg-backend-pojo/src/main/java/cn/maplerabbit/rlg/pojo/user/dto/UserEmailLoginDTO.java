@@ -6,7 +6,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,25 +17,26 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @Accessors(chain = true)
 
-@ApiModel("用户登录DTO")
-public class UserLoginDTO
-        implements ValidationMessageConst
+@ApiModel("用户邮箱登录DTO")
+public class UserEmailLoginDTO
+        implements Serializable,
+                   ValidationMessageConst
 {
-    @ApiModelProperty(value = "用户名", required = true)
-    @NotBlank(message = USER_USERNAME_NOTBLANK)
-    private String username;
+    @ApiModelProperty(value = "邮箱", required = true)
+    @Email(message = USER_EMAIL)
+    private String email;
 
-    @ApiModelProperty(value = "密码", required = true)
-    @NotBlank(message = USER_PASSWORD_NOTBLANK)
-    private String password;
+    @ApiModelProperty(value = "验证码", required = true)
+    @NotBlank(message = VALIDATION_CODE_NOTBLANK)
+    private String code;
 
     @Override
     public String toString()
     {
         return new StringBuilder(this.getClass().getSimpleName())
                 .append('{')
-                .append("username='").append(username).append('\'')
-                .append(", password='").append(password).append('\'')
+                .append("email='").append(email).append('\'')
+                .append(", code='").append(code).append('\'')
                 .append('}')
                 .toString();
     }

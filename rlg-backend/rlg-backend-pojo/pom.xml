@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>cn.maplerabbit</groupId>
-            <artifactId>rlg-backend-const</artifactId>
+            <artifactId>rlg-backend-common</artifactId>
         </dependency>
     </dependencies>
 </project>
