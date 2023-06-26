@@ -48,10 +48,10 @@ knife4j:
 
 # 项目全局配置
 rlg:
-  # 文件系统相关配置
-  file:
-    # 文件根目录
-    root: D:/rlg
+  # 文件目录配置
+  directory:
+    # 根目录路径
+    rootDir: D:/rlg
   # JWT相关配置
   jwt:
     secretKey: RedLeafGarden-JsonWebToken-SecretKey

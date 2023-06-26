@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class FilePropertiesTest
 {
     @Autowired
-    private FileProperties file;
+    private DirectoryProperties file;
 
     @Test
     void test()
