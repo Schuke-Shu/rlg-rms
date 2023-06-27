@@ -2,7 +2,7 @@ package cn.maplerabbit.rlg.aop;
 
 import cn.maplerabbit.rlg.enumpak.ServiceCode;
 import cn.maplerabbit.rlg.exception.ServiceException;
-import cn.maplerabbit.rlg.web.ErrorResult;
+import cn.maplerabbit.rlg.entity.result.ErrorResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.mail.MailException;

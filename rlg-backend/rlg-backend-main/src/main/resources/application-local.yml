@@ -32,8 +32,6 @@ spring:
     password: lkwydyooqanydihb
     properties:
       mail.smtp.timeout: 60000
-  jackson:
-    time-zone: GMT+8
 
 # 日志配置
 logging:
@@ -47,8 +45,3 @@ rlg:
   directory:
     # 根目录路径
     rootDir: D:/rlg
-  # JWT相关配置
-  jwt:
-    secretKey: RedLeafGarden-JsonWebToken-SecretKey
-    # JWT的有效时长（单位分钟）：一星期
-    usableMinutes: 10080

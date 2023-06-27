@@ -2,12 +2,6 @@
 #  配置文件主体  #
 # ============ #
 
-# Web服务配置
-server:
-  servlet:
-    encoding:
-      charset: UTF-8
-
 # Spring配置
 spring:
   # Profile相关配置
@@ -46,6 +40,14 @@ spring:
   mvc:
     servlet:
       load-on-startup: 1
+  jackson:
+    time-zone: GMT+8
+
+# Web服务配置
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
 
 # MyBatis配置
 mybatis:
@@ -78,6 +80,20 @@ rlg:
     staticDir: ${rlg.file.rootDir}/static
     # 用户文件仓库路径
     storeDir: ${rlg.file.rootDir}/store
+  # JWT相关配置
+  jwt:
+    # jwt签名算法
+    algorithm: HS256
+    # jwt类型
+    type: JWT
+    # 密钥
+    secretKey: RedLeafGarden-JsonWebToken-SecretKey
+    # JWT的有效时长（单位分钟）：一星期
+    usableMinutes: 10080
+    # 长度下限
+    minLength: 105
+    # 存放jwt的请求头名称
+    header: Authorization
   security:
     urlAllowList:
       - /user/email-login

@@ -14,14 +14,6 @@ public interface IUserService
      * 普通用户角色
      */
     String ROLE_USER = "ROLE_USER";
-    /**
-     * 用户邮箱登录验证码服务id
-     */
-    String EMAIL_LOGIN_CODE_ID = "USER_EMAIL_REGISTER";
-    /**
-     * jwt类型
-     */
-    String JWT_TYPE = "JWT";
 
     /**
      * 用户名注册

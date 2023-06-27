@@ -1,4 +1,4 @@
-package cn.maplerabbit.rlg.web;
+package cn.maplerabbit.rlg.entity.result;
 
 import cn.maplerabbit.rlg.enumpak.ServiceCode;
 

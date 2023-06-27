@@ -6,7 +6,7 @@ import cn.maplerabbit.rlg.exception.TokenException;
 import cn.maplerabbit.rlg.property.JwtProperties;
 import cn.maplerabbit.rlg.entity.LoginPrincipal;
 import cn.maplerabbit.rlg.util.IpUtil;
-import cn.maplerabbit.rlg.web.ErrorResult;
+import cn.maplerabbit.rlg.entity.result.ErrorResult;
 import com.alibaba.fastjson.JSON;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
@@ -35,17 +35,10 @@ public class JwtAuthorizationFilter
         extends OncePerRequestFilter
         implements LoginPrincipalConst
 {
-    /**
-     * JWT长度下限
-     */
-    public static final int JWT_MIN_LENGTH = 105;
-    /**
-     * 包含权限的请求头名称
-     */
-    private static final String AUTHORIZATION_HEADER = "Authorization";
-
     @Autowired
     private JwtProperties jwtProperties;
+    @Autowired
+    private HttpServletResponse response;
 
     public JwtAuthorizationFilter()
     {
@@ -62,8 +55,6 @@ public class JwtAuthorizationFilter
             ServletException,
             IOException
     {
-        response.setContentType("application/json;charset=utf-8");
-
         String secretKey = jwtProperties.getSecretKey();
 
         // 判断密钥是否为空
@@ -74,11 +65,11 @@ public class JwtAuthorizationFilter
         SecurityContextHolder.clearContext();
 
         // 从请求头获取JWT
-        String jwt = request.getHeader(AUTHORIZATION_HEADER);
+        String jwt = request.getHeader(jwtProperties.getHeader());
 
         log.trace("jwt: {}", jwt);
         // 检查JWT是否有效
-        if (!StringUtils.hasText(jwt) || jwt.length() < JWT_MIN_LENGTH)
+        if (!StringUtils.hasText(jwt) || jwt.length() < jwtProperties.getMinLength())
         {
             // JWT无效，放行
             log.debug("JWT is blank, to next...");
@@ -102,21 +93,21 @@ public class JwtAuthorizationFilter
             // JWT过期
             log.debug("-- ExpiredJwtException, jwt过期");
             log.trace("JWT: {}", jwt);
-            error(response, ServiceCode.ERR_JWT_EXPIRED, "您的登录信息已过期，请重新登录");
+            error(ServiceCode.ERR_JWT_EXPIRED, "您的登录信息已过期，请重新登录");
             return;
         }
         catch (SignatureException e)
         {
             // 签名错误，JWT被篡改
             log.warn("-- SignatureException，ip: {}", request.getRemoteAddr());
-            error(response, ServiceCode.ERR_JWT_SIGNATURE, "非法访问！");
+            error(ServiceCode.ERR_JWT_SIGNATURE, "非法访问！");
             return;
         }
         catch (MalformedJwtException e)
         {
             // JWT格式不正确，JWT被篡改
             log.warn("-- MalformedJwtException，ip: {}", request.getRemoteAddr());
-            error(response, ServiceCode.ERR_JWT_MALFORMED, "非法访问！");
+            error(ServiceCode.ERR_JWT_MALFORMED, "非法访问！");
             return;
         }
         catch (Throwable e)
@@ -124,7 +115,7 @@ public class JwtAuthorizationFilter
             // 出现未处理异常
             log.error("-- Unhandled Exception: {}", e.getClass().getName());
             e.printStackTrace();
-            error(response, ServiceCode.ERR_UNKNOWN, "服务器忙，请稍后再试");
+            error(ServiceCode.ERR_UNKNOWN, "服务器忙，请稍后再试");
             return;
         }
 
@@ -169,8 +160,10 @@ public class JwtAuthorizationFilter
     /**
      * 向客户端返回异常信息
      */
-    private void error(HttpServletResponse response, ServiceCode code, String msg)
+    private void error(ServiceCode code, String msg)
     {
+        response.setContentType("application/json;charset=utf-8");
+
         try
         {
             PrintWriter writer = response.getWriter();

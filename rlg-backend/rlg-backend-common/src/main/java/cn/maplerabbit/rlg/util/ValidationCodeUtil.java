@@ -70,7 +70,7 @@ public class ValidationCodeUtil
 
         if (value == null)
             throw new CodeException(ServiceCode.ERR_NOT_FOUND, "验证码已过期");
-        if (! value.equals(code))
+        if (! value.equalsIgnoreCase(code))
             throw new CodeException(ServiceCode.ERR_BAD_REQUEST, "验证码错误");
 
         redisUtil.remove(key);

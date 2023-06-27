@@ -14,5 +14,5 @@ public interface ILoginInfoService
      * @param email 邮箱
      * @return 用户信息
      */
-    public UserDetails loadUserByEmail(String email);
+    UserDetails loadUserByEmail(String email);
 }

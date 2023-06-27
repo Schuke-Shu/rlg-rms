@@ -3,7 +3,6 @@ package cn.maplerabbit.rlg.module.user.service.impl;
 import cn.maplerabbit.rlg.constpak.LoginPrincipalConst;
 import cn.maplerabbit.rlg.entity.AssociateUnit;
 import cn.maplerabbit.rlg.enumpak.ServiceCode;
-import cn.maplerabbit.rlg.exception.CodeException;
 import cn.maplerabbit.rlg.exception.UserException;
 import cn.maplerabbit.rlg.module.user.mapper.RoleMapper;
 import cn.maplerabbit.rlg.module.user.mapper.UserMapper;
@@ -17,7 +16,6 @@ import cn.maplerabbit.rlg.pojo.user.entity.User;
 import cn.maplerabbit.rlg.pojo.user.vo.UserInfoVO;
 import cn.maplerabbit.rlg.property.JwtProperties;
 import cn.maplerabbit.rlg.entity.UserDetails;
-import cn.maplerabbit.rlg.util.RedisUtil;
 import cn.maplerabbit.rlg.util.ValidationCodeUtil;
 import com.alibaba.fastjson.JSON;
 import io.jsonwebtoken.*;
@@ -26,13 +24,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
@@ -57,8 +53,6 @@ public class UserServiceImpl
     private UserRoleMapper userRoleMapper;
     @Autowired
     private RoleMapper roleMapper;
-    @Autowired
-    private HttpServletRequest request;
     @Autowired
     private ValidationCodeUtil validationCodeUtil;
     @Autowired
@@ -181,11 +175,15 @@ public class UserServiceImpl
         return vo;
     }
 
+    /**
+     * 从UserDetails中获取信息并存入map
+     * @param userDetails 用户信息
+     * @return 存储用户信息的map
+     */
     private Map<String, Object> getClaims(UserDetails userDetails)
     {
         Map<String, Object> claims = new HashMap<>();
 
-        // 获取用户数据并存入map
         claims.put(CLAIMS_KEY_ID, userDetails.getId());
         claims.put(CLAIMS_KEY_USERNAME, userDetails.getUsername());
         claims.put(CLAIMS_KEY_PHONE, userDetails.getPhone());
@@ -193,7 +191,6 @@ public class UserServiceImpl
         claims.put(CLAIMS_KEY_IP, userDetails.getIp());
         claims.put(CLAIMS_KEY_AUTHORITIES, JSON.toJSONString(userDetails.getAuthorities()));
 
-        // 返回
         return claims;
     }
 
@@ -207,8 +204,8 @@ public class UserServiceImpl
     {
         return Jwts.builder() // 获取JwtBuilder，用于构建JWT
                 // 配置Header
-                .setHeaderParam("alg", SignatureAlgorithm.HS256.getValue()) // alg（algorithm：算法）
-                .setHeaderParam("typ", JWT_TYPE)   // typ（type：类型）
+                .setHeaderParam("alg", jwtProperties.getAlgorithm())
+                .setHeaderParam("typ", jwtProperties.getType())
                 // 配置payload（存入数据）
                 .setClaims(claims)
                 // 配置Signature
@@ -218,7 +215,9 @@ public class UserServiceImpl
                         )
                 ) // JWT过期时间
                 .signWith(
-                        SignatureAlgorithm.HS256, // 签名算法
+                        SignatureAlgorithm.forName(
+                                jwtProperties.getAlgorithm()
+                        ),
                         jwtProperties.getSecretKey()
                 )
                 .compact(); // 获取JWT
