@@ -37,12 +37,6 @@ public interface IUserService
     String login(UsernameLoginDTO userLoginDTO);
 
     /**
-     * 发送email登录验证码
-     * @param email 目标email账号
-     */
-    void sendEmailLoginCode(String email);
-
-    /**
      * 用户email登录
      * @param userEmailLoginDTO email登录信息
      * @return jwt token

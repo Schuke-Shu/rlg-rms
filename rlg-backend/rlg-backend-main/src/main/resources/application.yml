@@ -68,6 +68,10 @@ knife4j:
 
 # 项目全局配置
 rlg:
+  # 验证码配置
+  code:
+    # 有效时间（单位分钟）
+    usableTime: 15
   # 文件目录配置
   directory:
     # 静态资源路径
@@ -76,7 +80,6 @@ rlg:
     storeDir: ${rlg.file.rootDir}/store
   security:
     urlAllowList:
-      - /user/email-login-code
       - /user/email-login
       - /user/login
       - /user/register

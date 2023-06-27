@@ -74,7 +74,7 @@ public class GlobalExceptionHandler
     public ErrorResult handleDisabledException(DisabledException e)
     {
         log.debug("-- DisabledException, msg: {}", e.getMessage());
-        return ErrorResult.fail(ServiceCode.ERR_UNAUTHORIZED_DISABLED, "账号已经被禁用！");
+        return ErrorResult.fail(ServiceCode.ERR_UNAUTHORIZED, "账号已经被禁用！");
     }
 
     @ExceptionHandler

@@ -3,6 +3,7 @@ package cn.maplerabbit.rlg.module.user.service.impl;
 import cn.maplerabbit.rlg.constpak.LoginPrincipalConst;
 import cn.maplerabbit.rlg.entity.AssociateUnit;
 import cn.maplerabbit.rlg.enumpak.ServiceCode;
+import cn.maplerabbit.rlg.exception.CodeException;
 import cn.maplerabbit.rlg.exception.UserException;
 import cn.maplerabbit.rlg.module.user.mapper.RoleMapper;
 import cn.maplerabbit.rlg.module.user.mapper.UserMapper;
@@ -16,6 +17,7 @@ import cn.maplerabbit.rlg.pojo.user.entity.User;
 import cn.maplerabbit.rlg.pojo.user.vo.UserInfoVO;
 import cn.maplerabbit.rlg.property.JwtProperties;
 import cn.maplerabbit.rlg.entity.UserDetails;
+import cn.maplerabbit.rlg.util.RedisUtil;
 import cn.maplerabbit.rlg.util.ValidationCodeUtil;
 import com.alibaba.fastjson.JSON;
 import io.jsonwebtoken.*;
@@ -29,6 +31,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -55,7 +58,7 @@ public class UserServiceImpl
     @Autowired
     private RoleMapper roleMapper;
     @Autowired
-    private HttpSession session;
+    private HttpServletRequest request;
     @Autowired
     private ValidationCodeUtil validationCodeUtil;
     @Autowired
@@ -125,25 +128,13 @@ public class UserServiceImpl
     }
 
     @Override
-    public void sendEmailLoginCode(String email)
-    {
-        // 向目标邮箱发送验证码
-        String code = validationCodeUtil.sendEmail(email);
-        // 将验证码绑定到session中
-        session.setAttribute(EMAIL_LOGIN_CODE_ID, code);
-    }
-
-    @Override
     public String emailLogin(UserEmailLoginDTO userEmailLoginDTO)
     {
-        // 获取存储在session中的验证码
-        String code = (String) session.getAttribute(EMAIL_LOGIN_CODE_ID);
-
-        // 验证
-        if (code == null)
-            throw new UserException(ServiceCode.ERR_NOT_FOUND, "请先获取验证码");
-        if (!code.equals(userEmailLoginDTO.getCode()))
-            throw new UserException(ServiceCode.ERR_BAD_REQUEST, "验证码不正确");
+        validationCodeUtil.validate(
+                request.getRequestURI(),
+                userEmailLoginDTO.getEmail(),
+                userEmailLoginDTO.getCode()
+        );
 
         // 获取用户数据
         UserDetails userDetails = loginService.loadUserByEmail(userEmailLoginDTO.getEmail());

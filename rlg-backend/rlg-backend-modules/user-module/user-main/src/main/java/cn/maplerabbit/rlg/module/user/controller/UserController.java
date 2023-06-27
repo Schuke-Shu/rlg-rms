@@ -6,6 +6,7 @@ import cn.maplerabbit.rlg.module.user.service.IUserService;
 import cn.maplerabbit.rlg.pojo.user.dto.UserEmailLoginDTO;
 import cn.maplerabbit.rlg.pojo.user.dto.UsernameLoginDTO;
 import cn.maplerabbit.rlg.pojo.user.dto.UserRegisterDTO;
+import cn.maplerabbit.rlg.util.ValidationCodeUtil;
 import cn.maplerabbit.rlg.web.JsonResult;
 import cn.maplerabbit.rlg.web.SuccessResult;
 import io.swagger.annotations.Api;
@@ -39,6 +40,10 @@ public class UserController
 
     @Autowired
     private IUserService userService;
+    @Autowired
+    private ValidationCodeUtil validationCodeUtil;
+    @Autowired
+    private HttpServletRequest request;
 
     public UserController()
     {
@@ -59,11 +64,11 @@ public class UserController
         return SuccessResult.ok(userService.login(userLoginDTO));
     }
 
-    @ApiOperation("获取email登录验证码")
-    @GetMapping("/email-login-code")
+    @ApiOperation("获取邮箱登录验证码")
+    @GetMapping("/email-login")
     public JsonResult<?> getEmailRegisterCode(@Email(message = USER_EMAIL) String email)
     {
-        userService.sendEmailLoginCode(email);
+        validationCodeUtil.sendEmail(request.getRequestURI(), email);
         return SuccessResult.ok();
     }
 

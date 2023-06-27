@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:mysql://localhost:3306/rlg_rms?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=Asia/Chongqing</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="0@127.0.0.1" uuid="e226198e-e53c-4fe2-93a0-320bfd49e920">
+      <driver-ref>redis</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>jdbc.RedisDriver</jdbc-driver>
+      <jdbc-url>jdbc:redis://127.0.0.1:6379/0</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
