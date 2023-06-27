@@ -33,7 +33,7 @@ public class GlobalExceptionHandler
     @ExceptionHandler
     public ErrorResult handleServiceException(ServiceException e)
     {
-        log.debug("-- ServiceException，code：{}，msg：{}", e.getCode().getStatus(), e.getMessage());
+        log.debug("-- {}，code：{}，msg：{}", e.getClass().getSimpleName(), e.getCode().getStatus(), e.getMessage());
         return ErrorResult.fail(e);
     }
 

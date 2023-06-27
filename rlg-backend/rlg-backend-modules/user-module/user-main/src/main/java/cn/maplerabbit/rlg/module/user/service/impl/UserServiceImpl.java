@@ -128,10 +128,15 @@ public class UserServiceImpl
     }
 
     @Override
+    public void getEmailLoginCode(String email)
+    {
+        validationCodeUtil.sendEmail(email);
+    }
+
+    @Override
     public String emailLogin(UserEmailLoginDTO userEmailLoginDTO)
     {
         validationCodeUtil.validate(
-                request.getRequestURI(),
                 userEmailLoginDTO.getEmail(),
                 userEmailLoginDTO.getCode()
         );

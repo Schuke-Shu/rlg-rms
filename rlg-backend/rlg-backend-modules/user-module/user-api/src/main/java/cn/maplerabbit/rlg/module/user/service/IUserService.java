@@ -4,7 +4,6 @@ import cn.maplerabbit.rlg.pojo.user.dto.UserEmailLoginDTO;
 import cn.maplerabbit.rlg.pojo.user.dto.UsernameLoginDTO;
 import cn.maplerabbit.rlg.pojo.user.dto.UserRegisterDTO;
 import cn.maplerabbit.rlg.pojo.user.vo.UserInfoVO;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 /**
  * 用户服务接口
@@ -37,7 +36,13 @@ public interface IUserService
     String login(UsernameLoginDTO userLoginDTO);
 
     /**
-     * 用户email登录
+     * 获取邮箱登录验证码
+     * @param email 邮箱
+     */
+    void getEmailLoginCode(String email);
+
+    /**
+     * 用户邮箱登录
      * @param userEmailLoginDTO email登录信息
      * @return jwt token
      */

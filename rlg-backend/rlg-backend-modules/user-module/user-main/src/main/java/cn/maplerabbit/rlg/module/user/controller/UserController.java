@@ -42,8 +42,6 @@ public class UserController
     private IUserService userService;
     @Autowired
     private ValidationCodeUtil validationCodeUtil;
-    @Autowired
-    private HttpServletRequest request;
 
     public UserController()
     {
@@ -66,9 +64,9 @@ public class UserController
 
     @ApiOperation("获取邮箱登录验证码")
     @GetMapping("/email-login")
-    public JsonResult<?> getEmailRegisterCode(@Email(message = USER_EMAIL) String email)
+    public JsonResult<?> getEmailLoginCode(@Email(message = USER_EMAIL) String email)
     {
-        validationCodeUtil.sendEmail(request.getRequestURI(), email);
+        userService.getEmailLoginCode(email);
         return SuccessResult.ok();
     }
 

@@ -10,8 +10,12 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 验证码工具
+ * <p>验证码存储到redis时，使用<strong>“请求地址:账户”</strong>的形式作为key值，所以要求<strong>获取与验证时的接口地址要相同</strong></p>
+ * <p>获取时采用get请求，验证时采用post请求</p>
  */
 @Slf4j
 @Component
@@ -25,14 +29,16 @@ public class ValidationCodeUtil
     private RedisUtil<String> redisUtil;
     @Autowired
     private CodeProperties codeProperties;
+    @Autowired
+    private HttpServletRequest request;
 
-    public void sendEmail(String requestPath, String email)
+    public void sendEmail(String email)
     {
         // 生成验证码
         String code = generateCode();
 
         // 将验证码存储到redis中
-        saveCode(requestPath, email, code);
+        saveCode(email, code);
 
         // 设置邮件内容
         SimpleMailMessage msg = new SimpleMailMessage();
@@ -57,9 +63,9 @@ public class ValidationCodeUtil
      * @param code          验证码
      * @return 是否验证成功
      */
-    public void validate(String requestPath, String account, String code)
+    public void validate(String account, String code)
     {
-        String key = redisUtil.key(requestPath, account);
+        String key = redisUtil.key(request.getRequestURI(), account);
         String value = redisUtil.get(key);
 
         if (value == null)
@@ -76,9 +82,9 @@ public class ValidationCodeUtil
      * @param account       账户名称
      * @param code          验证码
      */
-    private void saveCode(String requestPath, String account, String code)
+    private void saveCode(String account, String code)
     {
-        String key = redisUtil.key(requestPath, account);
+        String key = redisUtil.key(request.getRequestURI(), account);
 
         if ( !
                 redisUtil.set(
