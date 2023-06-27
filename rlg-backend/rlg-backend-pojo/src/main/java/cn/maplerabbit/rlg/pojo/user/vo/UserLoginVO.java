@@ -18,8 +18,8 @@ import java.util.List;
 @ApiModel("用户登录信息")
 public class UserLoginVO implements Serializable
 {
-    @ApiModelProperty("id")
-    private Long id;
+    @ApiModelProperty("uuid")
+    private String uuid;
     @ApiModelProperty("用户名")
     private String username;
     @ApiModelProperty("密码")
@@ -40,9 +40,10 @@ public class UserLoginVO implements Serializable
     {
         return new StringBuilder(this.getClass().getSimpleName())
                 .append('{')
-                .append("id=").append(id)
+                .append("uuid='").append(uuid).append('\'')
                 .append(", username='").append(username).append('\'')
                 .append(", password='").append(password).append('\'')
+                .append(", avatarUrl='").append(avatarUrl).append('\'')
                 .append(", phone='").append(phone).append('\'')
                 .append(", email='").append(email).append('\'')
                 .append(", enable=").append(enable)

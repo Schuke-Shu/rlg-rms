@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class UserLoginLog implements Serializable
 {
     private Long id;
-    private Long userId;
+    private String userUuid;
     /**
      * 用户名（冗余）
      */
@@ -42,11 +42,12 @@ public class UserLoginLog implements Serializable
     private LocalDateTime modifiedTime;
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return new StringBuilder(this.getClass().getSimpleName())
                 .append('{')
                 .append("id=").append(id)
-                .append(", userId=").append(userId)
+                .append(", userUuid='").append(userUuid).append('\'')
                 .append(", username='").append(username).append('\'')
                 .append(", ip='").append(ip).append('\'')
                 .append(", engine='").append(engine).append('\'')

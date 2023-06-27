@@ -10,6 +10,7 @@ import cn.maplerabbit.rlg.util.ValidationCodeUtil;
 import cn.maplerabbit.rlg.entity.result.JsonResult;
 import cn.maplerabbit.rlg.entity.result.SuccessResult;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,7 @@ public class UserController
 
     @ApiOperation("获取邮箱登录验证码")
     @GetMapping("/email-login")
+    @ApiImplicitParam(name = "email", value = "登录邮箱", required = true, dataType = "string")
     public JsonResult<?> getEmailLoginCode(@Email(message = USER_EMAIL) String email)
     {
         userService.getEmailLoginCode(email);
@@ -84,10 +86,10 @@ public class UserController
         return SuccessResult.ok(userService.refresh(request.getHeader(AUTHORIZATION_HEADER)));
     }
 
-    @ApiOperation("获取用户信息")
+    @ApiOperation("通过jwt获取用户信息")
     @GetMapping("/user-info")
     public JsonResult<?> getUserInfo(@ApiIgnore @AuthenticationPrincipal LoginPrincipal principal)
     {
-        return SuccessResult.ok(userService.getUserInfo(principal.getId()));
+        return SuccessResult.ok(userService.getUserInfo(principal.getUuid()));
     }
 }

@@ -2,13 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.maplerabbit.rlg.module.user.mapper.UserMapper">
+    <update id="updateLogin">
+        update user set
+            last_login_time = #{time},
+            last_login_ip = #{ip}
+        <where>
+            uuid = #{uuid}
+        </where>
+    </update>
+
     <sql id="count">
         select count(*) from user
     </sql>
 
     <sql id="selectLoginInfo">
         select
-            user.id,
+            user.uuid,
             user.username,
             user.password,
             user.avatar_url,
@@ -17,13 +26,13 @@
             user.enable,
             permission.flag
         from user
-                 left join user_role on user.id = user_role.user_id
+                 left join user_role on user.uuid = user_role.user_uuid
                  left join role_permission on user_role.role_id = role_permission.role_id
                  left join permission on permission.id = role_permission.permission_id
     </sql>
 
     <resultMap id="LoginInfoResultMap" type="cn.maplerabbit.rlg.pojo.user.vo.UserLoginVO">
-        <id column="id" property="id" />
+        <id column="uuid" property="uuid" />
         <result column="username" property="username" />
         <result column="password" property="password" />
         <result column="avatar_url" property="avatarUrl" />
@@ -87,18 +96,20 @@
 
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
-        id, uuid, username, password, avatar_url, real_name, gender, phone, email, birth, description, enable, sign_up_time, create_time, modified_time
+        uuid, username, password, avatar_url, real_name, gender, phone, email, birth, description, enable, last_login_time, last_login_ip, sign_up_time
+    </sql>
+    <sql id="BaseQueryColumns">
+        uuid, username, password, avatar_url, real_name, gender, phone, email, birth, description, enable, last_login_time, last_login_ip, sign_up_time, create_time, modified_time
     </sql>
     <sql id="save">
-        null, #{uuid}, #{username}, #{password}, #{avatarUrl}, #{realName}, #{gender}, #{phone}, #{email}, #{birth}, #{description}, #{enable}, #{signUpTime}
+        #{uuid}, #{username}, #{password}, #{avatarUrl}, #{realName}, #{gender}, #{phone}, #{email}, #{birth}, #{description}, #{enable}, #{lastLoginTime}, #{lastLoginIp}, #{signUpTime}
     </sql>
     <sql id="saveBatch">
-        null, #{i.uuid}, #{i.username}, #{i.password}, #{i.avatarUrl}, #{i.realName}, #{i.gender}, #{i.phone}, #{i.email}, #{i.birth}, #{i.description}, #{i.enable}, #{i.signUpTime}
+        #{i.uuid}, #{i.username}, #{i.password}, #{i.avatarUrl}, #{i.realName}, #{i.gender}, #{i.phone}, #{i.email}, #{i.birth}, #{i.description}, #{i.enable}, #{i.lastLoginTime}, #{i.lastLoginIp}, #{i.signUpTime}
     </sql>
 
     <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.user.entity.User">
-        <id column="id" property="id" />
-        <result column="uuid" property="uuid" />
+        <id column="uuid" property="uuid" />
         <result column="username" property="username" />
         <result column="password" property="password" />
         <result column="avatar_url" property="avatarUrl" />
@@ -109,6 +120,8 @@
         <result column="birth" property="birth" />
         <result column="description" property="description" />
         <result column="enable" property="enable" />
+        <result column="last_login_time" property="lastLoginTime" />
+        <result column="last_login_ip" property="lastLoginIp" />
         <result column="sign_up_time" property="signUpTime" />
         <result column="create_time" property="createTime" />
         <result column="modified_time" property="modifiedTime" />
@@ -118,7 +131,7 @@
         insert into user(
             <include refid="BaseColumns" />
         ) values (
-            <include refid="save" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+            <include refid="save" />
         )
     </insert>
 
@@ -127,23 +140,22 @@
             <include refid="BaseColumns" />
         ) values
         <foreach collection="list" item="i" separator=", ">
-            (<include refid="saveBatch" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            (<include refid="saveBatch" />)
         </foreach>
     </insert>
 
     <delete id="remove">
-        delete from user where id = #{pk}
+        delete from user where uuid = #{pk}
     </delete>
 
     <delete id="removeBatch">
-        delete from user where id in
+        delete from user where user.uuid in
         <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
     </delete>
 
     <update id="update">
         update user
         <set>
-            <if test="uuid != null">uuid = #{uuid},</if>
             <if test="username != null">username = #{username},</if>
             <if test="password != null">password = #{password},</if>
             <if test="avatarUrl != null">avatar_url = #{avatarUrl},</if>
@@ -154,29 +166,30 @@
             <if test="birth != null">birth = #{birth},</if>
             <if test="description != null">description = #{description},</if>
             <if test="enable != null">enable = #{enable},</if>
+            <if test="lastLoginTime != null">last_login_time = #{lastLoginTime},</if>
+            <if test="lastLoginIp != null">last_login_ip = #{lastLoginIp},</if>
             <if test="signUpTime != null">sign_up_time = #{signUpTime},</if>
-            modified_time = CURRENT_TIMESTAMP
         </set>
         <where>
-            id = #{id}
+            uuid = #{uuid}
         </where>
     </update>
 
     <select id="query" resultMap="BaseResultMap">
         select
-            <include refid="BaseColumns" />
+            <include refid="BaseQueryColumns" />
         from user
         <where>
-            id = #{pk}
+            uuid = #{pk}
         </where>
     </select>
 
     <select id="queryBatch" resultMap="BaseResultMap">
         select
-            <include refid="BaseColumns" />
+            <include refid="BaseQueryColumns" />
         from user
         <where>
-            id in
+            uuid in
             <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
         </where>
     </select>

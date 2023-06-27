@@ -22,8 +22,8 @@ public class UserRoleMapperTest
     @Test
     public void testSave()
     {
-        AssociateUnit<Long, Long> unit = new AssociateUnit<Long, Long>()
-                .setLeft(1L)
+        AssociateUnit<String, Long> unit = new AssociateUnit<String, Long>()
+                .setLeft("1")
                 .setRight(1L);
         System.out.println(unit);
         log.debug("插入{}条数据：\n{}", mapper.save(unit), unit);
@@ -32,12 +32,12 @@ public class UserRoleMapperTest
     @Test
     public void testSaveBatch()
     {
-        AssociateUnit<Long, Long> u2 = new AssociateUnit<Long, Long>()
-                .setLeft(2L)
+        AssociateUnit<String, Long> u2 = new AssociateUnit<String, Long>()
+                .setLeft("2")
                 .setRight(2L);
         System.out.println(u2);
-        AssociateUnit<Long, Long> u3 = new AssociateUnit<Long, Long>()
-                .setLeft(3L)
+        AssociateUnit<String, Long> u3 = new AssociateUnit<String, Long>()
+                .setLeft("3")
                 .setRight(3L);
         System.out.println(u3);
 

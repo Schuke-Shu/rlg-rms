@@ -15,7 +15,7 @@ import java.util.Collection;
 @EqualsAndHashCode(callSuper = true)
 public class UserDetails extends User implements Serializable
 {
-    private final Long id;
+    private final String uuid;
     /**
      * 手机号
      */
@@ -30,7 +30,7 @@ public class UserDetails extends User implements Serializable
     private final String ip;
 
     public UserDetails(
-            Long id,
+            String uuid,
             String username,
             String password,
             String phone,
@@ -41,7 +41,7 @@ public class UserDetails extends User implements Serializable
     )
     {
         super(username, password, enabled, true, true, true, authorities);
-        this.id = id;
+        this.uuid = uuid;
         this.phone = phone;
         this.email = email;
         this.ip = ip;
@@ -52,7 +52,7 @@ public class UserDetails extends User implements Serializable
     {
         return new StringBuilder(this.getClass().getSimpleName())
                 .append('{')
-                .append("id=").append(id)
+                .append("uuid='").append(uuid).append('\'')
                 .append(", phone='").append(phone).append('\'')
                 .append(", email='").append(email).append('\'')
                 .append(", ip='").append(ip).append('\'')

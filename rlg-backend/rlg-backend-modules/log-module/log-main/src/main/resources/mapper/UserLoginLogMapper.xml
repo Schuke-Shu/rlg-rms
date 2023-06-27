@@ -4,18 +4,21 @@
 <mapper namespace="cn.maplerabbit.rlg.module.log.mapper.UserLoginLogMapper">
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
-        id, user_id, username, ip, engine, time, create_time, modified_time
+        id, user_uuid, username, ip, engine, time
+    </sql>
+    <sql id="BaseQueryColumns">
+        id, user_uuid, username, ip, engine, time, create_time, modified_time
     </sql>
     <sql id="save">
-        null, #{userId}, #{username}, #{ip}, #{engine}, #{time}
+        null, #{userUuid}, #{username}, #{ip}, #{engine}, #{time}
     </sql>
     <sql id="saveBatch">
-        null, #{i.userId}, #{i.username}, #{i.ip}, #{i.engine}, #{i.time}
+        null, #{i.userUuid}, #{i.username}, #{i.ip}, #{i.engine}, #{i.time}
     </sql>
 
     <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.log.entity.UserLoginLog">
         <id column="id" property="id" />
-        <result column="user_id" property="userId" />
+        <result column="user_uuid" property="userUuid" />
         <result column="username" property="username" />
         <result column="ip" property="ip" />
         <result column="engine" property="engine" />
@@ -28,7 +31,7 @@
         insert into user_login_log(
             <include refid="BaseColumns" />
         ) values (
-            <include refid="save" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+            <include refid="save" />
         )
     </insert>
 
@@ -37,7 +40,7 @@
             <include refid="BaseColumns" />
         ) values
         <foreach collection="list" item="i" separator=", ">
-            (<include refid="saveBatch" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            (<include refid="saveBatch" />)
         </foreach>
     </insert>
 
@@ -53,12 +56,11 @@
     <update id="update">
         update user_login_log
         <set>
-            <if test="userId != null">user_id = #{userId},</if>
+            <if test="userUuid != null">user_uuid = #{userUuid},</if>
             <if test="username != null">username = #{username},</if>
             <if test="engine != null">engine = #{engine},</if>
             <if test="ip != null">ip = #{ip},</if>
             <if test="time != null">time = #{time},</if>
-            modified_time = CURRENT_TIMESTAMP
         </set>
         <where>
             id = #{id}
@@ -67,7 +69,7 @@
 
     <select id="query" resultMap="BaseResultMap">
         select
-            <include refid="BaseColumns" />
+            <include refid="BaseQueryColumns" />
         from user_login_log
         <where>
             id = #{pk}
@@ -76,7 +78,7 @@
 
     <select id="queryBatch" resultMap="BaseResultMap">
         select
-            <include refid="BaseColumns" />
+            <include refid="BaseQueryColumns" />
         from user_login_log
         <where>
             id in

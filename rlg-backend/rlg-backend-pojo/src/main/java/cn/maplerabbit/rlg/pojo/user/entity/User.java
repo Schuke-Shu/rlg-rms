@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class User implements Serializable
+public class User
+        implements Serializable
 {
-    private Long id;
     private String uuid;
     /**
      * 用户名
@@ -58,6 +58,14 @@ public class User implements Serializable
      */
     private Integer enable;
     /**
+     * 最后登录时间（冗余）
+     */
+    private LocalDateTime lastLoginTime;
+    /**
+     * 最后登录Ip（冗余）
+     */
+    private String lastLoginIp;
+    /**
      * 注册时间
      */
     private LocalDateTime signUpTime;
@@ -75,8 +83,7 @@ public class User implements Serializable
     {
         return new StringBuilder(this.getClass().getSimpleName())
                 .append('{')
-                .append("id=").append(id)
-                .append(", uuid='").append(uuid).append('\'')
+                .append("uuid='").append(uuid).append('\'')
                 .append(", username='").append(username).append('\'')
                 .append(", password='").append(password).append('\'')
                 .append(", avatarUrl='").append(avatarUrl).append('\'')
@@ -87,6 +94,8 @@ public class User implements Serializable
                 .append(", birth=").append(birth)
                 .append(", description='").append(description).append('\'')
                 .append(", enable=").append(enable)
+                .append(", lastLoginTime=").append(lastLoginTime)
+                .append(", lastLoginIp='").append(lastLoginIp).append('\'')
                 .append(", signUpTime=").append(signUpTime)
                 .append(", createTime=").append(createTime)
                 .append(", modifiedTime=").append(modifiedTime)

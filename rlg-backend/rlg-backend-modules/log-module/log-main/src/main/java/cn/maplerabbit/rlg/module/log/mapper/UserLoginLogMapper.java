@@ -1,8 +1,8 @@
 package cn.maplerabbit.rlg.module.log.mapper;
 
 import cn.maplerabbit.rlg.pojo.log.entity.UserLoginLog;
-import cn.maplerabbit.rlg.template.LongTemplate;
+import cn.maplerabbit.rlg.template.LongModelMapperTemplate;
 
-public interface UserLoginLogMapper extends LongTemplate<UserLoginLog>
+public interface UserLoginLogMapper extends LongModelMapperTemplate<UserLoginLog>
 {
 }

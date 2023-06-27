@@ -17,8 +17,8 @@ import java.io.Serializable;
 @ApiModel("用户信息")
 public class UserInfoVO implements Serializable
 {
-    @ApiModelProperty("id")
-    private Long id;
+    @ApiModelProperty("uuid")
+    private String uuid;
     @ApiModelProperty("用户名")
     private String username;
     @ApiModelProperty("头像Url")
@@ -29,7 +29,7 @@ public class UserInfoVO implements Serializable
     {
         return new StringBuilder(this.getClass().getSimpleName())
                 .append('{')
-                .append("id=").append(id)
+                .append("uuid='").append(uuid).append('\'')
                 .append(", username='").append(username).append('\'')
                 .append(", avatarUrl='").append(avatarUrl).append('\'')
                 .append('}')

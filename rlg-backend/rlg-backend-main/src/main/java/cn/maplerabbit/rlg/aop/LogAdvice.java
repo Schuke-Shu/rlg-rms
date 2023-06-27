@@ -34,15 +34,16 @@ public class LogAdvice
     public Object log(ProceedingJoinPoint pjp)
             throws Throwable
     {
-        log.debug("--> LogAdvice in");
+        log.debug("--> Enter controller: {}", pjp.getTarget().getClass().getSimpleName());
         log.debug(
-                "Get Request:\ntime: {}\nContent-type: {}\nip: {}\ntarget: {}",
+                "Get Request:\ntime: {}\nContent-type: {}\nip: {}\nmethod: {}\ntarget: {}",
                 LocalDateTime
                         .now()
                         .toString()
                         .replace('T', ' '),
                 request.getHeader("content-type"),
                 IpUtil.getIp(request),
+                request.getMethod(),
                 request.getRequestURI()
         );
         log.debug(
@@ -54,7 +55,7 @@ public class LogAdvice
         Object result = pjp.proceed();
 
         log.trace("result: {}", result);
-        log.debug("--> LogAdvice out");
+        log.debug("--> Out controller");
         return result;
     }
 

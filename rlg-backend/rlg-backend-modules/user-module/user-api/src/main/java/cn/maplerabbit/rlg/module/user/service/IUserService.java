@@ -48,9 +48,9 @@ public interface IUserService
     String refresh(String jwt);
 
     /**
-     * 获取用户信息
-     * @param id 用户id
+     * 通过jwt获取用户信息
+     * @param uuid 用户uuid
      * @return 用户信息vo类
      */
-    UserInfoVO getUserInfo(Long id);
+    UserInfoVO getUserInfo(String uuid);
 }

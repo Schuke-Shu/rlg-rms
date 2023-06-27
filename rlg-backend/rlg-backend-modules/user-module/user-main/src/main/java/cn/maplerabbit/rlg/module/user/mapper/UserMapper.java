@@ -2,10 +2,26 @@ package cn.maplerabbit.rlg.module.user.mapper;
 
 import cn.maplerabbit.rlg.pojo.user.entity.User;
 import cn.maplerabbit.rlg.pojo.user.vo.UserLoginVO;
-import cn.maplerabbit.rlg.template.LongTemplate;
+import cn.maplerabbit.rlg.template.StringModelMapperTemplate;
+import org.apache.ibatis.annotations.Param;
 
-public interface UserMapper extends LongTemplate<User>
+import java.time.LocalDateTime;
+
+public interface UserMapper extends StringModelMapperTemplate<User>
 {
+    /**
+     * 更新登录时间和ip
+     * @param uuid  用户uuid
+     * @param time  登陆时间
+     * @param ip    登录ip
+     * @return 更新数据数量
+     */
+    int updateLogin(
+            @Param("uuid") String uuid,
+            @Param("time") LocalDateTime time,
+            @Param("ip") String ip
+    );
+
     /**
      * 根据用户名获取登录信息
      * @param username 用户名

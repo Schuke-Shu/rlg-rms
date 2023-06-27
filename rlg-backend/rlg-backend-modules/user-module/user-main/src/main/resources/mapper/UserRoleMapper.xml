@@ -3,7 +3,7 @@
 <mapper namespace="cn.maplerabbit.rlg.module.user.mapper.UserRoleMapper">
     <!-- ========== Associate Table Base CUD ========== -->
     <sql id="BaseColumns">
-        user_id, role_id, create_time, modified_time
+        user_uuid, role_id
     </sql>
     <sql id="save">
         #{left}, #{right}
@@ -16,7 +16,7 @@
         insert into user_role(
             <include refid="BaseColumns" />
         ) values (
-            <include refid="save" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+            <include refid="save" />
         )
     </insert>
 
@@ -25,7 +25,7 @@
             <include refid="BaseColumns" />
         ) values
         <foreach collection="list" item="i" separator=", ">
-            (<include refid="saveBatch" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            (<include refid="saveBatch" />)
         </foreach>
     </insert>
 
@@ -41,9 +41,8 @@
     <update id="update">
         update user_role
         <set>
-            <if test="left != null">user_id = #{left},</if>
+            <if test="left != null">user_uuid = #{left},</if>
             <if test="right != null">role_id = #{right},</if>
-            modified_time = CURRENT_TIMESTAMP
         </set>
         <where>
             id = #{id}

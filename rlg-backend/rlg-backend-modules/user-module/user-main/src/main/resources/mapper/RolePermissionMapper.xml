@@ -4,7 +4,7 @@
 <mapper namespace="cn.maplerabbit.rlg.module.user.mapper.RolePermissionMapper">
     <!-- ========== Associate Table Base CUD ========== -->
     <sql id="BaseColumns">
-        role_id, permission_id, create_time, modified_time
+        role_id, permission_id
     </sql>
     <sql id="save">
         #{left}, #{right}
@@ -17,7 +17,7 @@
         insert into role_permission(
             <include refid="BaseColumns" />
         ) values (
-            <include refid="save" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+            <include refid="save" />
         )
     </insert>
 
@@ -26,7 +26,7 @@
             <include refid="BaseColumns" />
         ) values
         <foreach collection="list" item="i" separator=", ">
-            (<include refid="saveBatch" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            (<include refid="saveBatch" />)
         </foreach>
     </insert>
 
@@ -44,7 +44,6 @@
         <set>
             <if test="left != null">role_id = #{left},</if>
             <if test="right != null">permission_id = #{right},</if>
-            modified_time = CURRENT_TIMESTAMP
         </set>
         <where>
             id = #{id}

@@ -4,19 +4,22 @@
 <mapper namespace="cn.maplerabbit.rlg.module.file.mapper.FileMapper">
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
-        id, uuid, user_id, suffix, type, size, upload_time, create_time, modified_time
+        uuid, user_uuid, md5, suffix, type, size, upload_time
+    </sql>
+    <sql id="BaseQueryColumns">
+        uuid, user_uuid, md5, suffix, type, size, upload_time, create_time, modified_time
     </sql>
     <sql id="save">
-        #{id}, #{uuid}, #{userId}, #{suffix}, #{type}, #{size}, #{uploadTime}
+        #{uuid}, #{userUuid}, #{md5}, #{suffix}, #{type}, #{size}, #{uploadTime}
     </sql>
     <sql id="saveBatch">
-        #{i.id}, #{i.uuid}, #{i.userId}, #{i.suffix}, #{i.type}, #{i.size}, #{i.uploadTime}
+        #{i.uuid}, #{i.userUuid}, #{i.md5}, #{i.suffix}, #{i.type}, #{i.size}, #{i.uploadTime}
     </sql>
 
     <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.file.entity.File">
-        <id column="id" property="id" />
-        <result column="uuid" property="uuid" />
-        <result column="user_id" property="userId" />
+        <id column="uuid" property="uuid" />
+        <result column="user_uuid" property="userUuid" />
+        <result column="md5" property="md5" />
         <result column="suffix" property="suffix" />
         <result column="type" property="type" />
         <result column="size" property="size" />
@@ -29,7 +32,7 @@
         insert into file(
             <include refid="BaseColumns" />
         ) values (
-            <include refid="save" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+            <include refid="save" />
         )
     </insert>
 
@@ -38,50 +41,49 @@
             <include refid="BaseColumns" />
         ) values
         <foreach collection="list" item="i" separator=", ">
-            (<include refid="saveBatch" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            (<include refid="saveBatch" />)
         </foreach>
     </insert>
 
     <delete id="remove">
-        delete from file where id = #{pk}
+        delete from file where uuid = #{pk}
     </delete>
 
     <delete id="removeBatch">
-        delete from file where id in
+        delete from file where uuid in
         <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
     </delete>
 
     <update id="update">
         update file
         <set>
-            <if test="uuid != null">uuid = #{uuid},</if>
-            <if test="userId != null">user_id = #{userId},</if>
+            <if test="userUuid != null">user_uuid = #{userUuid},</if>
+            <if test="md5 != null">md5 = #{md5},</if>
             <if test="suffix != null">suffix = #{suffix},</if>
             <if test="type != null">type = #{type},</if>
             <if test="size != null">size = #{size},</if>
             <if test="uploadTime != null">upload_time = #{uploadTime},</if>
-            modified_time = CURRENT_TIMESTAMP
         </set>
         <where>
-            id = #{id}
+            uuid = #{uuid}
         </where>
     </update>
 
     <select id="query" resultMap="BaseResultMap">
         select
-            <include refid="BaseColumns" />
+            <include refid="BaseQueryColumns" />
         from file
         <where>
-            id = #{pk}
+            uuid = #{pk}
         </where>
     </select>
 
     <select id="queryBatch" resultMap="BaseResultMap">
         select
-            <include refid="BaseColumns" />
+            <include refid="BaseQueryColumns" />
         from file
         <where>
-            id in
+            uuid in
             <foreach collection="list" item="pk" open="(" close=")" separator=", ">#{pk}</foreach>
         </where>
     </select>

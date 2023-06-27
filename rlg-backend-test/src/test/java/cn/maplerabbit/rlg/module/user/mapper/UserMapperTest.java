@@ -22,8 +22,8 @@ public class UserMapperTest implements BaseCrudTest
     public void testSave()
     {
         User user = new User()
-                .setUuid("2")
-                .setUsername("测试2")
+                .setUuid("3")
+                .setUsername("测试3")
                 .setPassword("123456");
         System.out.println(user);
         log.debug("插入{}条数据：\n{}", mapper.save(user), user);
@@ -33,13 +33,13 @@ public class UserMapperTest implements BaseCrudTest
     public void testSaveBatch()
     {
         User u1 = new User()
-                .setUuid("3")
-                .setUsername("测试3")
+                .setUuid("4")
+                .setUsername("测试4")
                 .setPassword("123456");
         System.out.println(u1);
         User u2 = new User()
-                .setUuid("4")
-                .setUsername("测试4")
+                .setUuid("5")
+                .setUsername("测试5")
                 .setPassword("123456");
         System.out.println(u2);
 
@@ -63,8 +63,8 @@ public class UserMapperTest implements BaseCrudTest
     @Test
     public void testRemoveBatch()
     {
-        List<Long> list = Arrays.asList(
-                3L, 4L
+        List<String> list = Arrays.asList(
+                "3", "4"
         );
 
         log.debug("想要删除{}条数据，删除了{}条数据", list.size(), mapper.removeBatch(list));
@@ -74,7 +74,7 @@ public class UserMapperTest implements BaseCrudTest
     public void testUpdate()
     {
         User user = new User()
-                .setId(2L)
+                .setUuid("2")
                 .setUuid("10")
                 .setUsername("更新测试");
         System.out.println(user);

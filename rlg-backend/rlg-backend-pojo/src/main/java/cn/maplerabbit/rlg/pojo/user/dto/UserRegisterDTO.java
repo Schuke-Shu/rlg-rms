@@ -32,6 +32,17 @@ public class UserRegisterDTO
     @ApiModelProperty(value = "密码", required = true)
     @NotBlank(message = USER_PASSWORD_NOTBLANK)
     @Size(min = 8, max = 16, message = USER_PASSWORD_SIZE)
-    @Pattern(regexp = "^[\\w@#$%*\\.\\-\\\\]+$", message = USER_PASSWORD_PATTERN)
+    @Pattern(regexp = "^[\\w@#$%*.\\-\\\\]+$", message = USER_PASSWORD_PATTERN ,flags = {Pattern.Flag.MULTILINE, Pattern.Flag.UNIX_LINES})
     private String password;
+
+    @Override
+    public String toString()
+    {
+        return new StringBuilder(this.getClass().getSimpleName())
+                .append('{')
+                .append("username='").append(username).append('\'')
+                .append(", password='").append(password).append('\'')
+                .append('}')
+                .toString();
+    }
 }

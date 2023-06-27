@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class Directory implements Serializable
+public class Directory
+        implements Serializable
 {
     private Long id;
     /**
@@ -22,7 +23,7 @@ public class Directory implements Serializable
     /**
      * 所属用户uuid
      */
-    private Long userId;
+    private String userUuid;
     /**
      * 文件名称
      */
@@ -71,7 +72,7 @@ public class Directory implements Serializable
                 .append('{')
                 .append("id=").append(id)
                 .append(", fileUuid='").append(fileUuid).append('\'')
-                .append(", userId=").append(userId)
+                .append(", userUuid='").append(userUuid).append('\'')
                 .append(", filename='").append(filename).append('\'')
                 .append(", deep=").append(deep)
                 .append(", parentId=").append(parentId)

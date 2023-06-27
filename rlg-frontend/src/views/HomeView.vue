@@ -9,21 +9,13 @@ import qs from "qs";
 
 console.log("主页")
 
-const user = ref(null);
+import * as jose from 'jose';
 
+const user = ref(null);
 onMounted(() => {
-    let userinfo = {
-        username: 'rlgroot',
-        password: 'P@ssw0rdRoot'
-    }
-    let str = qs.stringify(userinfo);
-    // let formData = new FormData();
-    // formData.append('username', 'rlgroot');
-    // formData.append('password', 'P@ssw0rdRoot');
-    console.log(str);
-    login(str).then(res => {
-        console.log(res.data.data)
-    });
+
+    const jwt = jose.decodeJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6bnVsbCwiaXAiOiIwOjA6MDowOjA6MDowOjEiLCJleHAiOjE2ODg0NjM2MjcsInV1aWQiOiIxNTFkM2Q1NDAzMTE0MDAxOTIzN2FmMzVkODc0YjRmZCIsImVtYWlsIjoiMTQzMzI3NTkwNEBxcS5jb20iLCJhdXRob3JpdGllcyI6IltdIiwidXNlcm5hbWUiOiJybGdyb290In0.rassKNXCkkJk9GGSyQlPrmz4aaFOWA370_2SVXnP3hA");
+    console.log(jwt);
 })
 </script>
 

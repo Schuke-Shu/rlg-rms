@@ -14,12 +14,15 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class File implements Serializable
 {
-    private Integer id;
     private String uuid;
     /**
      * 文件上传者
      */
-    private Long userId;
+    private String userUuid;
+    /**
+     * 文件md5值
+     */
+    private String md5;
     /**
      * 后缀名
      */
@@ -50,9 +53,9 @@ public class File implements Serializable
     {
         return new StringBuilder(this.getClass().getSimpleName())
                 .append('{')
-                .append("id=").append(id)
-                .append(", uuid='").append(uuid).append('\'')
-                .append(", userId=").append(userId)
+                .append("uuid='").append(uuid).append('\'')
+                .append(", userUuid='").append(userUuid).append('\'')
+                .append(", md5='").append(md5).append('\'')
                 .append(", suffix='").append(suffix).append('\'')
                 .append(", type='").append(type).append('\'')
                 .append(", size=").append(size)

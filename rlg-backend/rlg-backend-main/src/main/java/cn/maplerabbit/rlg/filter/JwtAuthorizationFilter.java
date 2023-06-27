@@ -121,7 +121,7 @@ public class JwtAuthorizationFilter
 
         // 从Claims中获取数据
         String ip = claims.get(CLAIMS_KEY_IP, String.class);
-        Long id = claims.get(CLAIMS_KEY_ID, Long.class);
+        String uuid = claims.get(CLAIMS_KEY_UUID, String.class);
         String username = claims.get(CLAIMS_KEY_USERNAME, String.class);
         String phone = claims.get(CLAIMS_KEY_PHONE, String.class);
         String email = claims.get(CLAIMS_KEY_EMAIL, String.class);
@@ -138,7 +138,7 @@ public class JwtAuthorizationFilter
             // 创建Authentication对象，存入到SecurityContext中
             Authentication authentication = new UsernamePasswordAuthenticationToken(
                     // 封装Principal（当事人）对象
-                    new LoginPrincipal(id, username, phone, email, ip),
+                    new LoginPrincipal(uuid, username, phone, email, ip),
                     // 凭证（这里不需要）
                     null,
                     // 解析json形式的权限集合

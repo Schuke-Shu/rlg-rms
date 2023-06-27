@@ -1,8 +1,8 @@
 package cn.maplerabbit.rlg.module.user.mapper;
 
 import cn.maplerabbit.rlg.pojo.user.entity.Permission;
-import cn.maplerabbit.rlg.template.LongTemplate;
+import cn.maplerabbit.rlg.template.LongModelMapperTemplate;
 
-public interface PermissionMapper extends LongTemplate<Permission>
+public interface PermissionMapper extends LongModelMapperTemplate<Permission>
 {
 }

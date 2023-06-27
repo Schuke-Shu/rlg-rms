@@ -17,21 +17,11 @@ spring:
     url: jdbc:mysql://localhost:3306/rlg_rms?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Chongqing
     username: root
     password: root
-  # servlet配置
-  servlet:
-    # multipart文件传输配置
-    multipart:
-      # 单文件大小上限
-      max-file-size: 10MB
-      # 单次请求文件总大小上限
-      max-request-size: 100MB
   # 配置系统邮箱账户
   mail:
     host: smtp.qq.com
     username: schuke@foxmail.com
     password: lkwydyooqanydihb
-    properties:
-      mail.smtp.timeout: 60000
 
 # 日志配置
 logging:

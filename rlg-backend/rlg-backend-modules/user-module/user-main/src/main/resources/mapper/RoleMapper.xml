@@ -4,7 +4,7 @@
 <mapper namespace="cn.maplerabbit.rlg.module.user.mapper.RoleMapper">
     <select id="queryByFlag" resultMap="BaseResultMap">
         select
-            <include refid="BaseColumns" />
+            <include refid="BaseQueryColumns" />
         from role
         <where>
             flag = #{role}
@@ -13,6 +13,9 @@
 
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
+        id, flag, description
+    </sql>
+    <sql id="BaseQueryColumns">
         id, flag, description, create_time, modified_time
     </sql>
     <sql id="save">
@@ -34,7 +37,7 @@
         insert into role(
             <include refid="BaseColumns" />
         ) values (
-            <include refid="save" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+            <include refid="save" />
         )
     </insert>
 
@@ -43,7 +46,7 @@
         <include refid="BaseColumns" />
         ) values
         <foreach collection="list" item="i" separator=", ">
-            (<include refid="saveBatch" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            (<include refid="saveBatch" />)
         </foreach>
     </insert>
 
@@ -61,7 +64,6 @@
         <set>
             <if test="flag != null">flag = #{flag},</if>
             <if test="description != null">description = #{description},</if>
-            modified_time = CURRENT_TIMESTAMP
         </set>
         <where>
             id = #{id}
@@ -70,7 +72,7 @@
 
     <select id="query" resultMap="BaseResultMap">
         select
-            <include refid="BaseColumns" />
+            <include refid="BaseQueryColumns" />
         from role
         <where>
             id = #{pk}
@@ -79,7 +81,7 @@
 
     <select id="queryBatch" resultMap="BaseResultMap">
         select
-        <include refid="BaseColumns" />
+        <include refid="BaseQueryColumns" />
         from role
         <where>
             id in

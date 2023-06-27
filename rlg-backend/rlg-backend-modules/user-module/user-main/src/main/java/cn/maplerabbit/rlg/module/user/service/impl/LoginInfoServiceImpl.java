@@ -68,7 +68,7 @@ public class LoginInfoServiceImpl
 
         // 创建 UserDetails
         UserDetails userDetails = new UserDetails(
-                loginInfo.getId(),
+                loginInfo.getUuid(),
                 loginInfo.getUsername(),
                 loginInfo.getPassword(),
                 loginInfo.getPhone(),

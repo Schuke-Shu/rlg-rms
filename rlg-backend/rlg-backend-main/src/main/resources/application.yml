@@ -19,10 +19,18 @@ spring:
   servlet:
     # multipart文件传输配置
     multipart:
+      # 单文件大小上限
+      max-file-size: 10MB
+      # 单次请求文件总大小上限
+      max-request-size: 100MB
+      # multipart文件传输配置
       enabled: true
-      file-size-threshold: 5MB
+      # 文件写入磁盘的阈值，超过这个大小的文件会被存储为临时文件
+      file-size-threshold: 10MB
   # 邮箱配置
   mail:
+    properties:
+      mail.smtp.timeout: 60000
     protocol: smtp
   # 数据源配置
   datasource:

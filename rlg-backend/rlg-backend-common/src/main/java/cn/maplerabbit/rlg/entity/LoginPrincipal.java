@@ -17,9 +17,9 @@ import java.io.Serializable;
 public class LoginPrincipal implements Serializable {
 
     /**
-     * 数据id
+     * 用户uuid
      */
-    private Long id;
+    private String uuid;
     /**
      * 用户名
      */
@@ -36,12 +36,13 @@ public class LoginPrincipal implements Serializable {
      * ip
      */
     private String ip;
+
     @Override
     public String toString()
     {
         return new StringBuilder(this.getClass().getSimpleName())
                 .append('{')
-                .append("id=").append(id)
+                .append("uuid='").append(uuid).append('\'')
                 .append(", username='").append(username).append('\'')
                 .append(", phone='").append(phone).append('\'')
                 .append(", email='").append(email).append('\'')
