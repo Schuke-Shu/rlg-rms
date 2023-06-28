@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Setter
 @Slf4j
 @Component
-@ConfigurationProperties(prefix = "rlg.security")
+@ConfigurationProperties(prefix = "spring.security")
 public class SecurityProperties
 {
     private String[] urlAllowList;

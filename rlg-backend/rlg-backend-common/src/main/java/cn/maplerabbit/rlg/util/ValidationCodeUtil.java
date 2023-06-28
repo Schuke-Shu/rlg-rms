@@ -32,6 +32,8 @@ public class ValidationCodeUtil
     @Autowired
     private HttpServletRequest request;
 
+    public ValidationCodeUtil() {log.debug("ValidationCodeUtil()...");}
+
     public void sendEmail(String email)
     {
         // 生成验证码
