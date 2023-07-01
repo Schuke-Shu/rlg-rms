@@ -34,7 +34,7 @@
 
     <insert id="saveBatch" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into permission(
-        <include refid="BaseColumns" />
+            <include refid="BaseColumns" />
         ) values
         <foreach collection="list" item="i" separator=", ">
             (<include refid="saveBatch" />)

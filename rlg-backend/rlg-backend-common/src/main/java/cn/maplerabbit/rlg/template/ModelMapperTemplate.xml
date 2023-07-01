@@ -7,6 +7,9 @@
     <sql id="BaseColumns">
         <!-- add base columns -->
     </sql>
+    <sql id="BaseQueryColumns">
+        <!-- add base columns -->, create_time, modified_time
+    </sql>
     <sql id="save">
 
     </sql>
@@ -23,7 +26,7 @@
         insert into xxx(
             <include refid="BaseColumns" />
         ) values (
-            <include refid="save" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+            <include refid="save" />
         )
     </insert>
 
@@ -32,7 +35,7 @@
             <include refid="BaseColumns" />
         ) values
         <foreach collection="list" item="i" separator=", ">
-            (<include refid="saveBatch" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            (<include refid="saveBatch" />)
         </foreach>
     </insert>
 
@@ -49,7 +52,6 @@
         update xxx
         <set>
             <if test="xxx">xxx</if>
-            modified_time = CURRENT_TIMESTAMP
         </set>
         <where>
             xxx = #{xxx}
@@ -58,7 +60,7 @@
 
     <select id="query" resultMap="BaseResultMap">
         select
-            <include refid="BaseColumns" />
+            <include refid="BaseQueryColumns" />
         from xxx
         <where>
             xxx = #{pk}
@@ -67,7 +69,7 @@
 
     <select id="queryBatch" resultMap="BaseResultMap">
         select
-            <include refid="BaseColumns" />
+            <include refid="BaseQueryColumns" />
         from xxx
         <where>
             xxx in

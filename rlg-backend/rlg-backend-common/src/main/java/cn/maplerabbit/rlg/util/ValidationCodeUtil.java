@@ -39,9 +39,6 @@ public class ValidationCodeUtil
         // 生成验证码
         String code = generateCode();
 
-        // 将验证码存储到redis中
-        saveCode(email, code);
-
         // 设置邮件内容
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setFrom(mailProperties.getUsername());
@@ -56,6 +53,9 @@ public class ValidationCodeUtil
 
         // 发送邮件
         mailSender.send(msg);
+
+        // 将验证码存储到redis中
+        saveCode(email, code);
     }
 
     /**

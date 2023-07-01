@@ -1,0 +1,52 @@
+:root
+{
+    --font-sans-serif: "Microsoft YaHei UI", 'Ubuntu', 'Source Sans Pro', sans-serif !important;
+    --font-monospace: 'Fira Code', 'Roboto Mono', monospace !important;
+}
+
+html
+{
+    font-size: 16px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    scrollbar-width: none; /* firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+}
+
+/* Chrome/Safari */
+*::-webkit-scrollbar
+{
+    display: none;
+}
+
+body
+{
+    background-image: url("@assets/img/sys_background.jpg");
+    background-size: cover;
+    background-position: bottom center;
+    background-attachment: fixed;
+    font-family: var(--font-sans-serif);
+}
+
+a
+{
+    text-decoration: none;
+    color: white;
+}
+
+li
+{
+    list-style: none;
+}
+
+.scroll-box::-webkit-scrollbar
+{
+    display: none;
+}

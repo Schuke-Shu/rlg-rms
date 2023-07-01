@@ -5,20 +5,20 @@
 <mapper namespace="cn.maplerabbit.rlg.template.AssociateMapperTemplate">
     <!-- ========== Associate Table Base CUD ========== -->
     <sql id="BaseColumns">
-        <!-- add base columns -->, create_time, modified_time
+        <!-- add base columns -->
     </sql>
     <sql id="save">
-
+        , #{}
     </sql>
     <sql id="saveBatch">
-
+        , #{i.}
     </sql>
 
     <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into xxx(
             <include refid="BaseColumns" />
         ) values (
-            <include refid="save" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+            <include refid="save" />
         )
     </insert>
 
@@ -27,7 +27,7 @@
             <include refid="BaseColumns" />
         ) values
         <foreach collection="list" item="i" separator=", ">
-            (<include refid="saveBatch" />, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+            (<include refid="saveBatch" />)
         </foreach>
     </insert>
 
@@ -45,7 +45,6 @@
         <set>
             <if test="left != null">xxx = #{left},</if>
             <if test="right != null">xxx = #{right},</if>
-            modified_time = CURRENT_TIMESTAMP
         </set>
         <where>
             id = #{id}

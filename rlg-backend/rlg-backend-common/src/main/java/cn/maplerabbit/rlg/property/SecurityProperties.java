@@ -16,7 +16,10 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "spring.security")
 public class SecurityProperties
 {
-    private String[] urlAllowList;
+    /**
+     * url白名单
+     */
+    private String[] urlAllowlist;
 
     public SecurityProperties() {log.debug("SecurityProperties()...");}
 }

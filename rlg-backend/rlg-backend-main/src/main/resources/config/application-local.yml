@@ -1,0 +1,34 @@
+# ============ #
+#  本地环境配置  #
+# ============ #
+
+# Web服务配置
+server:
+  # 端口
+  port: 10086
+
+# Spring配置
+spring:
+  # 数据源配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/rlg_rms?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Chongqing
+    username: root
+    password: root
+  # 配置系统邮箱账户
+  mail:
+    host: smtp.qq.com
+    username: schuke@foxmail.com
+    password: lkwydyooqanydihb
+
+# 日志配置
+logging:
+  # 显示级别
+  level:
+    cn.maplerabbit.rlg: trace
+
+# 项目全局配置
+rlg:
+  # 文件目录配置
+  directory:
+    # 根目录路径
+    root-dir: D:/rlg

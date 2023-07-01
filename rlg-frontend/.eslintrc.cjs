@@ -14,6 +14,8 @@ module.exports = {
       {
         ignores: [
           'Rlg',
+          '404',
+            'Dialog'
         ]
       }
     ]

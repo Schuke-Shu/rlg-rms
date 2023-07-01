@@ -23,6 +23,7 @@ public class UserEmailLoginDTO
                    ValidationMessageConst
 {
     @ApiModelProperty(value = "邮箱", required = true)
+    @NotBlank(message = USER_EMAIL)
     @Email(message = USER_EMAIL)
     private String email;
 

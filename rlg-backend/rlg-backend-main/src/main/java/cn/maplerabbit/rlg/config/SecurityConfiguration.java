@@ -59,7 +59,7 @@ public class SecurityConfiguration
                 .and()
                 // 配置请求是否需要认证
                 .authorizeRequests()
-                .mvcMatchers(securityProperties.getUrlAllowList())  // 匹配白名单中的请求路径
+                .mvcMatchers(securityProperties.getUrlAllowlist())  // 匹配白名单中的请求路径
                 .permitAll()        // 允许直接访问
                 .anyRequest()       // 其它任何请求
                 .authenticated()    // 需要通过认证

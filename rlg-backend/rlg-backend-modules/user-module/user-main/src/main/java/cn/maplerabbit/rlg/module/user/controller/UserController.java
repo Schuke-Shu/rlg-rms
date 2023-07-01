@@ -25,6 +25,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 @Slf4j
 @RestController
@@ -66,7 +67,7 @@ public class UserController
     @ApiOperation("获取邮箱登录验证码")
     @GetMapping("/email-login")
     @ApiImplicitParam(name = "email", value = "登录邮箱", required = true, dataType = "string")
-    public JsonResult<?> getEmailLoginCode(@Email(message = USER_EMAIL) String email)
+    public JsonResult<?> getEmailLoginCode(@NotBlank(message = USER_EMAIL) @Email(message = USER_EMAIL) String email)
     {
         userService.getEmailLoginCode(email);
         return SuccessResult.ok();

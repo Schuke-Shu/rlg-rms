@@ -1,0 +1,47 @@
+# ============ #
+#  项目全局配置  #
+# ============ #
+
+spring:
+  # security配置
+  security:
+    # url白名单
+    url-allowlist:
+      - /static/**
+      - /user/email-login
+      - /user/login
+      - /user/register
+      - /doc.html
+      - /**/*.css
+      - /**/*.js
+      - /favicon.ico
+      - /swagger-resources
+      - /v2/api-docs
+
+rlg:
+  # 验证码配置
+  code:
+    # 有效时间（单位：分钟）
+    usable-time: 15
+  # 文件目录配置
+  directory:
+    # 根目录路径
+    root-dir: C:/rlg
+    # 静态资源路径
+    static-dir: ${rlg.directory.root-dir}/static
+    # 用户文件仓库路径
+    store-dir: ${rlg.directory.root-dir}/store
+  # JWT相关配置
+  jwt:
+    # jwt签名算法
+    algorithm: HS256
+    # jwt类型
+    type: JWT
+    # 密钥
+    secret-key: RedLeafGarden-JsonWebToken-SecretKey
+    # JWT的有效时长（单位分钟）
+    usable-minutes: 10080 # 一星期
+    # 长度下限
+    min-length: 105
+    # 存放jwt的请求头名称
+    header: Authorization

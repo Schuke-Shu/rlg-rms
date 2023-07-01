@@ -127,7 +127,7 @@
         <result column="modified_time" property="modifiedTime" />
     </resultMap>
 
-    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    <insert id="save">
         insert into user(
             <include refid="BaseColumns" />
         ) values (
@@ -135,7 +135,7 @@
         )
     </insert>
 
-    <insert id="saveBatch" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    <insert id="saveBatch">
         insert into user(
             <include refid="BaseColumns" />
         ) values

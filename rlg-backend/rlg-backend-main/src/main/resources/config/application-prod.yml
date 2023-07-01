@@ -1,0 +1,16 @@
+# ============ #
+#  生产环境配置  #
+# ============ #
+
+# Spring配置
+spring:
+  # 数据源配置
+  datasource:
+    url:
+    username:
+    password:
+  # 配置系统邮箱账户
+  mail:
+    host:
+    username:
+    password:
