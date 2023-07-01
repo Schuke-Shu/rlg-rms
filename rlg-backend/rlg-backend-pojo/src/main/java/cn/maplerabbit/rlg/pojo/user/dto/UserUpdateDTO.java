@@ -1,12 +1,11 @@
 package cn.maplerabbit.rlg.pojo.user.dto;
 
-import cn.maplerabbit.rlg.constpak.ValidationMessageConst;
+import cn.maplerabbit.rlg.common.constpak.ValidationMessageConst;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;

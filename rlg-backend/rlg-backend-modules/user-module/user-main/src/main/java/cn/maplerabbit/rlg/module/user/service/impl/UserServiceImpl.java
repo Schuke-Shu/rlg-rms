@@ -1,8 +1,8 @@
 package cn.maplerabbit.rlg.module.user.service.impl;
 
-import cn.maplerabbit.rlg.constpak.LoginPrincipalConst;
-import cn.maplerabbit.rlg.enumpak.ServiceCode;
-import cn.maplerabbit.rlg.exception.UserException;
+import cn.maplerabbit.rlg.common.constpak.LoginPrincipalConst;
+import cn.maplerabbit.rlg.common.enumpak.ServiceCode;
+import cn.maplerabbit.rlg.common.exception.UserException;
 import cn.maplerabbit.rlg.module.log.service.IUserLoginLogService;
 import cn.maplerabbit.rlg.module.user.mapper.UserMapper;
 import cn.maplerabbit.rlg.module.user.service.ILoginInfoService;
@@ -14,9 +14,9 @@ import cn.maplerabbit.rlg.pojo.user.dto.UsernameLoginDTO;
 import cn.maplerabbit.rlg.pojo.user.dto.UserRegisterDTO;
 import cn.maplerabbit.rlg.pojo.user.entity.User;
 import cn.maplerabbit.rlg.pojo.user.vo.UserInfoVO;
-import cn.maplerabbit.rlg.property.JwtProperties;
-import cn.maplerabbit.rlg.entity.UserDetails;
-import cn.maplerabbit.rlg.util.ValidationCodeUtil;
+import cn.maplerabbit.rlg.common.property.JwtProperties;
+import cn.maplerabbit.rlg.common.entity.UserDetails;
+import cn.maplerabbit.rlg.common.util.ValidationCodeUtil;
 import com.alibaba.fastjson.JSON;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;

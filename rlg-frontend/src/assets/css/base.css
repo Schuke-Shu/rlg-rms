@@ -4,11 +4,6 @@
     --font-monospace: 'Fira Code', 'Roboto Mono', monospace !important;
 }
 
-html
-{
-    font-size: 16px;
-}
-
 *,
 *::before,
 *::after {
@@ -20,6 +15,11 @@ html
     -ms-overflow-style: none; /* IE 10+ */
 }
 
+html
+{
+    font-size: 16px;
+}
+
 /* Chrome/Safari */
 *::-webkit-scrollbar
 {
@@ -28,7 +28,7 @@ html
 
 body
 {
-    background-image: url("@assets/img/sys_background.jpg");
+    background-image: url(/img/sys_background.jpg);
     background-size: cover;
     background-position: bottom center;
     background-attachment: fixed;
@@ -44,9 +44,4 @@ a
 li
 {
     list-style: none;
-}
-
-.scroll-box::-webkit-scrollbar
-{
-    display: none;
 }

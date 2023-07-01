@@ -1,6 +1,6 @@
 package cn.maplerabbit.rlg.module.user.service;
 
-import cn.maplerabbit.rlg.entity.UserDetails;
+import cn.maplerabbit.rlg.common.entity.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**

@@ -2,7 +2,7 @@ package cn.maplerabbit.rlg.module.user.mapper;
 
 import cn.maplerabbit.rlg.pojo.user.entity.User;
 import cn.maplerabbit.rlg.pojo.user.vo.UserLoginVO;
-import cn.maplerabbit.rlg.template.StringModelMapperTemplate;
+import cn.maplerabbit.rlg.common.template.StringModelMapperTemplate;
 import org.apache.ibatis.annotations.Param;
 
 import java.time.LocalDateTime;

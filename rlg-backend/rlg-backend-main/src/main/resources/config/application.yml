@@ -73,6 +73,10 @@ mybatis:
 
 # 日志配置
 logging:
+  # 日志文件配置
+  file:
+    # 文件路径
+    path: ${rlg.directory.log-dir}/sys_log
   # 显示级别
   level:
     root: info

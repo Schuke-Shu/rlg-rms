@@ -1,14 +1,14 @@
 package cn.maplerabbit.rlg.module.user.controller;
 
-import cn.maplerabbit.rlg.constpak.ValidationMessageConst;
-import cn.maplerabbit.rlg.entity.LoginPrincipal;
+import cn.maplerabbit.rlg.common.constpak.ValidationMessageConst;
+import cn.maplerabbit.rlg.common.entity.LoginPrincipal;
 import cn.maplerabbit.rlg.module.user.service.IUserService;
 import cn.maplerabbit.rlg.pojo.user.dto.UserEmailLoginDTO;
 import cn.maplerabbit.rlg.pojo.user.dto.UsernameLoginDTO;
 import cn.maplerabbit.rlg.pojo.user.dto.UserRegisterDTO;
-import cn.maplerabbit.rlg.util.ValidationCodeUtil;
-import cn.maplerabbit.rlg.entity.result.JsonResult;
-import cn.maplerabbit.rlg.entity.result.SuccessResult;
+import cn.maplerabbit.rlg.common.util.ValidationCodeUtil;
+import cn.maplerabbit.rlg.common.entity.result.JsonResult;
+import cn.maplerabbit.rlg.common.entity.result.SuccessResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;

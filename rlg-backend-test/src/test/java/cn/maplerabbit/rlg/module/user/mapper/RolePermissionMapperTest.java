@@ -1,7 +1,7 @@
 package cn.maplerabbit.rlg.module.user.mapper;
 
 import cn.maplerabbit.rlg.BaseCudTest;
-import cn.maplerabbit.rlg.entity.AssociateUnit;
+import cn.maplerabbit.rlg.common.entity.AssociateUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

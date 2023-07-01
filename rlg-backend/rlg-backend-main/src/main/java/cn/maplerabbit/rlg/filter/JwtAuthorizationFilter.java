@@ -1,12 +1,12 @@
 package cn.maplerabbit.rlg.filter;
 
-import cn.maplerabbit.rlg.constpak.LoginPrincipalConst;
-import cn.maplerabbit.rlg.enumpak.ServiceCode;
-import cn.maplerabbit.rlg.exception.TokenException;
-import cn.maplerabbit.rlg.property.JwtProperties;
-import cn.maplerabbit.rlg.entity.LoginPrincipal;
-import cn.maplerabbit.rlg.util.IpUtil;
-import cn.maplerabbit.rlg.entity.result.ErrorResult;
+import cn.maplerabbit.rlg.common.constpak.LoginPrincipalConst;
+import cn.maplerabbit.rlg.common.enumpak.ServiceCode;
+import cn.maplerabbit.rlg.common.exception.TokenException;
+import cn.maplerabbit.rlg.common.property.JwtProperties;
+import cn.maplerabbit.rlg.common.entity.LoginPrincipal;
+import cn.maplerabbit.rlg.common.util.IpUtil;
+import cn.maplerabbit.rlg.common.entity.result.ErrorResult;
 import com.alibaba.fastjson.JSON;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;

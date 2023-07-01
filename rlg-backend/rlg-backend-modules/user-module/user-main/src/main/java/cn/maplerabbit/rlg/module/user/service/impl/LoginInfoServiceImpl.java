@@ -1,12 +1,12 @@
 package cn.maplerabbit.rlg.module.user.service.impl;
 
-import cn.maplerabbit.rlg.entity.UserDetails;
-import cn.maplerabbit.rlg.enumpak.ServiceCode;
-import cn.maplerabbit.rlg.exception.UserException;
+import cn.maplerabbit.rlg.common.entity.UserDetails;
+import cn.maplerabbit.rlg.common.enumpak.ServiceCode;
+import cn.maplerabbit.rlg.common.exception.UserException;
 import cn.maplerabbit.rlg.module.user.mapper.UserMapper;
 import cn.maplerabbit.rlg.module.user.service.ILoginInfoService;
 import cn.maplerabbit.rlg.pojo.user.vo.UserLoginVO;
-import cn.maplerabbit.rlg.util.IpUtil;
+import cn.maplerabbit.rlg.common.util.IpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

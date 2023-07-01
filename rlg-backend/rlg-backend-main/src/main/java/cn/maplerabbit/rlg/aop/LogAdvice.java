@@ -1,6 +1,6 @@
 package cn.maplerabbit.rlg.aop;
 
-import cn.maplerabbit.rlg.util.IpUtil;
+import cn.maplerabbit.rlg.common.util.IpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
