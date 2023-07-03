@@ -7,5 +7,6 @@ public interface LoginPrincipalConst
     String CLAIMS_KEY_PHONE = "phone";
     String CLAIMS_KEY_EMAIL = "email";
     String CLAIMS_KEY_IP = "ip";
+    String CLAIMS_KEY_AVATAR_URL = "avatarUrl";
     String CLAIMS_KEY_AUTHORITIES = "authorities";
 }

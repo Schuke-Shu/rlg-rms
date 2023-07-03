@@ -74,6 +74,7 @@ public class LoginInfoServiceImpl
                 loginInfo.getPhone(),
                 loginInfo.getEmail(),
                 IpUtil.getIp(request),
+                loginInfo.getAvatarUrl(),
                 loginInfo.getEnable() == 1,
                 authorities
         );

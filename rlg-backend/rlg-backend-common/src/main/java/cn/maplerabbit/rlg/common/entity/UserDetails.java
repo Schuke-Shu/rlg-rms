@@ -17,6 +17,10 @@ public class UserDetails extends User implements Serializable
 {
     private final String uuid;
     /**
+     * 头像地址
+     */
+    private final String avatarUrl;
+    /**
      * 手机号
      */
     private final String phone;
@@ -36,6 +40,7 @@ public class UserDetails extends User implements Serializable
             String phone,
             String email,
             String ip,
+            String avatarUrl,
             boolean enabled,
             Collection<? extends GrantedAuthority> authorities
     )
@@ -45,6 +50,7 @@ public class UserDetails extends User implements Serializable
         this.phone = phone;
         this.email = email;
         this.ip = ip;
+        this.avatarUrl = avatarUrl;
     }
 
     @Override

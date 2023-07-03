@@ -3,7 +3,6 @@ package cn.maplerabbit.rlg.module.user.service;
 import cn.maplerabbit.rlg.pojo.user.dto.UserEmailLoginDTO;
 import cn.maplerabbit.rlg.pojo.user.dto.UsernameLoginDTO;
 import cn.maplerabbit.rlg.pojo.user.dto.UserRegisterDTO;
-import cn.maplerabbit.rlg.pojo.user.vo.UserInfoVO;
 
 /**
  * 用户服务接口
@@ -46,11 +45,4 @@ public interface IUserService
      * @return 新的jwt
      */
     String refresh(String jwt);
-
-    /**
-     * 通过jwt获取用户信息
-     * @param uuid 用户uuid
-     * @return 用户信息vo类
-     */
-    UserInfoVO getUserInfo(String uuid);
 }

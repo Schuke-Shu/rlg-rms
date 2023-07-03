@@ -86,11 +86,4 @@ public class UserController
     {
         return SuccessResult.ok(userService.refresh(request.getHeader(AUTHORIZATION_HEADER)));
     }
-
-    @ApiOperation("通过jwt获取用户信息")
-    @GetMapping("/user-info")
-    public JsonResult<?> getUserInfo(@ApiIgnore @AuthenticationPrincipal LoginPrincipal principal)
-    {
-        return SuccessResult.ok(userService.getUserInfo(principal.getUuid()));
-    }
 }

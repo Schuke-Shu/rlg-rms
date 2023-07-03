@@ -3,7 +3,8 @@ package cn.maplerabbit.rlg.common.exception;
 /**
  * 票据异常
  */
-public class TokenException extends RlgException
+public class TokenException extends
+                            RuntimeException
 {
     public TokenException()
     {

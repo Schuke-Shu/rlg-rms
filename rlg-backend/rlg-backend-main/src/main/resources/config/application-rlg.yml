@@ -12,8 +12,7 @@ spring:
       - /user/login
       - /user/register
       - /doc.html
-      - /**/*.css
-      - /**/*.js
+      - /webjars/**
       - /favicon.ico
       - /swagger-resources
       - /v2/api-docs

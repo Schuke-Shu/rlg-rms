@@ -162,7 +162,7 @@ li > a
                     </el-col>
                     <el-col :span="17">
                         <el-input v-model="loginForm.email" name="email" />
-                        <a @click="getCode(loginForm.email)" href="javascript:void(0)" style="color: #00d0d0">获取验证码</a>
+                        <a @click="getEmailLoginCode(loginForm.email)" href="javascript:void(0)" style="color: #00d0d0">获取验证码</a>
                     </el-col>
                 </el-row>
                 <el-row class="input_row" v-if="loginWay === loginByName">
@@ -251,7 +251,8 @@ li > a
 import {onMounted, ref} from "vue";
 import {HomeFilled, Message, UploadFilled, User} from "@element-plus/icons-vue";
 import Dialog from "@mrc/Dialog.vue";
-import {emailLogin, getCode, getUserInfo, login, register} from "@apis/login";
+import {emailLogin, getEmailLoginCode, login, register} from "@apis/login";
+import qs from "qs";
 
 const hasLoggedIn = ref(false);
 const loginDialogVisible = ref(true);
@@ -283,11 +284,12 @@ onMounted(() => {
 async function init()
 {
 
-    let jwt = localStorage.getItem('user');
-    if (jwt == null) return;
+    let user = localStorage.getItem('user');
+    if (user == null) return;
     hasLoggedIn.value = true;
-    let userInfo = await getUserInfo();
-    avatarUrl.value = userInfo.avatarUrl == null ? avatarUrl.value : 'http://localhost:10086/static/' + userInfo.avatarUrl;
+    user = qs.parse(user);
+    let avatar = user.info.avatarUrl;
+    avatarUrl.value = avatar == null ? avatarUrl.value : 'http://localhost:10086/static/' + avatar;
 }
 
 const outLogin = function ()

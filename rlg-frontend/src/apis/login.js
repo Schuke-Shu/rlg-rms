@@ -1,22 +1,13 @@
 import {axGet, axPost} from '@utils/http';
 import qs from "qs";
-let data;
+import * as jose from 'jose';
 
 export function login(form)
 {
     axPost({
         url: '/user/login',
         data: qs.stringify(form)
-    }).then(res => {
-        data = res.data;
-        if (data.status == 20000)
-        {
-            localStorage.setItem('user', res.data.data)
-            location.reload();
-        }
-        else
-            alert(data.message)
-    })
+    }).then(res => getInfo(res.data))
 }
 
 export function emailLogin(form)
@@ -24,19 +15,10 @@ export function emailLogin(form)
     axPost({
         url: '/user/email-login',
         data: qs.stringify(form)
-    }).then(res => {
-        data = res.data;
-        if (data.status == 20000)
-        {
-            localStorage.setItem('user', res.data.data)
-            location.reload();
-        }
-        else
-            alert(data.message)
-    })
+    }).then(res => getInfo(res.data))
 }
 
-export function getCode(email)
+export function getEmailLoginCode(email)
 {
     axGet({
         url: '/user/email-login?email=' + email
@@ -52,7 +34,7 @@ export function register(form)
         url: '/user/register',
         data: qs.stringify(form)
     }).then(res => {
-        data = res.data;
+        let data = res.data;
         if (data.status == 20000)
             alert("注册成功！");
         else
@@ -60,15 +42,19 @@ export function register(form)
     })
 }
 
-export async function getUserInfo()
+function getInfo(data)
 {
-    let userInfo;
-    let promise = await axGet({
-        url: '/user/user-info',
-        headers: {
-            Authorization: localStorage.getItem('user')
+    if (data.status == 20000)
+    {
+        let jwt = data.data;
+        let info = jose.decodeJwt(jwt);
+        let user = {
+            info: info,
+            jwt: jwt
         }
-    });
-    userInfo = promise.data.data;
-    return userInfo;
+        localStorage.setItem('user', qs.stringify(user));
+        location.reload();
+    }
+    else
+        alert(data.message)
 }

@@ -1,6 +1,7 @@
 package cn.maplerabbit.rlg.aop;
 
 import cn.maplerabbit.rlg.common.enumpak.ServiceCode;
+import cn.maplerabbit.rlg.common.exception.ProgramError;
 import cn.maplerabbit.rlg.common.exception.ServiceException;
 import cn.maplerabbit.rlg.common.entity.result.ErrorResult;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,13 @@ public class GlobalExceptionHandler
     {
         log.debug("-- {}，code：{}，msg：{}", e.getClass().getSimpleName(), e.getCode().getStatus(), e.getMessage());
         return ErrorResult.fail(e);
+    }
+
+    @ExceptionHandler
+    public ErrorResult handleProgramError(ProgramError e)
+    {
+        log.error("-- {}，msg：{}", e.getClass().getSimpleName(), e.getMessage());
+        return ErrorResult.fail(ServiceCode.ERR_UNKNOWN, "服务器忙，请稍后再试");
     }
 
     @ExceptionHandler

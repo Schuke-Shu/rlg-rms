@@ -53,13 +53,11 @@ spring:
       # 静态资源根路径
       static-locations:
       - classpath:static
-      - file:${rlg.directory.root-dir}/static
+      - file:${rlg.directory.root-dir}
   # spring mvc配置
   mvc:
     servlet:
       load-on-startup: 1
-    # 以static开头的url会去寻找静态文件，实际路径不包含static
-    static-path-pattern: /static/**
   jackson:
     time-zone: GMT+8
 

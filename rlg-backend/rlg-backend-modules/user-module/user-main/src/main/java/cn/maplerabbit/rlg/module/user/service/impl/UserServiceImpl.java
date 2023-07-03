@@ -3,6 +3,7 @@ package cn.maplerabbit.rlg.module.user.service.impl;
 import cn.maplerabbit.rlg.common.constpak.LoginPrincipalConst;
 import cn.maplerabbit.rlg.common.enumpak.ServiceCode;
 import cn.maplerabbit.rlg.common.exception.UserException;
+import cn.maplerabbit.rlg.common.util.JwtUtil;
 import cn.maplerabbit.rlg.module.log.service.IUserLoginLogService;
 import cn.maplerabbit.rlg.module.user.mapper.UserMapper;
 import cn.maplerabbit.rlg.module.user.service.ILoginInfoService;
@@ -13,7 +14,6 @@ import cn.maplerabbit.rlg.pojo.user.dto.UserEmailLoginDTO;
 import cn.maplerabbit.rlg.pojo.user.dto.UsernameLoginDTO;
 import cn.maplerabbit.rlg.pojo.user.dto.UserRegisterDTO;
 import cn.maplerabbit.rlg.pojo.user.entity.User;
-import cn.maplerabbit.rlg.pojo.user.vo.UserInfoVO;
 import cn.maplerabbit.rlg.common.property.JwtProperties;
 import cn.maplerabbit.rlg.common.entity.UserDetails;
 import cn.maplerabbit.rlg.common.util.ValidationCodeUtil;
@@ -30,10 +30,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 @Service
 @Slf4j
@@ -59,6 +61,8 @@ public class UserServiceImpl
     private HttpServletRequest request;
     @Autowired
     private IUserLoginLogService userLoginLogService;
+    @Autowired
+    private JwtUtil jwtUtil;
 
     /**
      * 存储浏览器内核信息的请求头
@@ -120,7 +124,7 @@ public class UserServiceImpl
         log.trace("Get UserDetails: {}", userDetails);
 
         // 存入JWT并返回
-        return generateJWT(
+        return jwtUtil.generate(
                 handleLogin(userDetails)
         );
     }
@@ -146,7 +150,7 @@ public class UserServiceImpl
         log.debug("Get UserDetails: {}", userDetails);
 
         // 存入JWT并返回
-        return generateJWT(
+        return jwtUtil.generate(
                 handleLogin(userDetails)
         );
     }
@@ -161,23 +165,7 @@ public class UserServiceImpl
                 .getBody();
 
         // 使用jwt中的数据重新生成jwt
-        return generateJWT(body);
-    }
-
-    @Override
-    public UserInfoVO getUserInfo(String uuid)
-    {
-        // 查询user对象
-        User user = userMapper.query(uuid);
-        // 若user为null，抛出异常
-        if (user == null)
-            throw new UserException(ServiceCode.ERR_NOT_FOUND, "找不到该用户");
-        // 创建UserInfoVO
-        UserInfoVO vo = new UserInfoVO();
-        // 将user的属性复制给vo对象
-        BeanUtils.copyProperties(user, vo);
-        // 返回
-        return vo;
+        return jwtUtil.generate(body);
     }
 
     /**
@@ -195,6 +183,7 @@ public class UserServiceImpl
         claims.put(CLAIMS_KEY_PHONE, userDetails.getPhone());
         claims.put(CLAIMS_KEY_EMAIL, userDetails.getEmail());
         claims.put(CLAIMS_KEY_IP, userDetails.getIp());
+        claims.put(CLAIMS_KEY_AVATAR_URL, userDetails.getAvatarUrl());
         claims.put(CLAIMS_KEY_AUTHORITIES, JSON.toJSONString(userDetails.getAuthorities()));
 
         LocalDateTime now = LocalDateTime.now();
@@ -221,32 +210,10 @@ public class UserServiceImpl
         return claims;
     }
 
-    /**
-     * 生成jwt
-     *
-     * @param claims 要存储的数据
-     * @return JWT字符串
-     */
-    private String generateJWT(Map<String, Object> claims)
+    public static void main(String[] args)
     {
-        return Jwts.builder() // 获取JwtBuilder，用于构建JWT
-                // 配置Header
-                .setHeaderParam("alg", jwtProperties.getAlgorithm())
-                .setHeaderParam("typ", jwtProperties.getType())
-                // 配置payload（存入数据）
-                .setClaims(claims)
-                // 配置Signature
-                .setExpiration(
-                        new Date(
-                                System.currentTimeMillis() + (long) jwtProperties.getUsableMinutes() * 60 * 1000
-                        )
-                ) // JWT过期时间
-                .signWith(
-                        SignatureAlgorithm.forName(
-                                jwtProperties.getAlgorithm()
-                        ),
-                        jwtProperties.getSecretKey()
-                )
-                .compact(); // 获取JWT
+        System.out.println(
+                MILLISECONDS.convert(1, TimeUnit.MINUTES)
+        );
     }
 }
