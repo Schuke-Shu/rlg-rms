@@ -23,25 +23,14 @@ public interface UserMapper extends StringModelMapperTemplate<User>
     );
 
     /**
-     * 根据用户名获取登录信息
-     * @param username 用户名
+     * 根据指定字段获取登录信息
+     * @param account 指定账户
      * @return 登录信息
      */
-    UserLoginVO getLoginInfoByUserName(String username);
-
-    /**
-     * 根据邮箱获取登录信息
-     * @param email 邮箱
-     * @return 登录信息
-     */
-    UserLoginVO getLoginInfoByEmail(String email);
-
-    /**
-     * 根据手机号获取登录信息
-     * @param phone 手机号
-     * @return 登录信息
-     */
-    UserLoginVO getLoginInfoByPhone(String phone);
+    UserLoginVO loadUserByCustomField(
+            @Param("field") String field,
+            @Param("account") String account
+    );
 
     /**
      * 根据用户名获取用户数

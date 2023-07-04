@@ -70,7 +70,7 @@ public class JwtUtil
                         SignatureAlgorithm.forName(
                                 algorithm
                         ),
-                        type
+                        jwtProperties.getSecretKey()
                 )
                 .compact(); // 获取JWT
     }

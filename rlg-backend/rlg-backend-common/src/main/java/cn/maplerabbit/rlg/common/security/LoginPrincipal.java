@@ -1,4 +1,4 @@
-package cn.maplerabbit.rlg.common.entity;
+package cn.maplerabbit.rlg.common.security;
 
 import lombok.*;
 import lombok.experimental.Accessors;

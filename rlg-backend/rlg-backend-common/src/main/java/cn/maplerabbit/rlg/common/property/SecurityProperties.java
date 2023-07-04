@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Setter
 @Slf4j
 @Component
-@ConfigurationProperties(prefix = "spring.security")
+@ConfigurationProperties(prefix = "rlg.security")
 public class SecurityProperties
 {
     /**

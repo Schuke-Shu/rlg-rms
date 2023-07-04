@@ -46,6 +46,14 @@
         </collection>
     </resultMap>
 
+    <!-- UserLoginVO loadUserByCustomField(String field, String account); -->
+    <select id="loadUserByCustomField" resultMap="LoginInfoResultMap">
+        <include refid="selectLoginInfo" />
+        <where>
+            user.${field} = #{account}
+        </where>
+    </select>
+
     <!-- UserLoginVO getLoginInfoByUserName(String username); -->
     <select id="getLoginInfoByUserName" resultMap="LoginInfoResultMap">
         <include refid="selectLoginInfo" />
@@ -195,6 +203,6 @@
     </select>
 
     <select id="count" resultType="int">
-        select count(*) from user
+        <include refid="count" />
     </select>
 </mapper>

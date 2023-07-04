@@ -27,7 +27,7 @@ public class UserUpdateDTO
     private String uuid;
     @ApiModelProperty(value = "用户名", required = true)
     @Size(max = 9, message = USER_USERNAME_SIZE)
-    @Pattern(regexp = "^[\\u4E00-\\u9FFF\\w]+$", message = USER_USERNAME_PATTERN)
+    @Pattern(regexp = "^[\\u4E00-\\u9FFFA-Za-z][\\u4E00-\\u9FFF\\w]+$", message = USER_USERNAME_PATTERN)
     private String username;
     @ApiModelProperty(value = "密码")
     @Size(min = 8, max = 16, message = USER_PASSWORD_SIZE)

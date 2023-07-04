@@ -1,16 +1,13 @@
 package cn.maplerabbit.rlg.module.user.controller;
 
 import cn.maplerabbit.rlg.common.constpak.ValidationMessageConst;
-import cn.maplerabbit.rlg.common.entity.LoginPrincipal;
+import cn.maplerabbit.rlg.common.security.UserDetails;
 import cn.maplerabbit.rlg.module.user.service.IUserService;
-import cn.maplerabbit.rlg.pojo.user.dto.UserEmailLoginDTO;
-import cn.maplerabbit.rlg.pojo.user.dto.UsernameLoginDTO;
+import cn.maplerabbit.rlg.pojo.user.dto.UserLoginDTO;
 import cn.maplerabbit.rlg.pojo.user.dto.UserRegisterDTO;
-import cn.maplerabbit.rlg.common.util.ValidationCodeUtil;
 import cn.maplerabbit.rlg.common.entity.result.JsonResult;
 import cn.maplerabbit.rlg.common.entity.result.SuccessResult;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +21,6 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 
 @Slf4j
 @RestController
@@ -42,8 +37,6 @@ public class UserController
 
     @Autowired
     private IUserService userService;
-    @Autowired
-    private ValidationCodeUtil validationCodeUtil;
 
     public UserController()
     {
@@ -58,26 +51,14 @@ public class UserController
         return SuccessResult.ok();
     }
 
-    @ApiOperation("用户名登录")
+    @ApiOperation("用户登录")
     @PostMapping("/login")
-    public JsonResult<?> login(@Valid UsernameLoginDTO userLoginDTO) {
-        return SuccessResult.ok(userService.login(userLoginDTO));
-    }
-
-    @ApiOperation("获取邮箱登录验证码")
-    @GetMapping("/email-login")
-    @ApiImplicitParam(name = "email", value = "登录邮箱", required = true, dataType = "string")
-    public JsonResult<?> getEmailLoginCode(@NotBlank(message = USER_EMAIL) @Email(message = USER_EMAIL) String email)
+    public JsonResult<?> login(
+            UserLoginDTO userLoginDTO,
+            @ApiIgnore @AuthenticationPrincipal UserDetails details
+    )
     {
-        userService.getEmailLoginCode(email);
-        return SuccessResult.ok();
-    }
-
-    @ApiOperation("用户邮箱登录")
-    @PostMapping("/email-login")
-    public JsonResult<?> emailLogin(@Valid UserEmailLoginDTO userEmailLoginDTO)
-    {
-        return SuccessResult.ok(userService.emailLogin(userEmailLoginDTO));
+        return SuccessResult.ok(userService.login(details));
     }
 
     @ApiOperation("刷新JWT")

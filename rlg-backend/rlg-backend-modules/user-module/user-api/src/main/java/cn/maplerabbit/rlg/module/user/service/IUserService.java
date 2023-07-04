@@ -1,19 +1,14 @@
 package cn.maplerabbit.rlg.module.user.service;
 
-import cn.maplerabbit.rlg.pojo.user.dto.UserEmailLoginDTO;
-import cn.maplerabbit.rlg.pojo.user.dto.UsernameLoginDTO;
+import cn.maplerabbit.rlg.common.security.ILoginRegisterService;
+import cn.maplerabbit.rlg.common.security.UserDetails;
 import cn.maplerabbit.rlg.pojo.user.dto.UserRegisterDTO;
 
 /**
  * 用户服务接口
  */
-public interface IUserService
+public interface IUserService extends ILoginRegisterService
 {
-    /**
-     * 普通用户角色
-     */
-    String ROLE_USER = "ROLE_USER";
-
     /**
      * 用户名注册
      */
@@ -24,20 +19,7 @@ public interface IUserService
      * @param userLoginDTO 用户名登录的dto类
      * @return jwt token
      */
-    String login(UsernameLoginDTO userLoginDTO);
-
-    /**
-     * 获取邮箱登录验证码
-     * @param email 邮箱
-     */
-    void getEmailLoginCode(String email);
-
-    /**
-     * 用户邮箱登录
-     * @param userEmailLoginDTO email登录信息
-     * @return jwt token
-     */
-    String emailLogin(UserEmailLoginDTO userEmailLoginDTO);
+    String login(UserDetails details);
 
     /**
      * 刷新jwt

@@ -14,7 +14,7 @@
 
 | 配置名称                      | 说明                             | 默认值                               |
 | ----------------------------- | -------------------------------- | ------------------------------------ |
-| spring.security.url-allowlist | spring-security配置中的url白名单 | [---](# arr_url-allowlist)           |
+| rlg.security.url-allowlist | spring-security配置中的url白名单 | [---](# arr_url-allowlist)           |
 | rlg.code.usable-time          | 有效时间（单位：分钟）           | 15                                   |
 | rlg.directory.root-dir        | 根目录路径                       | C:/rlg                               |
 | rlg.directory.static-dir      | 静态资源路径                     | ${rlg.directory.root-dir}/static     |
@@ -32,8 +32,6 @@
 ###### arr_url-allowlist
 
 - `/static/**`
-- `/user/email-login`
-- `/user/login`
 - `/user/register`
 - `/doc.html`
 - `/**/*.css`

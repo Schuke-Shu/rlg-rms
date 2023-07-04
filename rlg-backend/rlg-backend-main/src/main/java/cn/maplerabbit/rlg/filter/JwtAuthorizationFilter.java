@@ -1,12 +1,12 @@
 package cn.maplerabbit.rlg.filter;
 
 import cn.maplerabbit.rlg.common.constpak.LoginPrincipalConst;
+import cn.maplerabbit.rlg.common.entity.result.ErrorResult;
 import cn.maplerabbit.rlg.common.enumpak.ServiceCode;
 import cn.maplerabbit.rlg.common.exception.TokenException;
 import cn.maplerabbit.rlg.common.property.JwtProperties;
-import cn.maplerabbit.rlg.common.entity.LoginPrincipal;
+import cn.maplerabbit.rlg.common.security.LoginPrincipal;
 import cn.maplerabbit.rlg.common.util.IpUtil;
-import cn.maplerabbit.rlg.common.entity.result.ErrorResult;
 import com.alibaba.fastjson.JSON;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
+
+import static cn.maplerabbit.rlg.common.util.FilterError.error;
+
 
 /**
  * JWT过滤解析器
@@ -37,8 +39,6 @@ public class JwtAuthorizationFilter
 {
     @Autowired
     private JwtProperties jwtProperties;
-    @Autowired
-    private HttpServletResponse response;
 
     public JwtAuthorizationFilter()
     {
@@ -55,6 +55,12 @@ public class JwtAuthorizationFilter
             ServletException,
             IOException
     {
+
+        log.trace(
+                "Entry LoginAuthenticationFilter, details: \nrequest method: {}\nuri: {}",
+                request.getMethod(),
+                request.getRequestURI()
+        );
         String secretKey = jwtProperties.getSecretKey();
 
         // 判断密钥是否为空
@@ -93,21 +99,30 @@ public class JwtAuthorizationFilter
             // JWT过期
             log.debug("-- ExpiredJwtException, jwt过期");
             log.trace("JWT: {}", jwt);
-            error(ServiceCode.ERR_JWT_EXPIRED, "您的登录信息已过期，请重新登录");
+            error(
+                    response,
+                    ErrorResult.fail(ServiceCode.ERR_JWT_EXPIRED, "您的登录信息已过期，请重新登录")
+            );
             return;
         }
         catch (SignatureException e)
         {
             // 签名错误，JWT被篡改
             log.warn("-- SignatureException，ip: {}", request.getRemoteAddr());
-            error(ServiceCode.ERR_JWT_SIGNATURE, "非法访问！");
+            error(
+                    response,
+                    ErrorResult.fail(ServiceCode.ERR_JWT_SIGNATURE, "非法访问！")
+            );
             return;
         }
         catch (MalformedJwtException e)
         {
             // JWT格式不正确，JWT被篡改
             log.warn("-- MalformedJwtException，ip: {}", request.getRemoteAddr());
-            error(ServiceCode.ERR_JWT_MALFORMED, "非法访问！");
+            error(
+                    response,
+                    ErrorResult.fail(ServiceCode.ERR_JWT_MALFORMED, "非法访问！")
+            );
             return;
         }
         catch (Throwable e)
@@ -115,7 +130,10 @@ public class JwtAuthorizationFilter
             // 出现未处理异常
             log.error("-- Unhandled Exception: {}", e.getClass().getName());
             e.printStackTrace();
-            error(ServiceCode.ERR_UNKNOWN, "服务器忙，请稍后再试");
+            error(
+                    response,
+                    ErrorResult.fail(ServiceCode.ERR_UNKNOWN, "服务器忙，请稍后再试")
+            );
             return;
         }
 
@@ -154,32 +172,6 @@ public class JwtAuthorizationFilter
             // 放行
             log.debug("JWT parsing success, to next...");
             filterChain.doFilter(request, response);
-        }
-    }
-
-    /**
-     * 向客户端返回异常信息
-     */
-    private void error(ServiceCode code, String msg)
-    {
-        response.setContentType("application/json;charset=utf-8");
-
-        try
-        {
-            PrintWriter writer = response.getWriter();
-
-            writer.println(
-                    JSON.toJSONString(
-                            ErrorResult.fail(code, msg)
-                    )
-            );
-
-            writer.close();
-        }
-        catch (IOException e)
-        {
-            log.error("-- IOException, msg: {}", e.getMessage());
-            throw new RuntimeException(e.getMessage());
         }
     }
 }
