@@ -16,6 +16,10 @@
         #{i.uuid}, #{i.userUuid}, #{i.md5}, #{i.suffix}, #{i.type}, #{i.size}, #{i.uploadTime}
     </sql>
 
+    <sql id="BaseCount">
+        select count(*) from file
+    </sql>
+
     <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.file.entity.File">
         <id column="uuid" property="uuid" />
         <result column="user_uuid" property="userUuid" />
@@ -89,6 +93,6 @@
     </select>
 
     <select id="count" resultType="int">
-        select count(*) from file
+        <include refid="BaseCount" />
     </select>
 </mapper>

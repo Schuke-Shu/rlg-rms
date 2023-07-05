@@ -11,10 +11,14 @@
         <!-- add base columns -->, create_time, modified_time
     </sql>
     <sql id="save">
-
+        , #{}
     </sql>
     <sql id="saveBatch">
+        , #{i.}
+    </sql>
 
+    <sql id="BaseCount">
+        select count(*) from xxx
     </sql>
 
     <resultMap id="BaseResultMap" type="">
@@ -78,6 +82,6 @@
     </select>
 
     <select id="count" resultType="int">
-        select count(*) from xxx
+        <include refid="BaseCount" />
     </select>
 </mapper>

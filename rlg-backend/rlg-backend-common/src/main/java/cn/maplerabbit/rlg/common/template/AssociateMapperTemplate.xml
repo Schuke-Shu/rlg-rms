@@ -8,10 +8,14 @@
         <!-- add base columns -->
     </sql>
     <sql id="save">
-        , #{}
+        #{left}, #{right}
     </sql>
     <sql id="saveBatch">
-        , #{i.}
+        #{i.left}, #{i.right}
+    </sql>
+
+    <sql id="BaseCount">
+        select count(*) from xxx
     </sql>
 
     <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
@@ -52,6 +56,6 @@
     </update>
 
     <select id="count" resultType="int">
-        select count(*) from xxx
+        <include refid="BaseCount" />
     </select>
 </mapper>

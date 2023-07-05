@@ -12,6 +12,10 @@
         #{i.left}, #{i.right}
     </sql>
 
+    <sql id="BaseCount">
+        select count(*) from user_role
+    </sql>
+
     <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         insert into user_role(
             <include refid="BaseColumns" />
@@ -50,6 +54,6 @@
     </update>
 
     <select id="count" resultType="int">
-        select count(*) from user_role
+        <include refid="BaseCount" />
     </select>
 </mapper>

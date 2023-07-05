@@ -11,20 +11,16 @@
         </where>
     </update>
 
-    <sql id="count">
-        select count(*) from user
-    </sql>
-
     <sql id="selectLoginInfo">
         select
-            user.uuid,
-            user.username,
-            user.password,
-            user.avatar_url,
-            user.phone,
-            user.email,
-            user.enable,
-            permission.flag
+            uuid,
+            username,
+            password,
+            avatar_url,
+            phone,
+            email,
+            enable,
+            flag
         from user
                  left join user_role on user.uuid = user_role.user_uuid
                  left join role_permission on user_role.role_id = role_permission.role_id
@@ -50,13 +46,13 @@
     <select id="loadUserByCustomField" resultMap="LoginInfoResultMap">
         <include refid="selectLoginInfo" />
         <where>
-            user.${field} = #{account}
+            ${field} = #{account}
         </where>
     </select>
 
     <!-- int countByCustomField(String field, String account); -->
     <select id="countByCustomField" resultType="int">
-        <include refid="count" />
+        <include refid="BaseCount" />
         <where>
             ${field} = #{account}
         </where>
@@ -74,6 +70,10 @@
     </sql>
     <sql id="saveBatch">
         #{i.uuid}, #{i.username}, #{i.password}, #{i.avatarUrl}, #{i.realName}, #{i.gender}, #{i.phone}, #{i.email}, #{i.birth}, #{i.description}, #{i.enable}, #{i.lastLoginTime}, #{i.lastLoginIp}, #{i.signUpTime}
+    </sql>
+
+    <sql id="BaseCount">
+        select count(*) from user
     </sql>
 
     <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.user.entity.User">
@@ -163,6 +163,6 @@
     </select>
 
     <select id="count" resultType="int">
-        <include refid="count" />
+        <include refid="BaseCount" />
     </select>
 </mapper>
