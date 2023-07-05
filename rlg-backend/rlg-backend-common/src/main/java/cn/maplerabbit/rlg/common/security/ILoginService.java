@@ -6,8 +6,9 @@ package cn.maplerabbit.rlg.common.security;
 public interface ILoginService
 {
     /**
-     * 通过邮箱获取用户信息
-     * @param email 邮箱
+     * 动态获取用户信息
+     * @param field 数据库账户对应字段
+     * @param account 账户名称
      * @return 用户信息
      */
     UserDetails loadUser(String field, String account);
