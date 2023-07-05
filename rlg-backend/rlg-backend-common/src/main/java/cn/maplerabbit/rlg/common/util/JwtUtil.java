@@ -19,15 +19,6 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 @Component
 public class JwtUtil
 {
-    /**
-     * header key - alg
-     */
-    private static final String JWT_HEADER_PARAM_ALG = "alg";
-    /**
-     * header key - typ
-     */
-    private static final String JWT_HEADER_PARAM_TYP = "typ";
-
     @Autowired
     private JwtProperties jwtProperties;
 
@@ -52,17 +43,14 @@ public class JwtUtil
             log.warn("设置的jwt有效时间无意义，修改为配置文件中配置的有效时间");
             if (jwtProperties.getUsableMinutes() <= 0)
                 throw new JwtError("配置的jwt有效时间无意义！");
-            timeout = new Date(
-                    System.currentTimeMillis() +
-                            MILLISECONDS.convert(jwtProperties.getUsableMinutes(), TimeUnit.MINUTES)
-            );
+            timeout = timeout(jwtProperties.getUsableMinutes());
         }
 
         log.trace("Generating JWT, data: {}", claims);
         return Jwts.builder() // 获取JwtBuilder，用于构建JWT
                 // 配置Header
-                .setHeaderParam(JWT_HEADER_PARAM_ALG, algorithm)
-                .setHeaderParam(JWT_HEADER_PARAM_TYP, type)
+                .setHeaderParam(algorithm, algorithm)
+                .setHeaderParam(type, type)
                 // 配置payload（存入数据）
                 .setClaims(claims)
                 // 配置Signature
@@ -98,10 +86,15 @@ public class JwtUtil
     {
         return generate(
                 claims,
-                new Date(
-                        System.currentTimeMillis() +
-                                MILLISECONDS.convert(jwtProperties.getUsableMinutes(), TimeUnit.MINUTES)
-                )
+                timeout(jwtProperties.getUsableMinutes())
+        );
+    }
+
+    private Date timeout(int usableMinutes)
+    {
+        return new Date(
+                System.currentTimeMillis() +
+                        MILLISECONDS.convert(usableMinutes, TimeUnit.MINUTES)
         );
     }
 }
