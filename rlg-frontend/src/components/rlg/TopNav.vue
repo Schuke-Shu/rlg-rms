@@ -74,12 +74,18 @@ li > a
 
 .input_row + .input_row
 {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
 }
 
 .login_change
 {
     color: #ff9cb3;
+}
+
+.input_row span
+{
+    float: right;
+    margin-right: 1.5rem;
 }
 </style>
 
@@ -93,7 +99,7 @@ li > a
             </a>
         </el-col>
 
-        <el-col v-if="hasLoggedIn" :span="12" :offset="8" style="padding: 1.5rem 0">
+        <el-col v-if="hasSignedIn" :span="12" :offset="8" style="padding: 1.5rem 0">
             <el-row>
                 <!-- 导航菜单 -->
                 <el-col :span="20">
@@ -140,7 +146,7 @@ li > a
     </el-row>
 
     <!-- 模态框 -->
-    <Dialog v-model="loginDialogVisible" v-if="!hasLoggedIn">
+    <Dialog v-model="loginDialogVisible" v-if="!hasSignedIn">
         <template #header>
             <h2 v-if="isLogin">Login</h2>
             <h2 v-else>Register</h2>
@@ -148,59 +154,36 @@ li > a
 
         <template #body>
             <div v-if="isLogin">
-                <el-row class="input_row" v-if="loginWay === loginByName">
+                <el-row class="input_row">
                     <el-col :span="6">
-                        <span class="input_label">用户名：</span>
+                        <span class="input_label">账户：</span>
                     </el-col>
                     <el-col :span="17">
-                        <el-input v-model="loginForm.username" name="username" />
+                        <el-input v-model="account" :placeholder="placeholder" />
+                        <a @click="getLoginCode(account)" href="javascript:void(0)" v-if="!loginByPassword" style="color: #00d0d0; position: relative; left: .2rem; top: .3rem">获取验证码</a>
                     </el-col>
                 </el-row>
-                <el-row class="input_row" v-if="loginWay === loginByEmail">
+                <el-row class="input_row">
                     <el-col :span="6">
-                        <span class="input_label">邮箱：</span>
+                        <span class="input_label">{{ keyWord }}：</span>
                     </el-col>
                     <el-col :span="17">
-                        <el-input v-model="loginForm.email" name="email" />
-                        <a @click="getEmailLoginCode(loginForm.email)" href="javascript:void(0)" style="color: #00d0d0">获取验证码</a>
-                    </el-col>
-                </el-row>
-                <el-row class="input_row" v-if="loginWay === loginByName">
-                    <el-col :span="6">
-                        <span class="input_label">密码：</span>
-                    </el-col>
-                    <el-col :span="17">
-                        <el-input v-model="loginForm.password" name="password" />
-                    </el-col>
-                </el-row>
-                <el-row class="input_row" v-if="loginWay === loginByEmail">
-                    <el-col :span="6">
-                        <span class="input_label">验证码：</span>
-                    </el-col>
-                    <el-col :span="6">
-                        <el-input v-model="loginForm.code" name="code" />
+                        <el-input v-model="password" v-if="loginByPassword" placeholder="密码" />
+                        <el-input v-model="code" v-else placeholder="验证码" />
                     </el-col>
                 </el-row>
                 <el-row style="margin-top: 1rem">
-                    <el-col :span="6" v-if="loginWay === loginByName">
-                        <a class="login_change" href="javascript:void(0)" @click="loginWay = loginByEmail">
+                    <el-col :span="6">
+                        <a class="login_change" href="javascript:void(0)" @click="loginByPassword = !loginByPassword">
                             <el-icon>
-                                <message />
+                                <right />
                             </el-icon>
-                            <span style="margin-left: .5rem; position: relative; bottom: .15rem">邮箱登录</span>
-                        </a>
-                    </el-col>
-                    <el-col :span="6" v-else>
-                        <a class="login_change" href="javascript:void(0)"  @click="loginWay = loginByName">
-                            <el-icon>
-                                <user />
-                            </el-icon>
-                            <span style="margin-left: .5rem; position: relative; bottom: .15rem">用户名登录</span>
+                            <span style="margin-left: .5rem; position: relative; bottom: .25rem">{{ toKeyWord }}登录</span>
                         </a>
                     </el-col>
                     <el-col :span="8" :offset="9">
                         <span style="position: relative; bottom: .15rem">还没有账号？</span>
-                        <a href="javascript:void(0)" @click="isLogin = false" style="color: #ff9cb3; position: relative; bottom: .15rem">去注册</a>
+                        <a href="javascript:void(0)" @click="isLogin = !isLogin" style="color: #ff9cb3; position: relative; bottom: .15rem">去注册</a>
                     </el-col>
                 </el-row>
             </div>
@@ -211,7 +194,7 @@ li > a
                         <span class="input_label">用户名：</span>
                     </el-col>
                     <el-col :span="17">
-                        <el-input v-model="registerForm.username" name="username" />
+                        <el-input v-model="account" placeholder="用户名" />
                     </el-col>
                 </el-row>
                 <el-row class="input_row">
@@ -219,13 +202,13 @@ li > a
                         <span class="input_label">密码：</span>
                     </el-col>
                     <el-col :span="17">
-                        <el-input v-model="registerForm.password" name="password" />
+                        <el-input v-model="password" placeholder="密码"/>
                     </el-col>
                 </el-row>
                 <el-row style="margin-top: 1rem">
                     <el-col :span="8" :offset="15">
                         <span style="position: relative; bottom: .15rem">已有账号？</span>
-                        <a href="javascript:void(0)" @click="loginWay = loginByName; isLogin = true" style="color: #ff9cb3; position: relative; bottom: .15rem">去登录</a>
+                        <a href="javascript:void(0)" @click="loginByPassword = true; isLogin = !isLogin" style="color: #ff9cb3; position: relative; bottom: .15rem">去登录</a>
                     </el-col>
                 </el-row>
             </div>
@@ -234,13 +217,13 @@ li > a
         <template #footer>
             <el-row>
                 <el-col :span="4" :offset="15">
-                    <el-button type="info" plain @click="loginDialogVisible = false">取消</el-button>
+                    <el-button type="info" plain @click="loginDialogVisible = !loginDialogVisible">取消</el-button>
                 </el-col>
                 <el-col :span="4" v-if="isLogin">
-                    <el-button type="primary" plain @click="loginWay === loginByName ? login(loginForm) : emailLogin(loginForm)">登录</el-button>
+                    <el-button type="primary" plain @click="loginByPassword ? login(account, password, passwordLogin) : login(account, code, codeLogin)">登录</el-button>
                 </el-col>
                 <el-col :span="4" v-else>
-                    <el-button type="primary" plain @click="register(registerForm)">注册</el-button>
+                    <el-button type="primary" plain @click="register(account, password)">注册</el-button>
                 </el-col>
             </el-row>
         </template>
@@ -248,33 +231,45 @@ li > a
 </template>
 
 <script setup>
-import {onMounted, ref} from "vue";
-import {HomeFilled, Message, UploadFilled, User} from "@element-plus/icons-vue";
+import {computed, onMounted, ref} from "vue";
+import {HomeFilled, Right, UploadFilled} from "@element-plus/icons-vue";
 import Dialog from "@mrc/Dialog.vue";
-import {emailLogin, getEmailLoginCode, login, register} from "@apis/login";
+import {getLoginCode, login, register} from "@apis/login";
 import qs from "qs";
 
-const hasLoggedIn = ref(false);
-const loginDialogVisible = ref(true);
 const avatarUrl = ref('/img/defaultAvatar.png');
 
-
-const loginByName = 'username';
-const loginByEmail = 'email';
-
+const hasSignedIn = ref(false);
+const loginDialogVisible = ref(true);
+const loginByPassword = ref(true);
 const isLogin = ref(true);
 
-const loginWay = ref(loginByName);
+const account = ref('');
+const password = ref('');
+const code = ref('');
 
-const loginForm = ref({
-    username: '',
-    password: '',
-    email: '',
-    code: ''
-});
-const registerForm = ref({
-    username: '',
-    password: ''
+const passwordLogin = 'pwd';
+const codeLogin = 'code';
+
+const placeholder = computed(() => {
+    if (loginByPassword.value)
+        return "用户名/邮箱/手机号";
+    else
+        return "邮箱/手机号";
+})
+
+const keyWord = computed(() => {
+    if (loginByPassword.value)
+        return "密码";
+    else
+        return "验证码";
+})
+
+const toKeyWord = computed(() => {
+    if (loginByPassword.value)
+        return "验证码";
+    else
+        return "密码";
 })
 
 onMounted(() => {
@@ -286,7 +281,7 @@ async function init()
 
     let user = localStorage.getItem('user');
     if (user == null) return;
-    hasLoggedIn.value = true;
+    hasSignedIn.value = true;
     user = qs.parse(user);
     let avatar = user.info.avatarUrl;
     avatarUrl.value = avatar == null ? avatarUrl.value : 'http://localhost:10086/static/' + avatar;
@@ -297,4 +292,17 @@ const outLogin = function ()
     localStorage.removeItem('user');
     location.reload();
 }
+
+// const checkJwt = function (info)
+// {
+//     let timeout = new Date(info.timeout);
+//     let now = new Date();
+//     console.log(timeout.getTime() - now.getTime())
+//
+//     if (
+//         (timeout.getTime() - now.getTime()) <
+//         24 * 60 * 60 * 1000 // 一天
+//     )
+//         console.log(123);
+// }
 </script>

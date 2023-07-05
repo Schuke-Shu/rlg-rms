@@ -9,4 +9,5 @@ public interface LoginPrincipalConst
     String CLAIMS_KEY_IP = "ip";
     String CLAIMS_KEY_AVATAR_URL = "avatarUrl";
     String CLAIMS_KEY_AUTHORITIES = "authorities";
+    String CLAIMS_KEY_TIMEOUT = "timeout";
 }

@@ -25,7 +25,6 @@ import static cn.maplerabbit.rlg.common.util.FilterError.error;
  * 验证码获取，参数为account，可能为邮箱或手机号
  */
 @Slf4j
-@Component
 public class CodeObtainFilter extends HttpFilter
 {
     /**
@@ -38,20 +37,19 @@ public class CodeObtainFilter extends HttpFilter
      */
     private static final String ACCOUNT_PARAM = "account";
 
-    @Autowired
-    private ValidationCodeUtil validationCodeUtil;
+    private final ValidationCodeUtil validationCodeUtil;
 
-    public CodeObtainFilter() {log.debug("CodeObtainFilter()...");}
+    public CodeObtainFilter(ValidationCodeUtil validationCodeUtil)
+    {
+        this.validationCodeUtil = validationCodeUtil;
+        log.debug("CodeObtainFilter()...");
+    }
 
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException
     {
-        log.trace(
-                "Entry LoginAuthenticationFilter, details: \nrequest method: {}\nuri: {}",
-                request.getMethod(),
-                request.getRequestURI()
-        );
+        log.trace("Access CodeObtainFilter");
         
         if (!MATCHER.matches(request))
             chain.doFilter(request, response);
@@ -61,8 +59,6 @@ public class CodeObtainFilter extends HttpFilter
 
     private void sendCode(HttpServletRequest request, HttpServletResponse response)
     {
-        log.debug("Access CodeObtainFilter");
-
         String account = request.getParameter(ACCOUNT_PARAM);
         if (!StringUtils.hasText(account))
         {

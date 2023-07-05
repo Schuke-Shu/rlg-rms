@@ -2,40 +2,36 @@ import {axGet, axPost} from '@utils/http';
 import qs from "qs";
 import * as jose from 'jose';
 
-export function loginByPassword(form)
+export function login(account, key, way)
 {
     axPost({
         url: '/user/login',
-        data: qs.stringify(form),
-        headers: {
-            "login-way": 'pwd'
-        }
+        data: qs.stringify({
+            account: account,
+            key: key
+        }),
+        headers: {'login-way': way}
     }).then(res => getInfo(res.data))
 }
 
-export function emailLogin(form)
-{
-    axPost({
-        url: '/user/email-login',
-        data: qs.stringify(form)
-    }).then(res => getInfo(res.data))
-}
-
-export function getEmailLoginCode(email)
+export function getLoginCode(account)
 {
     axGet({
-        url: '/user/email-login?email=' + email
+        url: '/code/user/login?account=' + account
     }).then(res => {
         if (res.data.status != 20000)
             alert(res.data.message)
     })
 }
 
-export function register(form)
+export function register(username, password)
 {
     axPost({
         url: '/user/register',
-        data: qs.stringify(form)
+        data: qs.stringify({
+            username: username,
+            password: password
+        })
     }).then(res => {
         let data = res.data;
         if (data.status == 20000)

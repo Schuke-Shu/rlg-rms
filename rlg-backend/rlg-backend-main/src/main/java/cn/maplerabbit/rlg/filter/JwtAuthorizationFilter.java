@@ -32,16 +32,15 @@ import static cn.maplerabbit.rlg.common.util.FilterError.error;
  * JWT过滤解析器
  */
 @Slf4j
-@Component
 public class JwtAuthorizationFilter
         extends OncePerRequestFilter
         implements LoginPrincipalConst
 {
-    @Autowired
-    private JwtProperties jwtProperties;
+    private final JwtProperties jwtProperties;
 
-    public JwtAuthorizationFilter()
+    public JwtAuthorizationFilter(JwtProperties jwtProperties)
     {
+        this.jwtProperties = jwtProperties;
         log.debug("JwtAuthorizationFilter()...");
     }
 

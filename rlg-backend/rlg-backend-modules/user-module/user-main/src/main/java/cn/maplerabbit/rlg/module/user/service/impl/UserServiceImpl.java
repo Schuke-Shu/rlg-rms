@@ -3,6 +3,7 @@ package cn.maplerabbit.rlg.module.user.service.impl;
 import cn.maplerabbit.rlg.common.constpak.LoginPrincipalConst;
 import cn.maplerabbit.rlg.common.enumpak.AccountType;
 import cn.maplerabbit.rlg.common.enumpak.ServiceCode;
+import cn.maplerabbit.rlg.common.exception.ProgramError;
 import cn.maplerabbit.rlg.module.user.exception.UserException;
 import cn.maplerabbit.rlg.common.util.IpUtil;
 import cn.maplerabbit.rlg.common.util.JwtUtil;
@@ -26,11 +27,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 @Service
 @Slf4j
@@ -109,16 +116,24 @@ public class UserServiceImpl
     public String login(UserDetails details)
     {
         Map<String, Object> claims = new HashMap<>();
-
-        claims.put(CLAIMS_KEY_UUID, details.getUuid());
-        claims.put(CLAIMS_KEY_USERNAME, details.getUsername());
-        claims.put(CLAIMS_KEY_PHONE, details.getPhone());
-        claims.put(CLAIMS_KEY_EMAIL, details.getEmail());
-        claims.put(CLAIMS_KEY_IP, details.getIp());
-        claims.put(CLAIMS_KEY_AVATAR_URL, details.getAvatarUrl());
-        claims.put(CLAIMS_KEY_AUTHORITIES, JSON.toJSONString(details.getAuthorities()));
-
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
+
+        Date timeout =
+                new Date(
+                        System.currentTimeMillis() +
+                                MILLISECONDS.convert(jwtProperties.getUsableMinutes(), TimeUnit.MINUTES)
+                );
+
+        // 准备jwt要保存的信息
+        claims.put(CLAIMS_KEY_UUID, details.getUuid());                                     // 用户uuid
+        claims.put(CLAIMS_KEY_USERNAME, details.getUsername());                             // 密码
+        claims.put(CLAIMS_KEY_PHONE, details.getPhone());                                   // 手机号
+        claims.put(CLAIMS_KEY_EMAIL, details.getEmail());                                   // 邮箱
+        claims.put(CLAIMS_KEY_IP, details.getIp());                                         // 当前登录ip
+        claims.put(CLAIMS_KEY_AVATAR_URL, details.getAvatarUrl());                          // 用户头像
+        claims.put(CLAIMS_KEY_AUTHORITIES, JSON.toJSONString(details.getAuthorities()));    // 权限列表
+        claims.put(CLAIMS_KEY_TIMEOUT, dateFormat.format(timeout));                         // 过期时间
 
         // 更新最后登录时间
         if (
@@ -131,6 +146,7 @@ public class UserServiceImpl
         )
             log.warn("UserMapper update login failed, user uuid: {}, username: {}", details.getUuid(), details.getUsername());
 
+        // 记录用户登录日志
         userLoginLogService.addLog(
                 new UserLoginLog()
                         .setUserUuid(details.getUuid())
@@ -141,7 +157,7 @@ public class UserServiceImpl
         );
 
         // 存入JWT并返回
-        return jwtUtil.generate(claims);
+        return jwtUtil.generate(claims, timeout);
     }
 
     @Override
@@ -150,7 +166,7 @@ public class UserServiceImpl
 
         UserLoginVO info = userMapper.loadUserByCustomField(field, account);
 
-        log.trace("Get LoginInfo matches {}【{}】: {}", field, account, info);
+        log.trace("Get LoginInfo matches '{}'【{}】: \n{}", field, account, info);
 
         // 创建UserDetails并返回
         return new UserDetails(
@@ -175,13 +191,41 @@ public class UserServiceImpl
     @Override
     public String refresh(String jwt)
     {
+        // 获取jwt保存的信息
         Claims body = Jwts
                 .parser()
                 .setSigningKey(jwtProperties.getSecretKey())
                 .parseClaimsJws(jwt)
                 .getBody();
 
-        // 使用jwt中的数据重新生成jwt
-        return jwtUtil.generate(body);
+        // 准备新的过期时间
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        try
+        {
+            // 如果jwt距离过期时间超过一天，拒绝刷新
+            if (
+                    (dateFormat.parse((String) body.get(CLAIMS_KEY_TIMEOUT)).getTime() - new Date().getTime()) <
+                    MILLISECONDS.convert(1, TimeUnit.DAYS)
+            )
+                throw new UserException(ServiceCode.ERR_BAD_REQUEST, "jwt尚未临期，拒绝刷新！");
+        }
+        catch (ParseException e)
+        {
+            log.debug("-- ParseException, msg: {}", e.getMessage());
+            throw new ProgramError(e.getMessage());
+        }
+
+        Date timeout =
+                new Date(
+                        System.currentTimeMillis() +
+                                MILLISECONDS.convert(jwtProperties.getUsableMinutes(), TimeUnit.MINUTES)
+                );
+
+        // 覆盖旧的过期时间
+        body.put(CLAIMS_KEY_TIMEOUT, dateFormat.format(timeout));
+
+        // 重新生成jwt
+        return jwtUtil.generate(body, timeout);
     }
 }

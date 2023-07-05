@@ -42,17 +42,23 @@ public class JwtUtil
      * @param type jwt类型
      * @return JWT字符串
      */
-    public String generate(Map<String, Object> claims, int usableTime, String algorithm, String type)
+    public String generate(Map<String, Object> claims, Date timeout, String algorithm, String type)
     {
         if (!StringUtils.hasText(jwtProperties.getAlgorithm())) throw new JwtError("未配置jwt签名算法！");
         if (!StringUtils.hasText(jwtProperties.getType())) throw new JwtError("未配置jwt类型！");
-        if (usableTime <= 0)
+        Date now = new Date();
+        if (timeout.before(now))
         {
             log.warn("设置的jwt有效时间无意义，修改为配置文件中配置的有效时间");
-            usableTime = jwtProperties.getUsableMinutes();
+            if (jwtProperties.getUsableMinutes() <= 0)
+                throw new JwtError("配置的jwt有效时间无意义！");
+            timeout = new Date(
+                    System.currentTimeMillis() +
+                            MILLISECONDS.convert(jwtProperties.getUsableMinutes(), TimeUnit.MINUTES)
+            );
         }
-        if (usableTime <= 0) throw new JwtError("配置的jwt有效时间无意义！");
 
+        log.trace("Generating JWT, data: {}", claims);
         return Jwts.builder() // 获取JwtBuilder，用于构建JWT
                 // 配置Header
                 .setHeaderParam(JWT_HEADER_PARAM_ALG, algorithm)
@@ -60,12 +66,7 @@ public class JwtUtil
                 // 配置payload（存入数据）
                 .setClaims(claims)
                 // 配置Signature
-                .setExpiration(
-                        new Date(
-                                System.currentTimeMillis() +
-                                        MILLISECONDS.convert(usableTime, TimeUnit.MINUTES)
-                        )
-                ) // JWT过期时间
+                .setExpiration(timeout) // JWT过期时间
                 .signWith(
                         SignatureAlgorithm.forName(
                                 algorithm
@@ -82,9 +83,9 @@ public class JwtUtil
      * @param usableTime 有效时间
      * @return JWT字符串
      */
-    public String generate(Map<String, Object> claims, int usableTime)
+    public String generate(Map<String, Object> claims, Date timeout)
     {
-        return generate(claims, usableTime, jwtProperties.getAlgorithm(), jwtProperties.getType());
+        return generate(claims, timeout, jwtProperties.getAlgorithm(), jwtProperties.getType());
     }
 
     /**
@@ -95,6 +96,12 @@ public class JwtUtil
      */
     public String generate(Map<String, Object> claims)
     {
-        return generate(claims, jwtProperties.getUsableMinutes(), jwtProperties.getAlgorithm(), jwtProperties.getType());
+        return generate(
+                claims,
+                new Date(
+                        System.currentTimeMillis() +
+                                MILLISECONDS.convert(jwtProperties.getUsableMinutes(), TimeUnit.MINUTES)
+                )
+        );
     }
 }
