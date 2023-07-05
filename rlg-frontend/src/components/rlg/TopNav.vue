@@ -160,7 +160,7 @@ li > a
                     </el-col>
                     <el-col :span="17">
                         <el-input v-model="account" :placeholder="placeholder" />
-                        <a @click="getLoginCode(account)" href="javascript:void(0)" v-if="!loginByPassword" style="color: #00d0d0; position: relative; left: .2rem; top: .3rem">获取验证码</a>
+                        <a @click="getCode('/user/login', account)" href="javascript:void(0)" v-if="!loginByPassword" style="color: #00d0d0; position: relative; left: .2rem; top: .3rem">获取验证码</a>
                     </el-col>
                 </el-row>
                 <el-row class="input_row">
@@ -234,8 +234,10 @@ li > a
 import {computed, onMounted, ref} from "vue";
 import {HomeFilled, Right, UploadFilled} from "@element-plus/icons-vue";
 import Dialog from "@mrc/Dialog.vue";
-import {getLoginCode, login, register} from "@apis/login";
+import {login, register} from "@apis/login";
 import qs from "qs";
+import {getCode} from "@apis/login";
+import VAR from "@utils/Const";
 
 const avatarUrl = ref('/img/defaultAvatar.png');
 
@@ -278,18 +280,18 @@ onMounted(() => {
 
 async function init()
 {
-
-    let user = localStorage.getItem('user');
+    let user = localStorage.getItem(VAR.storageKeyUser);
     if (user == null) return;
     hasSignedIn.value = true;
     user = qs.parse(user);
     let avatar = user.info.avatarUrl;
-    avatarUrl.value = avatar == null ? avatarUrl.value : import.meta.env.VITE_BASE_URL + '/static/' + avatar;
+    avatar = avatar == null ? "" : avatar;
+    avatarUrl.value = avatar === "" ? avatarUrl.value : VAR.baseUrl + '/static' + avatar;
 }
 
 const outLogin = function ()
 {
-    localStorage.removeItem('user');
+    localStorage.removeItem(VAR.storageKeyUser);
     location.reload();
 }
 

@@ -59,9 +59,11 @@ public class CodeObtainFilter extends HttpFilter
 
     private void sendCode(HttpServletRequest request, HttpServletResponse response)
     {
+        System.out.println(request.getHeader("authorization"));
         String account = request.getParameter(ACCOUNT_PARAM);
         if (!StringUtils.hasText(account))
         {
+            log.debug("Account is empty");
             error(
                     response,
                     ErrorResult.fail(ServiceCode.ERR_BAD_REQUEST, "账户不能为空")
