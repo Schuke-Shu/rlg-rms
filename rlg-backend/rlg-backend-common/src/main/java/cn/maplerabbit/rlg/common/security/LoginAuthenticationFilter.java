@@ -5,8 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.maplerabbit.rlg.common.entity.result.ErrorResult;
 import cn.maplerabbit.rlg.common.enumpak.ServiceCode;
+import cn.maplerabbit.rlg.common.property.LoginProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -14,11 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 
 import static cn.maplerabbit.rlg.common.util.FilterError.error;
 
@@ -30,23 +26,15 @@ import static cn.maplerabbit.rlg.common.util.FilterError.error;
 public class LoginAuthenticationFilter
         extends AbstractAuthenticationProcessingFilter
 {
-    public static final String LOGIN_WAY_HEADER = "login-way";
-    public static final String LOGIN_ACCOUNT = "account";
-    public static final String LOGIN_KEY = "key";
     private static final AntPathRequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER = new AntPathRequestMatcher("/user/login", "POST");
-    private String accountParameter = LOGIN_ACCOUNT;
-    private String keyParameter = LOGIN_KEY;
     private boolean postOnly = true;
 
-    public LoginAuthenticationFilter()
-    {
-        super(DEFAULT_ANT_PATH_REQUEST_MATCHER);
-        log.debug("LoginAuthenticationFilter()...");
-    }
+    private final LoginProperties loginProperties;
 
-    public LoginAuthenticationFilter(AuthenticationManager authenticationManager)
+    public LoginAuthenticationFilter(LoginProperties loginProperties, AuthenticationManager authenticationManager)
     {
         super(DEFAULT_ANT_PATH_REQUEST_MATCHER, authenticationManager);
+        this.loginProperties = loginProperties;
         log.debug("LoginAuthenticationFilter()...");
     }
 
@@ -59,7 +47,7 @@ public class LoginAuthenticationFilter
         // 登录密钥，可能为密码、验证码
         String key = obtainKey(request);
         // 登录方式
-        String loginWay = request.getHeader(LOGIN_WAY_HEADER);
+        String loginWay = request.getHeader(loginProperties.getLoginWayHeader());
         // 请求方法
         String method = request.getMethod();
 
@@ -113,7 +101,7 @@ public class LoginAuthenticationFilter
     @Nullable
     protected String obtainAccount(HttpServletRequest request)
     {
-        return request.getParameter(this.accountParameter);
+        return request.getParameter(loginProperties.getParamAccount());
     }
 
     /**
@@ -122,47 +110,12 @@ public class LoginAuthenticationFilter
     @Nullable
     protected String obtainKey(HttpServletRequest request)
     {
-        return request.getParameter(this.keyParameter);
+        return request.getParameter(loginProperties.getParamKey());
     }
 
     protected void setDetails(HttpServletRequest request, LoginAuthenticationToken authRequest)
     {
         authRequest.setDetails(this.authenticationDetailsSource.buildDetails(request));
-    }
-
-    @Autowired
-    @Override
-    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
-        super.setAuthenticationManager(authenticationManager);
-    }
-
-    @Autowired
-    @Override
-    public void setAuthenticationFailureHandler(AuthenticationFailureHandler failureHandler)
-    {
-        super.setAuthenticationFailureHandler(failureHandler);
-    }
-
-    public final String getAccountParameter()
-    {
-        return this.accountParameter;
-    }
-
-    public final String getKeyParameter()
-    {
-        return this.keyParameter;
-    }
-
-    public void setAccountParameter(String accountParameter)
-    {
-        Assert.hasText(accountParameter, "Account parameter must not be empty or null");
-        this.accountParameter = accountParameter;
-    }
-
-    public void setKeyParameter(String keyParameter)
-    {
-        Assert.hasText(keyParameter, "Key parameter must not be empty or null");
-        this.keyParameter = keyParameter;
     }
 
     public void setPostOnly(boolean postOnly)

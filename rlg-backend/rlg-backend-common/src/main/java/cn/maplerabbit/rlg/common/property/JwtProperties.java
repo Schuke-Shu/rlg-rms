@@ -25,7 +25,7 @@ public class JwtProperties
      */
     private String type;
     /**
-     * 解析token使用的key
+     * 解析和生成token使用的key
      */
     private String secretKey;
     /**

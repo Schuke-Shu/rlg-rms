@@ -25,7 +25,7 @@ public class LoginAuthenticationProvider
     public static final String LOGIN_WAY_CODE = "code";
 
     @Autowired
-    private ILoginRegisterService loginRegisterService;
+    private ILoginService loginRegisterService;
     @Autowired
     private ValidationCodeUtil validationCodeUtil;
     @Autowired

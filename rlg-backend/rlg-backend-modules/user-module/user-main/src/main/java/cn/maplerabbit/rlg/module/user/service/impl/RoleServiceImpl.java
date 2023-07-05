@@ -2,7 +2,7 @@ package cn.maplerabbit.rlg.module.user.service.impl;
 
 import cn.maplerabbit.rlg.common.entity.AssociateUnit;
 import cn.maplerabbit.rlg.common.enumpak.ServiceCode;
-import cn.maplerabbit.rlg.common.exception.RoleException;
+import cn.maplerabbit.rlg.module.user.exception.RoleException;
 import cn.maplerabbit.rlg.module.user.mapper.RoleMapper;
 import cn.maplerabbit.rlg.module.user.mapper.UserRoleMapper;
 import cn.maplerabbit.rlg.module.user.service.IRoleService;

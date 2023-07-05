@@ -18,6 +18,14 @@ rlg:
   code:
     # 有效时间（单位：分钟）
     usable-time: 15
+  # 登录配置
+  login:
+    # 存放登陆方式的请求头名称
+    login-way-header: login-way
+    # 账户参数名（用户名、邮箱、手机号等的共同参数名）
+    param-account: account
+    # 密钥参数名（密码、验证码等的共同参数名）
+    param-key: key
   # 文件目录配置
   directory:
     # 根目录路径

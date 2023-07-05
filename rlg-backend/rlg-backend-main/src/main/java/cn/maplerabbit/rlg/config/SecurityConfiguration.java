@@ -1,5 +1,6 @@
 package cn.maplerabbit.rlg.config;
 
+import cn.maplerabbit.rlg.common.property.LoginProperties;
 import cn.maplerabbit.rlg.common.security.LoginAuthenticationFailHandler;
 import cn.maplerabbit.rlg.common.security.LoginAuthenticationFilter;
 import cn.maplerabbit.rlg.common.security.LoginAuthenticationProvider;
@@ -40,6 +41,8 @@ public class SecurityConfiguration
     private LoginAuthenticationProvider loginAuthenticationProvider;
     @Autowired
     private LoginAuthenticationFailHandler loginAuthenticationFailHandler;
+    @Autowired
+    private LoginProperties loginProperties;
 
     public SecurityConfiguration() {log.debug("SecurityConfiguration()...");}
 
@@ -65,6 +68,7 @@ public class SecurityConfiguration
     {
         LoginAuthenticationFilter loginAuthenticationFilter =
                 new LoginAuthenticationFilter(
+                        loginProperties,
                         authenticationManager()
                 );
 

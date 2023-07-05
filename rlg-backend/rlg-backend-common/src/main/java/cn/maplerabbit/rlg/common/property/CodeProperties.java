@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class CodeProperties
 {
     /**
-     * 有效时间
+     * 有效时间（单位：分钟）
      */
     private int usableTime;
 

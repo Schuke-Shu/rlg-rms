@@ -2,11 +2,14 @@ import {axGet, axPost} from '@utils/http';
 import qs from "qs";
 import * as jose from 'jose';
 
-export function login(form)
+export function loginByPassword(form)
 {
     axPost({
         url: '/user/login',
-        data: qs.stringify(form)
+        data: qs.stringify(form),
+        headers: {
+            "login-way": 'pwd'
+        }
     }).then(res => getInfo(res.data))
 }
 

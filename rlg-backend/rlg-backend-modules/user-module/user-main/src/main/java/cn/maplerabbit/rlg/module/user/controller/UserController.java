@@ -3,12 +3,10 @@ package cn.maplerabbit.rlg.module.user.controller;
 import cn.maplerabbit.rlg.common.constpak.ValidationMessageConst;
 import cn.maplerabbit.rlg.common.security.UserDetails;
 import cn.maplerabbit.rlg.module.user.service.IUserService;
-import cn.maplerabbit.rlg.pojo.user.dto.UserLoginDTO;
 import cn.maplerabbit.rlg.pojo.user.dto.UserRegisterDTO;
 import cn.maplerabbit.rlg.common.entity.result.JsonResult;
 import cn.maplerabbit.rlg.common.entity.result.SuccessResult;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -51,12 +49,15 @@ public class UserController
         return SuccessResult.ok();
     }
 
-    @ApiOperation("用户登录")
+    private static final String LOGIN_API_NOTE = "必须添加请求头login-way，值为pwd或code，表明是密码登录或验证码登录";
+
+    @ApiOperation(value = "用户登录", notes = LOGIN_API_NOTE)
     @PostMapping("/login")
-    public JsonResult<?> login(
-            UserLoginDTO userLoginDTO,
-            @ApiIgnore @AuthenticationPrincipal UserDetails details
-    )
+    @ApiImplicitParams({
+            @ApiImplicitParam(value = "账户名称（用户名/邮箱/手机号）", name = "account", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(value = "密钥（密码/验证码）", name = "key", required = true, dataTypeClass = String.class)
+    })
+    public JsonResult<?> login(@ApiIgnore @AuthenticationPrincipal UserDetails details)
     {
         return SuccessResult.ok(userService.login(details));
     }

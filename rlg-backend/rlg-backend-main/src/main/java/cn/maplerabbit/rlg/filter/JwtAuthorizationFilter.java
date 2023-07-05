@@ -3,7 +3,7 @@ package cn.maplerabbit.rlg.filter;
 import cn.maplerabbit.rlg.common.constpak.LoginPrincipalConst;
 import cn.maplerabbit.rlg.common.entity.result.ErrorResult;
 import cn.maplerabbit.rlg.common.enumpak.ServiceCode;
-import cn.maplerabbit.rlg.common.exception.TokenException;
+import cn.maplerabbit.rlg.common.exception.JwtError;
 import cn.maplerabbit.rlg.common.property.JwtProperties;
 import cn.maplerabbit.rlg.common.security.LoginPrincipal;
 import cn.maplerabbit.rlg.common.util.IpUtil;
@@ -55,17 +55,17 @@ public class JwtAuthorizationFilter
             ServletException,
             IOException
     {
-
         log.trace(
                 "Entry LoginAuthenticationFilter, details: \nrequest method: {}\nuri: {}",
                 request.getMethod(),
                 request.getRequestURI()
         );
+
         String secretKey = jwtProperties.getSecretKey();
 
         // 判断密钥是否为空
         if (!StringUtils.hasText(secretKey))
-            throw new TokenException("JWT SecretKey is blank...");
+            throw new JwtError("JWT SecretKey is blank...");
 
         // 清空SecurityContext，强制所有请求都必须携带JWT
         SecurityContextHolder.clearContext();

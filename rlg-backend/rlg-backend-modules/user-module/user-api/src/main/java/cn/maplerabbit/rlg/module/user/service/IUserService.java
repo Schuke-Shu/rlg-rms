@@ -1,13 +1,13 @@
 package cn.maplerabbit.rlg.module.user.service;
 
-import cn.maplerabbit.rlg.common.security.ILoginRegisterService;
+import cn.maplerabbit.rlg.common.security.ILoginService;
 import cn.maplerabbit.rlg.common.security.UserDetails;
 import cn.maplerabbit.rlg.pojo.user.dto.UserRegisterDTO;
 
 /**
  * 用户服务接口
  */
-public interface IUserService extends ILoginRegisterService
+public interface IUserService extends ILoginService
 {
     /**
      * 用户名注册

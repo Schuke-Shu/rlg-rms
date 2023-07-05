@@ -47,6 +47,12 @@ public class CodeObtainFilter extends HttpFilter
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException
     {
+        log.trace(
+                "Entry LoginAuthenticationFilter, details: \nrequest method: {}\nuri: {}",
+                request.getMethod(),
+                request.getRequestURI()
+        );
+        
         if (!MATCHER.matches(request))
             chain.doFilter(request, response);
         else

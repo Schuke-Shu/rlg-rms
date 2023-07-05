@@ -3,7 +3,7 @@ package cn.maplerabbit.rlg.common.security;
 /**
  * 用户登录信息获取接口
  */
-public interface ILoginRegisterService
+public interface ILoginService
 {
     /**
      * 通过邮箱获取用户信息
