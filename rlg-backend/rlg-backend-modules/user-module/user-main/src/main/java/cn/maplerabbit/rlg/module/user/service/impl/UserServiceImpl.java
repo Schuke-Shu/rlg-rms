@@ -1,8 +1,9 @@
 package cn.maplerabbit.rlg.module.user.service.impl;
 
 import cn.maplerabbit.rlg.common.constpak.LoginPrincipalConst;
+import cn.maplerabbit.rlg.common.enumpak.AccountType;
 import cn.maplerabbit.rlg.common.enumpak.ServiceCode;
-import cn.maplerabbit.rlg.common.exception.UserException;
+import cn.maplerabbit.rlg.module.user.exception.UserException;
 import cn.maplerabbit.rlg.common.util.IpUtil;
 import cn.maplerabbit.rlg.common.util.JwtUtil;
 import cn.maplerabbit.rlg.module.log.service.IUserLoginLogService;
@@ -67,7 +68,14 @@ public class UserServiceImpl
     public void register(UserRegisterDTO userRegisterDTO)
     {
         // 按照用户名查询用户个数，若查询到数据说明用户名已存在
-        if (userMapper.countByUsername(userRegisterDTO.getUsername()) > 0)
+        if (
+                userMapper
+                        .countByCustomField(
+                                AccountType.USERNAME.getField(),
+                                userRegisterDTO.getUsername()
+                        )
+                        > 0
+        )
             throw new UserException(ServiceCode.ERR_CONFLICT, "用户名已存在");
 
         // 创建新的用户对象

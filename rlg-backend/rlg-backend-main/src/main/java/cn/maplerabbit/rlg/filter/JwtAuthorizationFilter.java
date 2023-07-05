@@ -55,11 +55,7 @@ public class JwtAuthorizationFilter
             ServletException,
             IOException
     {
-        log.trace(
-                "Entry LoginAuthenticationFilter, details: \nrequest method: {}\nuri: {}",
-                request.getMethod(),
-                request.getRequestURI()
-        );
+        log.debug("Access JwtAuthorizationFilter");
 
         String secretKey = jwtProperties.getSecretKey();
 

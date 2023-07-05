@@ -51,8 +51,9 @@ public class LoginAuthenticationFilter
         // 请求方法
         String method = request.getMethod();
 
+        log.debug("Access LoginAuthenticationFilter");
         log.trace(
-                "Entry LoginAuthenticationFilter, details: \nlogin way: {}\naccount: {}, key: {}\nrequest method: {}",
+                "details: \nlogin way: {}\naccount: {}, key: {}\nrequest method: {}",
                 loginWay,
                 account,
                 key,
@@ -80,6 +81,7 @@ public class LoginAuthenticationFilter
         {
             authentication = getAuthenticationManager()
                     .authenticate(authRequest);
+            log.trace("Authentication success, info: {}", authentication);
         }
         catch (AuthenticationException e)
         {

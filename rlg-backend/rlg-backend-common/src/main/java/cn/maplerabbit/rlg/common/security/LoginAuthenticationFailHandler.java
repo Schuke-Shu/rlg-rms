@@ -30,6 +30,8 @@ public class LoginAuthenticationFailHandler
     )
             throws IOException, ServletException
     {
+        log.debug("Access LoginAuthenticationFailHandler onAuthenticationFailure()");
+        log.debug("-- {}, msg: {}", exception.getClass().getSimpleName(), exception.getMessage());
         error(
                 response,
                 ErrorResult.fail(

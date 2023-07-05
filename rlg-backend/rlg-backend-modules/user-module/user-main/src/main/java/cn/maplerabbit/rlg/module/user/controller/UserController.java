@@ -49,7 +49,7 @@ public class UserController
         return SuccessResult.ok();
     }
 
-    private static final String LOGIN_API_NOTE = "必须添加请求头login-way，值为pwd或code，表明是密码登录或验证码登录";
+    private static final String LOGIN_API_NOTE = "必须携带请求头login-way，值为pwd或code，表明是密码登录或验证码登录";
 
     @ApiOperation(value = "用户登录", notes = LOGIN_API_NOTE)
     @PostMapping("/login")
@@ -62,7 +62,7 @@ public class UserController
         return SuccessResult.ok(userService.login(details));
     }
 
-    @ApiOperation("刷新JWT")
+    @ApiOperation(value = "刷新JWT")
     @GetMapping("/refresh")
     public JsonResult<?> refresh(HttpServletRequest request)
     {

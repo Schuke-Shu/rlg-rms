@@ -61,6 +61,8 @@ public class CodeObtainFilter extends HttpFilter
 
     private void sendCode(HttpServletRequest request, HttpServletResponse response)
     {
+        log.debug("Access CodeObtainFilter");
+
         String account = request.getParameter(ACCOUNT_PARAM);
         if (!StringUtils.hasText(account))
         {

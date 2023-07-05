@@ -59,6 +59,7 @@ public class UserDetails extends User implements Serializable
         return new StringBuilder(this.getClass().getSimpleName())
                 .append('{')
                 .append("uuid='").append(uuid).append('\'')
+                .append(", avatarUrl='").append(avatarUrl).append('\'')
                 .append(", phone='").append(phone).append('\'')
                 .append(", email='").append(email).append('\'')
                 .append(", ip='").append(ip).append('\'')

@@ -24,6 +24,7 @@ public interface UserMapper extends StringModelMapperTemplate<User>
 
     /**
      * 根据指定字段获取登录信息
+     * @param field 字段名称
      * @param account 指定账户
      * @return 登录信息
      */
@@ -33,23 +34,13 @@ public interface UserMapper extends StringModelMapperTemplate<User>
     );
 
     /**
-     * 根据用户名获取用户数
-     * @param username 用户名
+     * 根据指定字段获取用户数
+     * @param field 字段名称
+     * @param account 指定账户
      * @return 用户数
      */
-    int countByUsername(String username);
-
-    /**
-     * 根据邮箱获取用户数
-     * @param email 邮箱
-     * @return 用户数
-     */
-    int countByEmail(String email);
-
-    /**
-     * 根据手机号获取用户数
-     * @param phone 手机号
-     * @return 用户数
-     */
-    int countByPhone(String phone);
+    int countByCustomField(
+            @Param("field") String field,
+            @Param("account") String account
+    );
 }

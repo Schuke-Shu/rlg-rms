@@ -54,51 +54,11 @@
         </where>
     </select>
 
-    <!-- UserLoginVO getLoginInfoByUserName(String username); -->
-    <select id="getLoginInfoByUserName" resultMap="LoginInfoResultMap">
-        <include refid="selectLoginInfo" />
-        <where>
-            user.username = #{username}
-        </where>
-    </select>
-
-    <!-- UserLoginVO getLoginInfoByEmail(String email); -->
-    <select id="getLoginInfoByEmail" resultMap="LoginInfoResultMap">
-        <include refid="selectLoginInfo" />
-        <where>
-            user.email = #{email}
-        </where>
-    </select>
-
-    <!-- UserLoginVO getLoginInfoByPhone(String phone); -->
-    <select id="getLoginInfoByPhone" resultMap="LoginInfoResultMap">
-        <include refid="selectLoginInfo" />
-        <where>
-            user.phone = #{phone}
-        </where>
-    </select>
-
-    <!-- int countByUsername(String username); -->
-    <select id="countByUsername" resultType="int">
+    <!-- int countByCustomField(String field, String account); -->
+    <select id="countByCustomField" resultType="int">
         <include refid="count" />
         <where>
-            username = #{username}
-        </where>
-    </select>
-
-    <!-- int countByEmail(String email); -->
-    <select id="countByEmail" resultType="int">
-        <include refid="count" />
-        <where>
-            email = #{email}
-        </where>
-    </select>
-
-    <!-- int countByPhone(String phone); -->
-    <select id="countByPhone" resultType="int">
-        <include refid="count" />
-        <where>
-            phone = #{phone}
+            ${field} = #{account}
         </where>
     </select>
 
