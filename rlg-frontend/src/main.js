@@ -16,7 +16,6 @@ const pinia = createPinia();
 // 这些属性用不到，只做提示用
 let props = rlg.config.globalProperties;
 props.$axios = axios;
-
 props.$jwt = jwt;
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {

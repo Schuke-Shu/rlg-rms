@@ -284,7 +284,7 @@ async function init()
     hasSignedIn.value = true;
     user = qs.parse(user);
     let avatar = user.info.avatarUrl;
-    avatarUrl.value = avatar == null ? avatarUrl.value : 'http://localhost:10086/static/' + avatar;
+    avatarUrl.value = avatar == null ? avatarUrl.value : import.meta.env.VITE_BASE_URL + '/static/' + avatar;
 }
 
 const outLogin = function ()
