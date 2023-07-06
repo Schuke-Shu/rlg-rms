@@ -12,7 +12,7 @@ const router = createRouter({
     {
       path: '/disk',
       name: 'disk',
-      component: () => import('@views/CloudDiskView.vue')
+      component: () => import('@views/disk/CloudDiskView.vue')
     },
     {
       path: '/404',

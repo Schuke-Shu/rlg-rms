@@ -1,7 +1,7 @@
 import web from '@utils/Http';
 import qs from "qs";
 import * as jose from 'jose';
-import VAR from "@utils/Const";
+import env from "@utils/Const";
 
 export function login(account, key, way)
 {
@@ -13,18 +13,18 @@ export function login(account, key, way)
                 account: account,
                 key: key
             }),
-            headers: {[VAR.requestHeaderLoginWay]: way}
+            headers: {[env.requestHeaderLoginWay]: way}
         },
         data => {
             let info = jose.decodeJwt(data);
             let user = {
                 info: info,
-                jwt: data
+                token: data
             }
-            localStorage.setItem(VAR.storageKeyUser, qs.stringify(user));
+            localStorage.setItem(env.storageKeyUser, qs.stringify(user));
             location.reload();
         },
-        data => alert(data.message)
+        error => alert(error.message)
     );
 }
 
@@ -43,7 +43,7 @@ export function register(username, password)
             alert("注册成功！");
             location.href = '/'
         },
-        data => alert(data.message)
+        error => alert(error.message)
     )
 }
 
@@ -55,6 +55,21 @@ export function getCode(uri, account)
             url: '/code' + uri + '?account=' + account
         },
         null,
-        data => alert(data.message)
+        error => alert(error.message)
+    )
+}
+
+export function refreshJwt()
+{
+    web(
+        {
+            method: 'GET',
+            url: '/user/token/refresh'
+        },
+        data => {
+            let user = localStorage.getItem(env.storageKeyUser);
+            user['token'] = data;
+            localStorage.setItem(env.storageKeyUser, user);
+        }
     )
 }

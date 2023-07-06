@@ -4,9 +4,10 @@ import cn.maplerabbit.rlg.common.constpak.LoginPrincipalConst;
 import cn.maplerabbit.rlg.common.enumpak.AccountType;
 import cn.maplerabbit.rlg.common.enumpak.ServiceCode;
 import cn.maplerabbit.rlg.common.exception.ProgramError;
+import cn.maplerabbit.rlg.common.exception.ServiceException;
 import cn.maplerabbit.rlg.module.user.exception.UserException;
 import cn.maplerabbit.rlg.common.util.IpUtil;
-import cn.maplerabbit.rlg.common.util.JwtUtil;
+import cn.maplerabbit.rlg.common.util.TokenUtil;
 import cn.maplerabbit.rlg.module.log.service.IUserLoginLogService;
 import cn.maplerabbit.rlg.module.user.mapper.UserMapper;
 import cn.maplerabbit.rlg.module.user.service.IRoleService;
@@ -14,7 +15,7 @@ import cn.maplerabbit.rlg.module.user.service.IUserService;
 import cn.maplerabbit.rlg.pojo.log.entity.UserLoginLog;
 import cn.maplerabbit.rlg.pojo.user.dto.UserRegisterDTO;
 import cn.maplerabbit.rlg.pojo.user.entity.User;
-import cn.maplerabbit.rlg.common.property.JwtProperties;
+import cn.maplerabbit.rlg.common.property.TokenProperties;
 import cn.maplerabbit.rlg.common.security.UserDetails;
 import cn.maplerabbit.rlg.pojo.user.vo.UserLoginVO;
 import com.alibaba.fastjson.JSON;
@@ -46,7 +47,7 @@ public class UserServiceImpl
                    LoginPrincipalConst
 {
     @Autowired
-    private JwtProperties jwtProperties;
+    private TokenProperties tokenProperties;
     @Autowired
     private UserMapper userMapper;
     @Autowired
@@ -58,7 +59,7 @@ public class UserServiceImpl
     @Autowired
     private IUserLoginLogService userLoginLogService;
     @Autowired
-    private JwtUtil jwtUtil;
+    private TokenUtil tokenUtil;
 
     /**
      * 存储浏览器内核信息的请求头
@@ -122,10 +123,10 @@ public class UserServiceImpl
         Date timeout =
                 new Date(
                         System.currentTimeMillis() +
-                                MILLISECONDS.convert(jwtProperties.getUsableMinutes(), TimeUnit.MINUTES)
+                                MILLISECONDS.convert(tokenProperties.getUsableMinutes(), TimeUnit.MINUTES)
                 );
 
-        // 准备jwt要保存的信息
+        // 准备token要保存的信息
         claims.put(CLAIMS_KEY_UUID, details.getUuid());                                     // 用户uuid
         claims.put(CLAIMS_KEY_USERNAME, details.getUsername());                             // 密码
         claims.put(CLAIMS_KEY_PHONE, details.getPhone());                                   // 手机号
@@ -156,8 +157,8 @@ public class UserServiceImpl
                         .setTime(now)
         );
 
-        // 存入JWT并返回
-        return jwtUtil.generate(claims, timeout);
+        // 生成token并返回
+        return tokenUtil.generate(claims, timeout);
     }
 
     @Override
@@ -191,10 +192,10 @@ public class UserServiceImpl
     @Override
     public String refresh(String jwt)
     {
-        // 获取jwt保存的信息
+        // 获取token保存的信息
         Claims body = Jwts
                 .parser()
-                .setSigningKey(jwtProperties.getSecretKey())
+                .setSigningKey(tokenProperties.getSecretKey())
                 .parseClaimsJws(jwt)
                 .getBody();
 
@@ -203,29 +204,30 @@ public class UserServiceImpl
 
         try
         {
-            // 如果jwt距离过期时间超过一天，拒绝刷新
+            // 如果token距离过期时间超过一天，拒绝刷新
             if (
                     (dateFormat.parse((String) body.get(CLAIMS_KEY_TIMEOUT)).getTime() - new Date().getTime()) <
-                    MILLISECONDS.convert(1, TimeUnit.DAYS)
+                    MILLISECONDS.convert(tokenProperties.getRefreshTime(), TimeUnit.MINUTES)
+                    // 服务端稍微放宽时限，避免误差产生的重复请求
             )
-                throw new UserException(ServiceCode.ERR_BAD_REQUEST, "jwt尚未临期，拒绝刷新！");
+                throw new ServiceException(ServiceCode.ERR_BAD_REQUEST, "token尚未临期，拒绝刷新！");
         }
         catch (ParseException e)
         {
-            log.debug("-- ParseException, msg: {}", e.getMessage());
+            log.error("-- ParseException, msg: {}", e.getMessage());
             throw new ProgramError(e.getMessage());
         }
 
         Date timeout =
                 new Date(
                         System.currentTimeMillis() +
-                                MILLISECONDS.convert(jwtProperties.getUsableMinutes(), TimeUnit.MINUTES)
+                                MILLISECONDS.convert(tokenProperties.getUsableMinutes(), TimeUnit.MINUTES)
                 );
 
         // 覆盖旧的过期时间
         body.put(CLAIMS_KEY_TIMEOUT, dateFormat.format(timeout));
 
         // 重新生成jwt
-        return jwtUtil.generate(body, timeout);
+        return tokenUtil.generate(body, timeout);
     }
 }

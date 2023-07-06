@@ -31,6 +31,7 @@ public class RedisUtil<V>
      */
     public boolean set(String key, V value)
     {
+        log.debug("Create redis data, key: {}, value: {}", key, value);
         try
         {
             redisTemplate.opsForValue().set(key, value);
@@ -53,6 +54,7 @@ public class RedisUtil<V>
      */
     public boolean set(String key, V value, int time)
     {
+        log.debug("Create redis data with timeout, key: {}, value: {}, time: {}m", key, value, time);
         try
         {
             if (time > 0)
@@ -81,8 +83,12 @@ public class RedisUtil<V>
         return joiner.toString();
     }
 
+    /**
+     * 删除redis数据
+     */
     public void remove(String key)
     {
+        log.debug("Remove redis date by key: {}", key);
         if (! Boolean.TRUE.equals(redisTemplate.delete(key)))
             log.warn("Redis remove failed, key: {}", key);
     }

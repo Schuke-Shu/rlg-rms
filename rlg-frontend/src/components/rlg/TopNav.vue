@@ -51,17 +51,6 @@ li > a
     right: 2rem;
 }
 
-#login_dialog
-{
-    width: 500px;
-    margin: auto;
-    padding: 20px 30px;
-    background-color: #fff4df;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
-    transition: all 0.3s ease;
-}
-
 .model-header h2 {
     color: #00d0d0;
 }
@@ -146,7 +135,7 @@ li > a
     </el-row>
 
     <!-- 模态框 -->
-    <Dialog v-model="loginDialogVisible" v-if="!hasSignedIn">
+    <Dialog v-model="loginDialogVisible">
         <template #header>
             <h2 v-if="isLogin">Login</h2>
             <h2 v-else>Register</h2>
@@ -234,15 +223,15 @@ li > a
 import {computed, onMounted, ref} from "vue";
 import {HomeFilled, Right, UploadFilled} from "@element-plus/icons-vue";
 import Dialog from "@mrc/Dialog.vue";
-import {login, register} from "@apis/login";
+import {login, refreshJwt, register} from "@apis/login";
 import qs from "qs";
 import {getCode} from "@apis/login";
-import VAR from "@utils/Const";
+import env from "@utils/Const";
 
 const avatarUrl = ref('/img/defaultAvatar.png');
 
 const hasSignedIn = ref(false);
-const loginDialogVisible = ref(true);
+const loginDialogVisible = ref(false);
 const loginByPassword = ref(true);
 const isLogin = ref(true);
 
@@ -280,31 +269,31 @@ onMounted(() => {
 
 async function init()
 {
-    let user = localStorage.getItem(VAR.storageKeyUser);
+    let user = localStorage.getItem(env.storageKeyUser);
     if (user == null) return;
     hasSignedIn.value = true;
     user = qs.parse(user);
     let avatar = user.info.avatarUrl;
     avatar = avatar == null ? "" : avatar;
-    avatarUrl.value = avatar === "" ? avatarUrl.value : VAR.baseUrl + '/static' + avatar;
+    avatarUrl.value = avatar === "" ? avatarUrl.value : env.baseUrl + '/static' + avatar;
+    checkJwt(user.info.timeout)
 }
 
 const outLogin = function ()
 {
-    localStorage.removeItem(VAR.storageKeyUser);
-    location.reload();
+    localStorage.removeItem(env.storageKeyUser);
+    location.href = '/';
 }
 
-// const checkJwt = function (info)
-// {
-//     let timeout = new Date(info.timeout);
-//     let now = new Date();
-//     console.log(timeout.getTime() - now.getTime())
-//
-//     if (
-//         (timeout.getTime() - now.getTime()) <
-//         24 * 60 * 60 * 1000 // 一天
-//     )
-//         console.log(123);
-// }
+const checkJwt = function (timeout)
+{
+    let out = new Date(timeout);
+    let now = new Date();
+
+    if (
+        (out.getTime() - now.getTime()) <
+        24 * 60 * 60 * 1000 // 一天
+    )
+        refreshJwt();
+}
 </script>

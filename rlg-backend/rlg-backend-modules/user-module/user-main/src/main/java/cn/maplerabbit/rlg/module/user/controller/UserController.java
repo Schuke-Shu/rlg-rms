@@ -63,9 +63,13 @@ public class UserController
     }
 
     @ApiOperation(value = "刷新JWT")
-    @GetMapping("/refresh")
+    @GetMapping("/token/refresh")
     public JsonResult<?> refresh(HttpServletRequest request)
     {
-        return SuccessResult.ok(userService.refresh(request.getHeader(AUTHORIZATION_HEADER)));
+        return SuccessResult.ok(
+                userService.refresh(
+                        request.getHeader(AUTHORIZATION_HEADER)
+                )
+        );
     }
 }

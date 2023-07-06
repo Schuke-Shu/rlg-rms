@@ -1,4 +1,4 @@
-const VAR = {
+const env = {
     // 后端地址
     baseUrl: import.meta.env.VITE_BASE_URL,
     // 存储在localStorage中的user的key
@@ -9,4 +9,4 @@ const VAR = {
     requestHeaderLoginWay: import.meta.env.VITE_REQUEST_HEADER_LOGIN_WAY,
 }
 
-export default VAR;
+export default env;

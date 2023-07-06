@@ -3,12 +3,11 @@ package cn.maplerabbit.rlg.filter;
 import cn.maplerabbit.rlg.common.entity.result.ErrorResult;
 import cn.maplerabbit.rlg.common.entity.result.SuccessResult;
 import cn.maplerabbit.rlg.common.enumpak.ServiceCode;
+import cn.maplerabbit.rlg.common.exception.ProgramError;
 import cn.maplerabbit.rlg.common.util.ValidationCodeUtil;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.FilterChain;
@@ -91,7 +90,7 @@ public class CodeObtainFilter extends HttpFilter
         catch (IOException e)
         {
             log.error("-- IOException, msg: {}", e.getMessage());
-            throw new RuntimeException(e.getMessage());
+            throw new ProgramError(e.getMessage());
         }
     }
 }

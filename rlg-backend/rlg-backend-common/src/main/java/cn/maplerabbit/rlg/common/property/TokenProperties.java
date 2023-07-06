@@ -7,21 +7,21 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * jwt相关配置属性类
+ * token相关配置属性类
  */
 @Getter
 @Setter
 @Slf4j
 @Component
-@ConfigurationProperties(prefix = "rlg.jwt")
-public class JwtProperties
+@ConfigurationProperties(prefix = "rlg.token")
+public class TokenProperties
 {
     /**
-     * jwt签名算法
+     * token签名算法
      */
     private String algorithm;
     /**
-     * jwt类型
+     * token类型
      */
     private String type;
     /**
@@ -37,9 +37,13 @@ public class JwtProperties
      */
     private int minLength;
     /**
-     * 存放jwt的请求头的名称
+     * 存放token的请求头的名称
      */
     private String header;
+    /**
+     * token可刷新临期时间（单位：分钟）
+     */
+    private int refreshTime;
 
-    public JwtProperties() {log.debug("JwtProperties()...");}
+    public TokenProperties() {log.debug("TokenProperties()...");}
 }

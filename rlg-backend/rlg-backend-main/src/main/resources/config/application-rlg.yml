@@ -36,17 +36,19 @@ rlg:
     store-dir: ${rlg.directory.root-dir}/store
     # 日志文件路径
     log-dir: ${rlg.directory.root-dir}/log
-  # JWT相关配置
-  jwt:
-    # jwt签名算法
+  # token相关配置
+  token:
+    # token签名算法
     algorithm: HS256
-    # jwt类型
+    # token类型
     type: JWT
     # 密钥
     secret-key: RedLeafGarden-JsonWebToken-SecretKey
-    # JWT的有效时长（单位分钟）
+    # token有效时长（单位：分钟）
     usable-minutes: 10080 # 一星期
     # 长度下限
     min-length: 105
-    # 存放jwt的请求头名称
+    # 存放token的请求头名称
     header: authorization
+    # token可刷新临期时间
+    refresh-time: 1500 # 25小时

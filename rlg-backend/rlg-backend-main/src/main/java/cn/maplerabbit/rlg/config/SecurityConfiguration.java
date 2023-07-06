@@ -1,13 +1,13 @@
 package cn.maplerabbit.rlg.config;
 
-import cn.maplerabbit.rlg.common.property.JwtProperties;
+import cn.maplerabbit.rlg.common.property.TokenProperties;
 import cn.maplerabbit.rlg.common.property.LoginProperties;
 import cn.maplerabbit.rlg.common.security.LoginAuthenticationFailHandler;
 import cn.maplerabbit.rlg.common.security.LoginAuthenticationFilter;
 import cn.maplerabbit.rlg.common.security.LoginAuthenticationProvider;
 import cn.maplerabbit.rlg.common.util.ValidationCodeUtil;
 import cn.maplerabbit.rlg.filter.CodeObtainFilter;
-import cn.maplerabbit.rlg.filter.JwtAuthorizationFilter;
+import cn.maplerabbit.rlg.filter.TokenAuthorizationFilter;
 import cn.maplerabbit.rlg.common.property.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class SecurityConfiguration
     @Autowired
     private LoginProperties loginProperties;
     @Autowired
-    private JwtProperties jwtProperties;
+    private TokenProperties tokenProperties;
     @Autowired
     private ValidationCodeUtil validationCodeUtil;
 
@@ -68,7 +68,7 @@ public class SecurityConfiguration
     protected void configure(HttpSecurity http)
             throws Exception
     {
-        JwtAuthorizationFilter jwtAuthorizationFilter = new JwtAuthorizationFilter(jwtProperties);
+        TokenAuthorizationFilter tokenAuthorizationFilter = new TokenAuthorizationFilter(tokenProperties);
         CodeObtainFilter codeObtainFilter = new CodeObtainFilter(validationCodeUtil);
         LoginAuthenticationFilter loginAuthenticationFilter =
                 new LoginAuthenticationFilter(
@@ -95,13 +95,13 @@ public class SecurityConfiguration
                 .authenticationProvider(loginAuthenticationProvider)
                 // 将JWT过滤器置于Spring Security的“用户名密码认证信息过滤器”之前
                 .addFilterBefore(
-                        jwtAuthorizationFilter,
+                        tokenAuthorizationFilter,
                         UsernamePasswordAuthenticationFilter.class
                 )
                 // 将验证码获取过滤器置于JWT过滤器之前
                 .addFilterBefore(
                         codeObtainFilter,
-                        JwtAuthorizationFilter.class
+                        TokenAuthorizationFilter.class
                 )
                 // 用通用登录验证过滤器替换security自带的用户名密码认证信息过滤器
                 .addFilterAt(

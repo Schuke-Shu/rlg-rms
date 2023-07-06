@@ -3,19 +3,17 @@ package cn.maplerabbit.rlg.filter;
 import cn.maplerabbit.rlg.common.constpak.LoginPrincipalConst;
 import cn.maplerabbit.rlg.common.entity.result.ErrorResult;
 import cn.maplerabbit.rlg.common.enumpak.ServiceCode;
-import cn.maplerabbit.rlg.common.exception.JwtError;
-import cn.maplerabbit.rlg.common.property.JwtProperties;
+import cn.maplerabbit.rlg.common.exception.TokenError;
+import cn.maplerabbit.rlg.common.property.TokenProperties;
 import cn.maplerabbit.rlg.common.security.LoginPrincipal;
 import cn.maplerabbit.rlg.common.util.IpUtil;
 import com.alibaba.fastjson.JSON;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -32,16 +30,16 @@ import static cn.maplerabbit.rlg.common.util.FilterError.error;
  * JWT过滤解析器
  */
 @Slf4j
-public class JwtAuthorizationFilter
+public class TokenAuthorizationFilter
         extends OncePerRequestFilter
         implements LoginPrincipalConst
 {
-    private final JwtProperties jwtProperties;
+    private final TokenProperties tokenProperties;
 
-    public JwtAuthorizationFilter(JwtProperties jwtProperties)
+    public TokenAuthorizationFilter(TokenProperties jwtProperties)
     {
-        this.jwtProperties = jwtProperties;
-        log.debug("JwtAuthorizationFilter()...");
+        this.tokenProperties = jwtProperties;
+        log.debug("TokenAuthorizationFilter()...");
     }
 
     @Override
@@ -54,46 +52,46 @@ public class JwtAuthorizationFilter
             ServletException,
             IOException
     {
-        log.debug("Access JwtAuthorizationFilter");
+        log.debug("Access TokenAuthorizationFilter");
 
-        String secretKey = jwtProperties.getSecretKey();
+        String secretKey = tokenProperties.getSecretKey();
 
         // 判断密钥是否为空
         if (!StringUtils.hasText(secretKey))
-            throw new JwtError("JWT SecretKey is blank...");
+            throw new TokenError("JWT SecretKey is blank...");
 
         // 清空SecurityContext，强制所有请求都必须携带JWT
         SecurityContextHolder.clearContext();
 
-        // 从请求头获取JWT
-        String jwt = request.getHeader(jwtProperties.getHeader());
+        // 从请求头获取token
+        String token = request.getHeader(tokenProperties.getHeader());
 
-        log.trace("jwt: {}", jwt);
-        // 检查JWT是否有效
-        if (!StringUtils.hasText(jwt) || jwt.length() < jwtProperties.getMinLength())
+        log.trace("token: {}", token);
+        // 检查token是否有效
+        if (!StringUtils.hasText(token) || token.length() < tokenProperties.getMinLength())
         {
-            // JWT无效，放行
-            log.debug("JWT is blank, to next...");
+            // token无效，放行
+            log.debug("Token is invalid, to next...");
             filterChain.doFilter(request, response);
             return;
         }
 
-        // JWT有效，解析JWT
-        log.debug("Parsing JWT...");
+        // token有效，准备解析
+        log.debug("Parsing token...");
         Claims claims = null;
         try
         {
             claims = Jwts
                     .parser()
                     .setSigningKey(secretKey)
-                    .parseClaimsJws(jwt)
+                    .parseClaimsJws(token)
                     .getBody();
         }
         catch (ExpiredJwtException e)
         {
-            // JWT过期
-            log.debug("-- ExpiredJwtException, jwt过期");
-            log.trace("JWT: {}", jwt);
+            // token过期
+            log.debug("-- ExpiredJwtException, token过期");
+            log.trace("token: {}", token);
             error(
                     response,
                     ErrorResult.fail(ServiceCode.ERR_JWT_EXPIRED, "您的登录信息已过期，请重新登录")
@@ -102,7 +100,7 @@ public class JwtAuthorizationFilter
         }
         catch (SignatureException e)
         {
-            // 签名错误，JWT被篡改
+            // 签名错误，token被篡改
             log.warn("-- SignatureException，ip: {}", request.getRemoteAddr());
             error(
                     response,
@@ -112,7 +110,7 @@ public class JwtAuthorizationFilter
         }
         catch (MalformedJwtException e)
         {
-            // JWT格式不正确，JWT被篡改
+            // token格式不正确，token被篡改
             log.warn("-- MalformedJwtException，ip: {}", request.getRemoteAddr());
             error(
                     response,
@@ -123,7 +121,7 @@ public class JwtAuthorizationFilter
         catch (Throwable e)
         {
             // 出现未处理异常
-            log.error("-- Unhandled Exception: {}", e.getClass().getName());
+            log.error("-- Unhandled Exception: {}, msg: {}", e.getClass().getName(), e.getMessage());
             e.printStackTrace();
             error(
                     response,
@@ -143,7 +141,7 @@ public class JwtAuthorizationFilter
         if (!IpUtil.getIp(request).equals(ip))
         {
             log.debug("ip error, to next...");
-            // 请求IP与JWT记录的IP不同时，不存储解析到的信息，直接放行，由之后的过滤器处理
+            // 请求IP与token记录的IP不同时，不存储解析到的信息，直接放行，由之后的过滤器处理
             filterChain.doFilter(request, response);
         }
         else
@@ -165,7 +163,7 @@ public class JwtAuthorizationFilter
                     .setAuthentication(authentication);
 
             // 放行
-            log.debug("JWT parsing success, to next...");
+            log.debug("Token parsing success, to next...");
             filterChain.doFilter(request, response);
         }
     }
