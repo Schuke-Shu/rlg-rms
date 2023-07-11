@@ -1,13 +1,16 @@
 package cn.maplerabbit.rlg.module.user.service.impl;
 
 import cn.maplerabbit.rlg.common.constpak.LoginPrincipalConst;
+import cn.maplerabbit.rlg.common.entity.ErrorDetail;
 import cn.maplerabbit.rlg.common.enumpak.AccountType;
 import cn.maplerabbit.rlg.common.enumpak.ServiceCode;
 import cn.maplerabbit.rlg.common.exception.ProgramError;
 import cn.maplerabbit.rlg.common.exception.ServiceException;
+import cn.maplerabbit.rlg.common.property.RlgProperties;
+import cn.maplerabbit.rlg.common.util.IErrorUtil;
+import cn.maplerabbit.rlg.common.util.IIpUtil;
+import cn.maplerabbit.rlg.common.util.ITokenUtil;
 import cn.maplerabbit.rlg.module.user.exception.UserException;
-import cn.maplerabbit.rlg.common.util.IpUtil;
-import cn.maplerabbit.rlg.common.util.TokenUtil;
 import cn.maplerabbit.rlg.module.log.service.IUserLoginLogService;
 import cn.maplerabbit.rlg.module.user.mapper.UserMapper;
 import cn.maplerabbit.rlg.module.user.service.IRoleService;
@@ -15,10 +18,9 @@ import cn.maplerabbit.rlg.module.user.service.IUserService;
 import cn.maplerabbit.rlg.pojo.log.entity.UserLoginLog;
 import cn.maplerabbit.rlg.pojo.user.dto.UserRegisterDTO;
 import cn.maplerabbit.rlg.pojo.user.entity.User;
-import cn.maplerabbit.rlg.common.property.TokenProperties;
-import cn.maplerabbit.rlg.common.security.UserDetails;
+import cn.maplerabbit.rlg.common.entity.UserDetails;
 import cn.maplerabbit.rlg.pojo.user.vo.UserLoginVO;
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +49,7 @@ public class UserServiceImpl
                    LoginPrincipalConst
 {
     @Autowired
-    private TokenProperties tokenProperties;
+    private RlgProperties rlgProperties;
     @Autowired
     private UserMapper userMapper;
     @Autowired
@@ -59,12 +61,20 @@ public class UserServiceImpl
     @Autowired
     private IUserLoginLogService userLoginLogService;
     @Autowired
-    private TokenUtil tokenUtil;
+    private ITokenUtil tokenUtil;
+    @Autowired
+    private IIpUtil ipUtil;
+    @Autowired
+    private IErrorUtil errorUtil;
 
     /**
      * 存储浏览器内核信息的请求头
      */
     private static final String USER_AGENT = "user-agent";
+    /**
+     * 时间格式
+     */
+    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     public UserServiceImpl()
     {
@@ -79,7 +89,7 @@ public class UserServiceImpl
         if (
                 userMapper
                         .countByCustomField(
-                                AccountType.USERNAME.getField(),
+                                AccountType.USERNAME.field(),
                                 userRegisterDTO.getUsername()
                         )
                         > 0
@@ -117,13 +127,18 @@ public class UserServiceImpl
     public String login(UserDetails details)
     {
         Map<String, Object> claims = new HashMap<>();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
         LocalDateTime now = LocalDateTime.now();
 
         Date timeout =
                 new Date(
                         System.currentTimeMillis() +
-                                MILLISECONDS.convert(tokenProperties.getUsableMinutes(), TimeUnit.MINUTES)
+                                MILLISECONDS.convert(
+                                        rlgProperties
+                                                .getToken()
+                                                .getUsableMinutes(),
+                                        TimeUnit.MINUTES
+                                )
                 );
 
         // 准备token要保存的信息
@@ -176,7 +191,7 @@ public class UserServiceImpl
                 info.getPassword(),
                 info.getPhone(),
                 info.getEmail(),
-                IpUtil.getIp(request),
+                ipUtil.ip(),
                 info.getAvatarUrl(),
                 info.getEnable() == 1,
                 // 生成权限列表
@@ -191,37 +206,51 @@ public class UserServiceImpl
 
     @Override
     public String refresh(String jwt)
+            throws ProgramError
     {
         // 获取token保存的信息
         Claims body = Jwts
                 .parser()
-                .setSigningKey(tokenProperties.getSecretKey())
+                .setSigningKey(
+                        rlgProperties
+                                .getToken()
+                                .getSecretKey()
+                )
                 .parseClaimsJws(jwt)
                 .getBody();
 
         // 准备新的过期时间
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 
         try
         {
             // 如果token距离过期时间超过一天，拒绝刷新
             if (
                     (dateFormat.parse((String) body.get(CLAIMS_KEY_TIMEOUT)).getTime() - new Date().getTime()) <
-                    MILLISECONDS.convert(tokenProperties.getRefreshTime(), TimeUnit.MINUTES)
+                    MILLISECONDS.convert(
+                            rlgProperties
+                                    .getToken()
+                                    .getRefreshAllowTime(),
+                            TimeUnit.MINUTES
+                    )
                     // 服务端稍微放宽时限，避免误差产生的重复请求
             )
                 throw new ServiceException(ServiceCode.ERR_BAD_REQUEST, "token尚未临期，拒绝刷新！");
         }
         catch (ParseException e)
         {
-            log.error("-- ParseException, msg: {}", e.getMessage());
-            throw new ProgramError(e.getMessage());
+            errorUtil.record(this.getClass(), e, ProgramError.class);
         }
 
         Date timeout =
                 new Date(
                         System.currentTimeMillis() +
-                                MILLISECONDS.convert(tokenProperties.getUsableMinutes(), TimeUnit.MINUTES)
+                                MILLISECONDS.convert(
+                                        rlgProperties
+                                                .getToken()
+                                                .getUsableMinutes(),
+                                        TimeUnit.MINUTES
+                                )
                 );
 
         // 覆盖旧的过期时间

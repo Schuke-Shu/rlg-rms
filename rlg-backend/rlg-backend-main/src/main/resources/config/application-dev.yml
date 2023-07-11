@@ -2,11 +2,6 @@
 #  开发环境配置  #
 # ============ #
 
-# Web服务配置
-server:
-  # 端口
-  port: 10086
-
 # Spring配置
 spring:
   # 数据源配置
@@ -29,6 +24,6 @@ logging:
 # 项目全局配置
 rlg:
   # 文件目录配置
-  directory:
+  file:
     # 根目录路径
     root-dir: D:/rlg

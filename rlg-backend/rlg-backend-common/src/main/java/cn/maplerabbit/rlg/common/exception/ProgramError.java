@@ -1,15 +1,12 @@
 package cn.maplerabbit.rlg.common.exception;
 
+import cn.maplerabbit.rlg.common.entity.ErrorDetail;
+
 /**
  * 程序错误
  */
 public class ProgramError
         extends RuntimeException
 {
-    private String message;
-
-    public ProgramError(String message)
-    {
-        this.message = message;
-    }
+    public ProgramError(String msg) {super(msg);}
 }

@@ -101,9 +101,9 @@ CREATE TABLE IF NOT EXISTS user_login_log(
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户登录日志表';
 
-# 用户文件目录表
-DROP TABLE IF EXISTS directory;
-CREATE TABLE IF NOT EXISTS directory(
+# 用户文件索引表
+DROP TABLE IF EXISTS dictionary;
+CREATE TABLE IF NOT EXISTS dictionary(
     id                  bigint          UNSIGNED NOT NULL AUTO_INCREMENT,
     file_uuid           char(32)        DEFAULT NULL COMMENT '文件uuid',
     user_uuid           char(32)        DEFAULT NULL COMMENT '用户uuid',
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS directory(
     create_time         datetime        DEFAULT NULL COMMENT '创建时间',
     modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间',
     PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户文件目录表，存储用户的文件目录结构';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户文件索引表，存储用户的文件目录结构';
 
 # 文件表
 DROP TABLE IF EXISTS file;

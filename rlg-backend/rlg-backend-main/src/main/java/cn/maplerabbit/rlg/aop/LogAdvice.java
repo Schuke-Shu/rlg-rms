@@ -1,6 +1,6 @@
 package cn.maplerabbit.rlg.aop;
 
-import cn.maplerabbit.rlg.common.util.IpUtil;
+import cn.maplerabbit.rlg.common.util.IIpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -20,7 +20,9 @@ import java.time.LocalDateTime;
 public class LogAdvice
 {
     @Autowired
-    HttpServletRequest request;
+    private HttpServletRequest request;
+    @Autowired
+    private IIpUtil ipUtil;
 
     public LogAdvice()
     {
@@ -34,7 +36,7 @@ public class LogAdvice
     public Object log(ProceedingJoinPoint pjp)
             throws Throwable
     {
-        log.debug("--> Enter controller: {}", pjp.getTarget().getClass().getSimpleName());
+        log.trace("--> Enter controller: {}", pjp.getTarget().getClass().getSimpleName());
         log.debug(
                 "Get Request:\ntime: {}\nContent-type: {}\nip: {}\nmethod: {}\ntarget: {}",
                 LocalDateTime
@@ -42,21 +44,33 @@ public class LogAdvice
                         .toString()
                         .replace('T', ' '),
                 request.getHeader("content-type"),
-                IpUtil.getIp(request),
+                ipUtil.ip(),
                 request.getMethod(),
                 request.getRequestURI()
         );
-        log.debug(
+        log.trace(
                 "Controller method --> {}",
                 pjp.getSignature()
         );
-        log.trace("args: {}", pjp.getArgs());
+        log.debug("args: {}", pjp.getArgs());
 
         Object result = pjp.proceed();
 
-        log.trace("result: {}", result);
-        log.debug("--> Out controller");
+        log.debug("result: {}", result);
+        log.trace("--> Out controller");
         return result;
     }
 
+    /**
+     * 匹配项目中所有类的所有方法，记录跟踪日志
+     */
+    @Around("execution(* cn.maplerabbit.rlg..*(..))")
+    public Object logEntryAndExit(ProceedingJoinPoint pjp)
+            throws Throwable
+    {
+        log.trace("--> Enter: {}", pjp.getSignature());
+        Object result = pjp.proceed();
+        log.trace("--> Out: {}", pjp.getSignature());
+        return result;
+    }
 }

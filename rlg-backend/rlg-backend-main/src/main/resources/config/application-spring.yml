@@ -1,0 +1,17 @@
+# =================== #
+#  spring相关自定义配置  #
+# =================== #
+
+# Spring配置
+spring:
+  # security配置
+  security:
+    # url白名单
+    url-allowlist:
+      - /public/**
+      - /user/register
+      - /doc.html
+      - /webjars/**
+      - /favicon.ico
+      - /swagger-resources
+      - /v2/api-docs

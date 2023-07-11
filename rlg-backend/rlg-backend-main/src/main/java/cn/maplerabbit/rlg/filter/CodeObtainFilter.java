@@ -3,9 +3,8 @@ package cn.maplerabbit.rlg.filter;
 import cn.maplerabbit.rlg.common.entity.result.ErrorResult;
 import cn.maplerabbit.rlg.common.entity.result.SuccessResult;
 import cn.maplerabbit.rlg.common.enumpak.ServiceCode;
-import cn.maplerabbit.rlg.common.exception.ProgramError;
-import cn.maplerabbit.rlg.common.util.ValidationCodeUtil;
-import com.alibaba.fastjson.JSON;
+import cn.maplerabbit.rlg.common.util.*;
+import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.util.StringUtils;
@@ -18,8 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import static cn.maplerabbit.rlg.common.util.FilterError.error;
-
 /**
  * 验证码获取，参数为account，可能为邮箱或手机号
  */
@@ -27,20 +24,24 @@ import static cn.maplerabbit.rlg.common.util.FilterError.error;
 public class CodeObtainFilter extends HttpFilter
 {
     /**
-     * 匹配code开头的路径
+     * 匹配 "/code" 开头的路径
      */
     private static final AntPathRequestMatcher MATCHER = new AntPathRequestMatcher("/code/**", "GET");
+
+    private static final String URI_PREFIX_CODE = "/code";
 
     /**
      * 请求参数名称
      */
     private static final String ACCOUNT_PARAM = "account";
 
-    private final ValidationCodeUtil validationCodeUtil;
+    private ICodeUtil codeUtil;
+    private IAccountUtil accountUtil;
+    private IRedisUtil<String> redisUtil;
+    private IErrorUtil errorUtil;
 
-    public CodeObtainFilter(ValidationCodeUtil validationCodeUtil)
+    public CodeObtainFilter()
     {
-        this.validationCodeUtil = validationCodeUtil;
         log.debug("CodeObtainFilter()...");
     }
 
@@ -60,17 +61,41 @@ public class CodeObtainFilter extends HttpFilter
     {
         System.out.println(request.getHeader("authorization"));
         String account = request.getParameter(ACCOUNT_PARAM);
+
         if (!StringUtils.hasText(account))
         {
             log.debug("Account is empty");
-            error(
-                    response,
+            errorUtil.response(
                     ErrorResult.fail(ServiceCode.ERR_BAD_REQUEST, "账户不能为空")
             );
             return;
         }
 
-        validationCodeUtil.send(account);
+        // 获取验证码
+        String code = codeUtil.generate();
+        log.debug("Code: {}", code);
+
+        // 存储验证码
+        redisUtil.set(
+                redisUtil.key(
+                        request.getRequestURI()
+                                .substring(URI_PREFIX_CODE.length()),
+                        account
+                ),
+                code
+        );
+
+        // 发送验证码
+        IAccountUtil.CodeSender sender = accountUtil.getSender(account);
+        if (sender == null)
+        {
+            errorUtil.response(
+                    ErrorResult.fail(ServiceCode.ERR_BAD_REQUEST, "账户格式不正确")
+            );
+            return;
+        }
+
+        sender.send(account, code);
 
         response.setContentType("application/json;charset=utf-8");
 
@@ -90,7 +115,30 @@ public class CodeObtainFilter extends HttpFilter
         catch (IOException e)
         {
             log.error("-- IOException, msg: {}", e.getMessage());
-            throw new ProgramError(e.getMessage());
         }
+    }
+
+    public CodeObtainFilter setCodeUtil(ICodeUtil codeUtil)
+    {
+        this.codeUtil = codeUtil;
+        return this;
+    }
+
+    public CodeObtainFilter setAccountUtil(IAccountUtil accountUtil)
+    {
+        this.accountUtil = accountUtil;
+        return this;
+    }
+
+    public CodeObtainFilter setRedisUtil(IRedisUtil<String> redisUtil)
+    {
+        this.redisUtil = redisUtil;
+        return this;
+    }
+
+    public CodeObtainFilter setErrorUtil(IErrorUtil errorUtil)
+    {
+        this.errorUtil = errorUtil;
+        return this;
     }
 }

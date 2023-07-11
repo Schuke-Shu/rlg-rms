@@ -14,7 +14,7 @@
     <artifactId>rlg-backend</artifactId>
     <version>0.1.0.TEST</version>
 
-    <description>RedLeafGarden Family resource management system Backend</description>
+    <description>RedLeafGarden resource management system backend</description>
 
     <packaging>pom</packaging>
 
@@ -23,6 +23,7 @@
         <module>rlg-backend-modules</module>
         <module>rlg-backend-common</module>
         <module>rlg-backend-pojo</module>
+        <module>rlg-backend-util</module>
     </modules>
 
     <properties>
@@ -32,7 +33,9 @@
         <mysql.version>8.0.28</mysql.version>
         <jjwt.version>0.9.1</jjwt.version>
         <lombok.version>1.18.20</lombok.version>
-        <fastjson.version>1.2.75</fastjson.version>
+        <fastjson2.version>2.0.26</fastjson2.version>
+        <commons-net.version>3.9.0</commons-net.version>
+        <hutool.version>5.8.20</hutool.version>
 
         <rlg-backend.version>0.1.0.TEST</rlg-backend.version>
     </properties>
@@ -117,23 +120,34 @@
             <version>${jjwt.version}</version>
         </dependency>
 
-        <!-- alibaba fastjson -->
+        <!-- alibaba fastjson2 -->
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>${fastjson2.version}</version>
         </dependency>
+
 
         <!-- apache线程池 -->
         <dependency>
             <groupId>commons-net</groupId>
             <artifactId>commons-net</artifactId>
-            <version>3.6</version>
+            <version>${commons-net.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
-            <version>2.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-core -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
+            <version>${hutool.version}</version>
         </dependency>
     </dependencies>
 
@@ -157,7 +171,7 @@
             <!-- rlg-backend-const -->
             <dependency>
                 <groupId>cn.maplerabbit</groupId>
-                <artifactId>rlg-backend-const</artifactId>
+                <artifactId>rlg-backend-util</artifactId>
                 <version>${rlg-backend.version}</version>
             </dependency>
 

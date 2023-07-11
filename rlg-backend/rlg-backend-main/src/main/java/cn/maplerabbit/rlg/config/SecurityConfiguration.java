@@ -1,14 +1,13 @@
 package cn.maplerabbit.rlg.config;
 
-import cn.maplerabbit.rlg.common.property.TokenProperties;
-import cn.maplerabbit.rlg.common.property.LoginProperties;
-import cn.maplerabbit.rlg.common.security.LoginAuthenticationFailHandler;
-import cn.maplerabbit.rlg.common.security.LoginAuthenticationFilter;
-import cn.maplerabbit.rlg.common.security.LoginAuthenticationProvider;
-import cn.maplerabbit.rlg.common.util.ValidationCodeUtil;
+import cn.maplerabbit.rlg.common.property.RlgProperties;
+import cn.maplerabbit.rlg.common.property.SpringProperties;
+import cn.maplerabbit.rlg.common.util.*;
+import cn.maplerabbit.rlg.security.LoginAuthenticationFailHandler;
+import cn.maplerabbit.rlg.security.LoginAuthenticationFilter;
+import cn.maplerabbit.rlg.security.LoginAuthenticationProvider;
 import cn.maplerabbit.rlg.filter.CodeObtainFilter;
 import cn.maplerabbit.rlg.filter.TokenAuthorizationFilter;
-import cn.maplerabbit.rlg.common.property.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -34,17 +33,23 @@ public class SecurityConfiguration
         extends WebSecurityConfigurerAdapter
 {
     @Autowired
-    private SecurityProperties securityProperties;
-    @Autowired
     private LoginAuthenticationProvider loginAuthenticationProvider;
     @Autowired
     private LoginAuthenticationFailHandler loginAuthenticationFailHandler;
     @Autowired
-    private LoginProperties loginProperties;
+    private RlgProperties rlgProperties;
     @Autowired
-    private TokenProperties tokenProperties;
+    private SpringProperties springProperties;
     @Autowired
-    private ValidationCodeUtil validationCodeUtil;
+    private IIpUtil ipUtil;
+    @Autowired
+    private ICodeUtil codeUtil;
+    @Autowired
+    private IAccountUtil accountUtil;
+    @Autowired
+    private IRedisUtil<String> redisUtil;
+    @Autowired
+    private IErrorUtil errorUtil;
 
     public SecurityConfiguration() {log.debug("SecurityConfiguration()...");}
 
@@ -68,11 +73,27 @@ public class SecurityConfiguration
     protected void configure(HttpSecurity http)
             throws Exception
     {
-        TokenAuthorizationFilter tokenAuthorizationFilter = new TokenAuthorizationFilter(tokenProperties);
-        CodeObtainFilter codeObtainFilter = new CodeObtainFilter(validationCodeUtil);
+        // token过滤器
+        TokenAuthorizationFilter tokenAuthorizationFilter =
+                new TokenAuthorizationFilter()
+                        .setTokenProperties(rlgProperties.getToken())
+                        .setIpUtil(ipUtil)
+                        .setErrorUtil(errorUtil);
+
+        // 验证码发送器
+        CodeObtainFilter codeObtainFilter =
+                new CodeObtainFilter()
+                        .setCodeUtil(codeUtil)
+                        .setAccountUtil(accountUtil)
+                        .setRedisUtil(redisUtil)
+                        .setErrorUtil(errorUtil);
+
+        // 登录验证器
         LoginAuthenticationFilter loginAuthenticationFilter =
                 new LoginAuthenticationFilter(
-                        loginProperties,
+                        rlgProperties
+                                .getUser()
+                                .getLogin(),
                         authenticationManager()
                 );
 
@@ -84,7 +105,13 @@ public class SecurityConfiguration
                 .and()
                 // 配置请求是否需要认证
                 .authorizeRequests()
-                .mvcMatchers(securityProperties.getUrlAllowlist())  // 匹配白名单中的请求路径
+                // 匹配白名单中的请求路径
+                .mvcMatchers(
+                        springProperties
+                                .getSecurity()
+                                .getUrlAllowlist()
+                                .toArray(new String[0])
+                )
                 .permitAll()        // 允许直接访问
                 .anyRequest()       // 其它任何请求
                 .authenticated()    // 需要通过认证
@@ -93,12 +120,12 @@ public class SecurityConfiguration
                 .csrf()
                 .disable()
                 .authenticationProvider(loginAuthenticationProvider)
-                // 将JWT过滤器置于Spring Security的“用户名密码认证信息过滤器”之前
+                // 将token过滤器置于Spring Security的“用户名密码认证信息过滤器”之前
                 .addFilterBefore(
                         tokenAuthorizationFilter,
                         UsernamePasswordAuthenticationFilter.class
                 )
-                // 将验证码获取过滤器置于JWT过滤器之前
+                // 将验证码获取过滤器置于token过滤器之前
                 .addFilterBefore(
                         codeObtainFilter,
                         TokenAuthorizationFilter.class

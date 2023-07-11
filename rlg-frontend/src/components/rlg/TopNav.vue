@@ -157,7 +157,7 @@ li > a
                         <span class="input_label">{{ keyWord }}：</span>
                     </el-col>
                     <el-col :span="17">
-                        <el-input v-model="password" v-if="loginByPassword" placeholder="密码" />
+                        <el-input v-model="password" v-if="loginByPassword" type="password" placeholder="密码" show-password />
                         <el-input v-model="code" v-else placeholder="验证码" />
                     </el-col>
                 </el-row>
@@ -191,7 +191,7 @@ li > a
                         <span class="input_label">密码：</span>
                     </el-col>
                     <el-col :span="17">
-                        <el-input v-model="password" placeholder="密码"/>
+                        <el-input v-model="password" type="password" placeholder="密码" show-password />
                     </el-col>
                 </el-row>
                 <el-row style="margin-top: 1rem">

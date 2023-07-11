@@ -14,3 +14,17 @@ spring:
     host:
     username:
     password:
+
+rlg:
+  # 文件目录配置
+  file:
+    # 根目录路径
+    root-dir:
+    # ftp配置
+    ftp:
+      # 主机地址
+      host:
+      # 用户名
+      username:
+      # 密码
+      password:

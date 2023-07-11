@@ -1,10 +1,14 @@
 package cn.maplerabbit.rlg.aop;
 
+import cn.maplerabbit.rlg.common.enumpak.DirectoryEnum;
 import cn.maplerabbit.rlg.common.enumpak.ServiceCode;
 import cn.maplerabbit.rlg.common.exception.ProgramError;
 import cn.maplerabbit.rlg.common.exception.ServiceException;
 import cn.maplerabbit.rlg.common.entity.result.ErrorResult;
+import cn.maplerabbit.rlg.common.property.RlgProperties;
+import cn.maplerabbit.rlg.common.util.IErrorUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.mail.MailException;
 import org.springframework.security.access.AccessDeniedException;
@@ -19,6 +23,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.validation.ConstraintViolationException;
 import java.util.StringJoiner;
 
+import static cn.maplerabbit.rlg.common.enumpak.DirectoryEnum.ERROR_LOG;
+
 /**
  * 全局异常处理器
  */
@@ -26,6 +32,11 @@ import java.util.StringJoiner;
 @RestControllerAdvice
 public class GlobalExceptionHandler
 {
+    @Autowired
+    private IErrorUtil errorUtil;
+    @Autowired
+    private RlgProperties rlgProperties;
+
     public GlobalExceptionHandler()
     {
         log.debug("GlobalExceptionHandler()...");
@@ -108,8 +119,16 @@ public class GlobalExceptionHandler
 
     @ExceptionHandler
     public ErrorResult handleThrowable(Throwable e) {
-        log.error("-- Unhandled Exception: {}", e.getClass().getName());
-        e.printStackTrace();
+        log.error(
+                "-- Unhandled Exception: {}, please check error-log file: {}",
+                e.getClass().getName(),
+                ERROR_LOG.router(
+                        rlgProperties
+                                .getFile()
+                                .getRootDir()
+                )
+        );
+        errorUtil.record(this.getClass(), e);
         return ErrorResult.fail(ServiceCode.ERR_UNKNOWN, "服务器忙，请稍后再试");
     }
 }

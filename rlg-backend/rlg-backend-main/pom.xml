@@ -19,6 +19,11 @@
 			<artifactId>rlg-backend-common</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>cn.maplerabbit</groupId>
+			<artifactId>rlg-backend-util</artifactId>
+		</dependency>
+
 		<!-- file module -->
 		<dependency>
 			<groupId>cn.maplerabbit</groupId>

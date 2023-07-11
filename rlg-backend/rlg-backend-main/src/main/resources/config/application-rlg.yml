@@ -3,52 +3,15 @@
 # ============ #
 
 rlg:
-  # security配置
-  security:
-    # url白名单
-    url-allowlist:
-      - /static/**
-      - /user/register
-      - /doc.html
-      - /webjars/**
-      - /favicon.ico
-      - /swagger-resources
-      - /v2/api-docs
-  # 验证码配置
-  code:
-    # 有效时间（单位：分钟）
-    usable-time: 15
-  # 登录配置
-  login:
-    # 存放登陆方式的请求头名称
-    login-way-header: login-way
-    # 账户参数名（用户名、邮箱、手机号等的共同参数名）
-    param-account: account
-    # 密钥参数名（密码、验证码等的共同参数名）
-    param-key: key
-  # 文件目录配置
-  directory:
+  # 文件模块配置
+  file:
     # 根目录路径
     root-dir: C:/rlg
-    # 静态资源路径
-    static-dir: ${rlg.directory.root-dir}/static
-    # 用户文件仓库路径
-    store-dir: ${rlg.directory.root-dir}/store
-    # 日志文件路径
-    log-dir: ${rlg.directory.root-dir}/log
-  # token相关配置
-  token:
-    # token签名算法
-    algorithm: HS256
-    # token类型
-    type: JWT
-    # 密钥
-    secret-key: RedLeafGarden-JsonWebToken-SecretKey
-    # token有效时长（单位：分钟）
-    usable-minutes: 10080 # 一星期
-    # 长度下限
-    min-length: 105
-    # 存放token的请求头名称
-    header: authorization
-    # token可刷新临期时间
-    refresh-time: 1500 # 25小时
+    # ftp配置
+    ftp:
+      # 主机地址
+      host: 127.0.0.1
+      # 用户名
+      username: rlgroot
+      # 密码
+      password: P@ssw0rdRoot

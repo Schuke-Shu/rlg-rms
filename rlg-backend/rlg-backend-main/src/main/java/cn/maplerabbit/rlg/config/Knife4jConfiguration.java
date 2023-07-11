@@ -30,43 +30,43 @@ public class Knife4jConfiguration
     /**
      * 【重要】指定Controller包路径
      */
-    private String basePackage = "cn.maplerabbit.rlg.module";
+    private final String basePackage = "cn.maplerabbit.rlg.module";
     /**
      * 分组名称
      */
-    private String groupName = "rlg-backend";
+    private final String groupName = "rlg-backend";
     /**
      * 主机名
      */
-    private String host = "http://maplerabbit.cn";
+    private final String host = "http://maplerabbit.cn";
     /**
      * 标题
      */
-    private String title = "红叶园API";
+    private final String title = "红叶园API";
     /**
      * 简介
      */
-    private String description = "红叶园家庭资源管理系统后台在线API文档";
+    private final String description = "红叶园资源管理系统后台在线API文档";
     /**
      * 服务条款URL
      */
-    private String termsOfServiceUrl = "http://www.apache.org/licenses/LICENSE-2.0";
+    private final String termsOfServiceUrl = "http://www.apache.org/licenses/LICENSE-2.0";
     /**
      * 联系人
      */
-    private String contactName = "一只枫兔";
+    private final String contactName = "一只枫兔";
     /**
      * 联系网址
      */
-    private String contactUrl = "http://maplerabbit.cn";
+    private final String contactUrl = "http://maplerabbit.cn";
     /**
      * 联系邮箱
      */
-    private String contactEmail = "schuke-shu@outlook.com";
+    private final String contactEmail = "schuke-shu@outlook.com";
     /**
      * 版本号
      */
-    private String version = "1";
+    private final String version = "1";
 
     public Knife4jConfiguration() {
         log.debug("Knife4jConfiguration()...");

@@ -13,7 +13,7 @@
 
     <groupId>cn.maplerabbit</groupId>
     <artifactId>rlg-backend-test</artifactId>
-    <version>1</version>
+    <version>0.1.0.TEST</version>
 
     <description>RedLeafGarden Backend test</description>
 
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>cn.maplerabbit</groupId>
             <artifactId>rlg-backend-main</artifactId>
-            <version>1</version>
+            <version>0.1.0.TEST</version>
         </dependency>
 
         <!-- Spring Boot Test -->

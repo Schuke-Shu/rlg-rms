@@ -1,13 +1,13 @@
 package cn.maplerabbit.rlg.module.user.service;
 
-import cn.maplerabbit.rlg.common.security.ILoginService;
-import cn.maplerabbit.rlg.common.security.UserDetails;
+import cn.maplerabbit.rlg.common.entity.UserDetails;
+import cn.maplerabbit.rlg.common.exception.ProgramError;
 import cn.maplerabbit.rlg.pojo.user.dto.UserRegisterDTO;
 
 /**
  * 用户服务接口
  */
-public interface IUserService extends ILoginService
+public interface IUserService
 {
     /**
      * 用户名注册
@@ -26,5 +26,14 @@ public interface IUserService extends ILoginService
      * @param jwt 请求头中旧的jwt
      * @return 新的jwt
      */
-    String refresh(String jwt);
+    String refresh(String jwt)
+            throws ProgramError;
+
+    /**
+     * 动态获取用户信息
+     * @param field 数据库账户对应字段
+     * @param account 账户名称
+     * @return 用户信息
+     */
+    UserDetails loadUser(String field, String account);
 }

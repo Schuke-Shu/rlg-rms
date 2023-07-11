@@ -1,7 +1,7 @@
 package cn.maplerabbit.rlg.module.user.controller;
 
 import cn.maplerabbit.rlg.common.constpak.ValidationMessageConst;
-import cn.maplerabbit.rlg.common.security.UserDetails;
+import cn.maplerabbit.rlg.common.entity.UserDetails;
 import cn.maplerabbit.rlg.module.user.service.IUserService;
 import cn.maplerabbit.rlg.pojo.user.dto.UserRegisterDTO;
 import cn.maplerabbit.rlg.common.entity.result.JsonResult;
