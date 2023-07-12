@@ -2,6 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.maplerabbit.rlg.module.file.mapper.FileMapper">
+    <select id="queryBySha512AndSize" resultMap="BaseResultMap">
+        select
+            <include refid="BaseQueryColumns" />
+        from file
+        <where>
+            sha512 = #{sha512} and size = #{size}
+        </where>
+    </select>
+
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
         uuid, user_uuid, sha512, suffix, type, size, upload_time

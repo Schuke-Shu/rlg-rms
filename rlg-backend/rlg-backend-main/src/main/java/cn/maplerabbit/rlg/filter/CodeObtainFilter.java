@@ -3,6 +3,7 @@ package cn.maplerabbit.rlg.filter;
 import cn.maplerabbit.rlg.common.entity.result.ErrorResult;
 import cn.maplerabbit.rlg.common.entity.result.SuccessResult;
 import cn.maplerabbit.rlg.common.enumpak.ServiceCode;
+import cn.maplerabbit.rlg.common.property.RlgProperties;
 import cn.maplerabbit.rlg.common.util.*;
 import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,8 @@ import java.io.PrintWriter;
  * 验证码获取，参数为account，可能为邮箱或手机号
  */
 @Slf4j
-public class CodeObtainFilter extends HttpFilter
+public class CodeObtainFilter
+        extends HttpFilter
 {
     /**
      * 匹配 "/code" 开头的路径
@@ -39,6 +41,7 @@ public class CodeObtainFilter extends HttpFilter
     private IAccountUtil accountUtil;
     private IRedisUtil<String> redisUtil;
     private IErrorUtil errorUtil;
+    private RlgProperties rlgProperties;
 
     public CodeObtainFilter()
     {
@@ -50,7 +53,7 @@ public class CodeObtainFilter extends HttpFilter
             throws ServletException, IOException
     {
         log.trace("Access CodeObtainFilter");
-        
+
         if (!MATCHER.matches(request))
             chain.doFilter(request, response);
         else
@@ -59,7 +62,6 @@ public class CodeObtainFilter extends HttpFilter
 
     private void sendCode(HttpServletRequest request, HttpServletResponse response)
     {
-        System.out.println(request.getHeader("authorization"));
         String account = request.getParameter(ACCOUNT_PARAM);
 
         if (!StringUtils.hasText(account))
@@ -82,7 +84,10 @@ public class CodeObtainFilter extends HttpFilter
                                 .substring(URI_PREFIX_CODE.length()),
                         account
                 ),
-                code
+                code,
+                rlgProperties
+                        .getCode()
+                        .getUsableTime()
         );
 
         // 发送验证码
@@ -139,6 +144,12 @@ public class CodeObtainFilter extends HttpFilter
     public CodeObtainFilter setErrorUtil(IErrorUtil errorUtil)
     {
         this.errorUtil = errorUtil;
+        return this;
+    }
+
+    public CodeObtainFilter setRlgProperties(RlgProperties rlgProperties)
+    {
+        this.rlgProperties = rlgProperties;
         return this;
     }
 }

@@ -33,6 +33,8 @@ INSERT INTO user(uuid, username, password, real_name, gender, description, enabl
     # root账号初始密码 P@ssw0rdRoot
     ('151d3d54031140019237af35d874b4fd', 'rlgroot', '$2a$10$NbOqv/eIJCQl/i2z57ZDeuqh7KIwarT6r8BLk6Wj4HKq7A52N2rXu', 'BOSS', 1, '顶级管理员', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
+UPDATE user SET email = '1433275904@qq.com' WHERE username = 'rlgroot';
+
 # 用户-用户角色关联表
 DROP TABLE IF EXISTS user_role;
 CREATE TABLE IF NOT EXISTS user_role(
@@ -125,7 +127,7 @@ DROP TABLE IF EXISTS file;
 CREATE TABLE IF NOT EXISTS file(
     uuid                char(32)        NOT NULL,
     user_uuid           char(32)        DEFAULT NULL COMMENT '文件上传者uuid',
-    sha512              char(32)        DEFAULT NULL COMMENT '文件sha512值',
+    sha512              char(128)       DEFAULT NULL COMMENT '文件sha512值',
     suffix              varchar(8)      DEFAULT NULL COMMENT '后缀名',
     type                varchar(64)     DEFAULT NULL COMMENT '文件类型',
     size                bigint          UNSIGNED DEFAULT 0 COMMENT '文件大小',

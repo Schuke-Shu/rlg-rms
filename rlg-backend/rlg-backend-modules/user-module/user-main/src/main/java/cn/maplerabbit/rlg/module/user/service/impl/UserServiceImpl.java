@@ -12,6 +12,7 @@ import cn.maplerabbit.rlg.common.util.IIpUtil;
 import cn.maplerabbit.rlg.common.util.ITokenUtil;
 import cn.maplerabbit.rlg.module.user.exception.UserException;
 import cn.maplerabbit.rlg.module.log.service.IUserLoginLogService;
+import cn.maplerabbit.rlg.module.user.exception.UserNotFoundException;
 import cn.maplerabbit.rlg.module.user.mapper.UserMapper;
 import cn.maplerabbit.rlg.module.user.service.IRoleService;
 import cn.maplerabbit.rlg.module.user.service.IUserService;
@@ -181,6 +182,9 @@ public class UserServiceImpl
     {
 
         UserLoginVO info = userMapper.loadUserByCustomField(field, account);
+
+        if (info == null)
+            throw new UserNotFoundException(ServiceCode.ERR_UNAUTHORIZED, "登录错误，请检查登录信息");
 
         log.trace("Get LoginInfo matches '{}'【{}】: \n{}", field, account, info);
 

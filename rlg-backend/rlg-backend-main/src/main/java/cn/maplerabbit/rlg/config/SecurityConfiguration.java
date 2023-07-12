@@ -86,7 +86,8 @@ public class SecurityConfiguration
                         .setCodeUtil(codeUtil)
                         .setAccountUtil(accountUtil)
                         .setRedisUtil(redisUtil)
-                        .setErrorUtil(errorUtil);
+                        .setErrorUtil(errorUtil)
+                        .setRlgProperties(rlgProperties);
 
         // 登录验证器
         LoginAuthenticationFilter loginAuthenticationFilter =

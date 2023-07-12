@@ -2,6 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.maplerabbit.rlg.module.file.mapper.DictionaryMapper">
+    <select id="listByParentId" resultMap="BaseResultMap">
+        select
+            <include refid="BaseQueryColumns" />
+        from dictionary
+        <where>
+            parent_id = #{id}
+        </where>
+    </select>
+
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
         id, file_uuid, user_uuid, filename, deep, parent_id, directory, file_size, deleted, delete_time, hidden

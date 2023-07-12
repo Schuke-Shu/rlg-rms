@@ -1,10 +1,14 @@
 package cn.maplerabbit.rlg.security;
 
 import cn.maplerabbit.rlg.common.entity.UserDetails;
+import cn.maplerabbit.rlg.common.entity.result.ErrorResult;
+import cn.maplerabbit.rlg.common.enumpak.ServiceCode;
 import cn.maplerabbit.rlg.common.exception.CodeException;
 import cn.maplerabbit.rlg.common.util.IAccountUtil;
 import cn.maplerabbit.rlg.common.util.ICodeUtil;
+import cn.maplerabbit.rlg.common.util.IErrorUtil;
 import cn.maplerabbit.rlg.common.util.IRedisUtil;
+import cn.maplerabbit.rlg.module.user.exception.UserException;
 import cn.maplerabbit.rlg.module.user.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +45,8 @@ public class LoginAuthenticationProvider
     private IRedisUtil<String> redisUtil;
     @Autowired
     private HttpServletRequest request;
+    @Autowired
+    private IErrorUtil errorUtil;
 
     public LoginAuthenticationProvider() {log.debug("LoginAuthenticationProvider()...");}
 
@@ -71,23 +77,34 @@ public class LoginAuthenticationProvider
                     request.getRequestURI(),
                     account
             );
+            log.debug("Get code from redis, key: {}", k);
 
             try
             {
                 // 验证
                 codeUtil.validate(key, redisUtil.get(k));
+                // 验证成功，删除验证码
+                redisUtil.remove(k);
             }
             catch (CodeException e)
             {
                 // 验证失败，报错
-                throw new AuthenticationServiceException(e.getMessage());
+                errorUtil.response(ErrorResult.fail(e));
+                return null;
             }
-            // 验证成功，删除验证码
-            redisUtil.remove(k);
         }
+        UserDetails user = null;
 
-        UserDetails user = userService
-                .loadUser(accountUtil.parse(account).field(), account);
+        try
+        {
+            user = userService
+                    .loadUser(accountUtil.parse(account).field(), account);
+        }
+        catch (UserException e)
+        {
+            errorUtil.response(ErrorResult.fail(e));
+            return null;
+        }
 
         if (
                 // 用户对象为空
@@ -98,7 +115,9 @@ public class LoginAuthenticationProvider
                         !passwordEncoder.matches(key, user.getPassword())
                 )
         )
-            throw new AuthenticationServiceException("登录错误，请检查登录信息");
+            errorUtil.response(
+                    ErrorResult.fail(ServiceCode.ERR_UNAUTHORIZED, "登录错误，请检查登录信息")
+            );
 
         LoginAuthenticationToken result =
                 new LoginAuthenticationToken(

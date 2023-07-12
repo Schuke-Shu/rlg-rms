@@ -76,8 +76,16 @@ public class LoginAuthenticationFilter
 
         setDetails(request, authRequest);
 
-        Authentication authentication = getAuthenticationManager()
-                    .authenticate(authRequest);
+        Authentication authentication = null;
+        try
+        {
+            authentication = getAuthenticationManager()
+                        .authenticate(authRequest);
+        }
+        catch (AuthenticationException e)
+        {
+            // ignore
+        }
         log.trace("Authentication success, info: {}", authentication);
 
         // 若验证成功，将结果存入security上下文

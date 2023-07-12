@@ -24,13 +24,13 @@ public class UserRegisterDTO
                    ValidationMessageConst
 {
     @ApiModelProperty(value = "用户名", required = true)
-    @NotBlank(message = USER_USERNAME_NOTBLANK)
+    @NotBlank(message = USER_USERNAME_EMPTY)
     @Size(max = 9, message = USER_USERNAME_SIZE)
     @Pattern(regexp = "^[\\u4E00-\\u9FFF\\w]+$", message = USER_USERNAME_PATTERN)
     private String username;
 
     @ApiModelProperty(value = "密码", required = true)
-    @NotBlank(message = USER_PASSWORD_NOTBLANK)
+    @NotBlank(message = USER_PASSWORD_EMPTY)
     @Size(min = 8, max = 16, message = USER_PASSWORD_SIZE)
     @Pattern(regexp = "^[\\w@#$%*.\\-\\\\]+$", message = USER_PASSWORD_PATTERN ,flags = {Pattern.Flag.MULTILINE, Pattern.Flag.UNIX_LINES})
     private String password;

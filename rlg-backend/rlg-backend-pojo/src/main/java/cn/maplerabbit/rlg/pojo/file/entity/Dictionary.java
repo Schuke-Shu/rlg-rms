@@ -6,6 +6,9 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * 用户文件索引实体类
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode

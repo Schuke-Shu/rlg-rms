@@ -2,6 +2,7 @@ package cn.maplerabbit.rlg.module.user.controller;
 
 import cn.maplerabbit.rlg.common.constpak.ValidationMessageConst;
 import cn.maplerabbit.rlg.common.entity.UserDetails;
+import cn.maplerabbit.rlg.common.property.RlgProperties;
 import cn.maplerabbit.rlg.module.user.service.IUserService;
 import cn.maplerabbit.rlg.pojo.user.dto.UserRegisterDTO;
 import cn.maplerabbit.rlg.common.entity.result.JsonResult;
@@ -10,7 +11,6 @@ import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,17 +22,13 @@ import javax.validation.Valid;
 
 @Slf4j
 @RestController
-@Validated
 @RequestMapping(value = "/user")
 @Api(tags = "01. 用户模块")
 public class UserController
         implements ValidationMessageConst
 {
-    /**
-     * 包含权限的请求头名称
-     */
-    private static final String AUTHORIZATION_HEADER = "Authorization";
-
+    @Autowired
+    private RlgProperties rlgProperties;
     @Autowired
     private IUserService userService;
 
@@ -68,7 +64,11 @@ public class UserController
     {
         return SuccessResult.ok(
                 userService.refresh(
-                        request.getHeader(AUTHORIZATION_HEADER)
+                        request.getHeader(
+                                rlgProperties
+                                        .getToken()
+                                        .getHeader()
+                        )
                 )
         );
     }

@@ -31,9 +31,9 @@ spring:
     # multipart文件传输配置
     multipart:
       # 单文件大小上限
-      max-file-size: -1
+      max-file-size: 1GB
       # 单次请求文件总大小上限
-      max-request-size: -1
+      max-request-size: 1GB
       # multipart文件传输配置
       enabled: true
       # 文件写入磁盘的阈值，超过这个大小的文件会被存储为临时文件

@@ -19,7 +19,7 @@ spring:
 logging:
   # 显示级别
   level:
-    cn.maplerabbit.rlg: debug
+    cn.maplerabbit.rlg: trace
 
 # 项目全局配置
 rlg:

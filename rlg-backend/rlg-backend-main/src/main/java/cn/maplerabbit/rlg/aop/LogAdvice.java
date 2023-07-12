@@ -60,17 +60,4 @@ public class LogAdvice
         log.trace("--> Out controller");
         return result;
     }
-
-    /**
-     * 匹配项目中所有类的所有方法，记录跟踪日志
-     */
-    @Around("execution(* cn.maplerabbit.rlg..*(..))")
-    public Object logEntryAndExit(ProceedingJoinPoint pjp)
-            throws Throwable
-    {
-        log.trace("--> Enter: {}", pjp.getSignature());
-        Object result = pjp.proceed();
-        log.trace("--> Out: {}", pjp.getSignature());
-        return result;
-    }
 }
