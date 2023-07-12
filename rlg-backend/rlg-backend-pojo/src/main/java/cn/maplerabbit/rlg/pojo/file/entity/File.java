@@ -22,7 +22,7 @@ public class File implements Serializable
     /**
      * 文件md5值
      */
-    private String md5;
+    private String sha512;
     /**
      * 后缀名
      */
@@ -55,7 +55,7 @@ public class File implements Serializable
                 .append('{')
                 .append("uuid='").append(uuid).append('\'')
                 .append(", userUuid='").append(userUuid).append('\'')
-                .append(", md5='").append(md5).append('\'')
+                .append(", sha512='").append(sha512).append('\'')
                 .append(", suffix='").append(suffix).append('\'')
                 .append(", type='").append(type).append('\'')
                 .append(", size=").append(size)

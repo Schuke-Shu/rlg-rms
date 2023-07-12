@@ -4,16 +4,16 @@
 <mapper namespace="cn.maplerabbit.rlg.module.file.mapper.FileMapper">
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
-        uuid, user_uuid, md5, suffix, type, size, upload_time
+        uuid, user_uuid, sha512, suffix, type, size, upload_time
     </sql>
     <sql id="BaseQueryColumns">
-        uuid, user_uuid, md5, suffix, type, size, upload_time, create_time, modified_time
+        uuid, user_uuid, sha512, suffix, type, size, upload_time, create_time, modified_time
     </sql>
     <sql id="save">
-        #{uuid}, #{userUuid}, #{md5}, #{suffix}, #{type}, #{size}, #{uploadTime}
+        #{uuid}, #{userUuid}, #{sha512}, #{suffix}, #{type}, #{size}, #{uploadTime}
     </sql>
     <sql id="saveBatch">
-        #{i.uuid}, #{i.userUuid}, #{i.md5}, #{i.suffix}, #{i.type}, #{i.size}, #{i.uploadTime}
+        #{i.uuid}, #{i.userUuid}, #{i.sha512}, #{i.suffix}, #{i.type}, #{i.size}, #{i.uploadTime}
     </sql>
 
     <sql id="BaseCount">
@@ -23,7 +23,7 @@
     <resultMap id="BaseResultMap" type="cn.maplerabbit.rlg.pojo.file.entity.File">
         <id column="uuid" property="uuid" />
         <result column="user_uuid" property="userUuid" />
-        <result column="md5" property="md5" />
+        <result column="sha512" property="sha512" />
         <result column="suffix" property="suffix" />
         <result column="type" property="type" />
         <result column="size" property="size" />
@@ -62,7 +62,7 @@
         update file
         <set>
             <if test="userUuid != null">user_uuid = #{userUuid},</if>
-            <if test="md5 != null">md5 = #{md5},</if>
+            <if test="sha512 != null">sha512 = #{sha512},</if>
             <if test="suffix != null">suffix = #{suffix},</if>
             <if test="type != null">type = #{type},</if>
             <if test="size != null">size = #{size},</if>
