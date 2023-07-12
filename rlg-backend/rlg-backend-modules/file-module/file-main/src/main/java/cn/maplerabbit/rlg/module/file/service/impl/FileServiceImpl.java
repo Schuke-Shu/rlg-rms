@@ -169,7 +169,7 @@ public class FileServiceImpl
     }
 
     /**
-     * 获取父目录
+     * 获取父目录{@link Dictionary}
      *
      * @param parentId 父目录id
      * @return 父目录
@@ -190,7 +190,7 @@ public class FileServiceImpl
     }
 
     /**
-     * 名称重复性检查，如果要创建的文件/文件夹名称已存在，返回{@code true}，否则返回{@code false}
+     * 名称重复性检查，如果在同一个父目录中要创建的文件/文件夹名称已存在，返回{@code true}，否则返回{@code false}
      *
      * @param parentId 父目录id
      * @param filename 要创建的文件/文件夹名称
