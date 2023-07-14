@@ -3,9 +3,9 @@ package cn.maplerabbit.rlg.module.file.controller;
 import cn.maplerabbit.rlg.common.entity.LoginPrincipal;
 import cn.maplerabbit.rlg.common.entity.result.JsonResult;
 import cn.maplerabbit.rlg.common.entity.result.SuccessResult;
-import cn.maplerabbit.rlg.module.file.service.IFileService;
+import cn.maplerabbit.rlg.module.file.service.IDictionaryService;
+import cn.maplerabbit.rlg.pojo.file.dto.UploadDTO;
 import cn.maplerabbit.rlg.pojo.file.dto.MkdirDTO;
-import cn.maplerabbit.rlg.pojo.file.dto.SingleUploadDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ import javax.validation.Valid;
 public class FileController
 {
     @Autowired
-    private IFileService fileService;
+    private IDictionaryService dictionaryService;
 
     public FileController() {log.debug("FileController()...");}
 
@@ -41,18 +41,20 @@ public class FileController
             @ApiIgnore @AuthenticationPrincipal LoginPrincipal principal
     )
     {
-        fileService.mkdir(mkdirDTO, principal);
+        dictionaryService.mkdir(mkdirDTO, principal);
         return SuccessResult.ok();
     }
 
-    @ApiOperation("单文件上传")
-    @PostMapping("/upload-single")
+    private static final String UPLOAD_NOTE = "只支持单文件上传，多文件上传与文件夹上传在前端实现";
+
+    @ApiOperation(value = "文件上传", notes = UPLOAD_NOTE)
+    @PostMapping("/upload")
     public JsonResult<?> upload(
-            @Valid SingleUploadDTO singleUploadDTO,
+            @Valid UploadDTO fileUploadDTO,
             @ApiIgnore @AuthenticationPrincipal LoginPrincipal principal
     )
     {
-        fileService.upload(singleUploadDTO, principal);
+        dictionaryService.upload(fileUploadDTO, principal);
         return SuccessResult.ok();
     }
 }

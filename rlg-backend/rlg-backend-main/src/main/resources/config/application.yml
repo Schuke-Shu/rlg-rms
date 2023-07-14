@@ -31,13 +31,13 @@ spring:
     # multipart文件传输配置
     multipart:
       # 单文件大小上限
-      max-file-size: 1GB
+      max-file-size: 10GB
       # 单次请求文件总大小上限
-      max-request-size: 1GB
+      max-request-size: 10GB
       # multipart文件传输配置
       enabled: true
       # 文件写入磁盘的阈值，超过这个大小的文件会被存储为临时文件
-      file-size-threshold: 10MB
+      file-size-threshold: 100MB
   # 邮箱配置
   mail:
     properties:

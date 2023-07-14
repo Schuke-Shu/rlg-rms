@@ -64,23 +64,44 @@
                     </el-menu-item>
                 </el-menu>
             </el-aside>
+            <el-main>
+                <input ref="file" type="file" webkitdirectory/>
+
+                <el-input v-model="parentId" placeholder="父目录id" />
+
+                <el-button class="ml-3" type="success" @click="submitUpload">
+                    upload
+                </el-button>
+            </el-main>
         </el-container>
     </transition>
 </template>
 
 <script setup>
-import {onMounted, ref} from "vue";
-import {
-    Document,
-    Files,
-    Delete,
-    Headset,
-    Picture as Pic,
-    VideoPlay, More,
-} from '@element-plus/icons-vue'
+    import {onMounted, ref} from "vue";
+    import {
+        Document,
+        Files,
+        Delete,
+        Headset,
+        Picture as Pic,
+        VideoPlay, More,
+    } from '@element-plus/icons-vue'
+    import {upload} from "@apis/disk";
 
-  const show = ref(false);
-  onMounted(() => {
+    const parentId = ref('');
+
+    const show = ref(false);
+    onMounted(() => {
       show.value = true;
-  })
+    })
+
+    const file = ref(null);
+
+    const submitUpload = () => {
+        let files = file.value.files;
+
+        for (let i = 0; i < files.length; i++)
+            upload(parentId.value, files[i]);
+    }
 </script>

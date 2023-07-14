@@ -129,7 +129,7 @@ li > a
                 </el-col>
             </el-row>
         </el-col>
-        <el-col v-else :span="2" :offset="18" style="padding: 1.2rem">
+        <el-col v-else :span="2" :offset="17" style="padding: 1.2rem">
             <el-button id="show_login_dialog_button" @click="loginDialogVisible = true">登录/注册</el-button>
         </el-col>
     </el-row>
@@ -157,8 +157,8 @@ li > a
                         <span class="input_label">{{ keyWord }}：</span>
                     </el-col>
                     <el-col :span="17">
-                        <el-input v-model="password" v-if="loginByPassword" type="password" placeholder="密码" show-password />
-                        <el-input v-model="code" v-else placeholder="验证码" />
+                        <el-input v-model="password" v-if="loginByPassword" type="password" placeholder="密码" show-password @keydown.enter="loginByPassword ? login(account, password, passwordLogin) : login(account, code, codeLogin)" />
+                        <el-input v-model="code" v-else placeholder="验证码" @keydown.enter="loginByPassword ? login(account, password, passwordLogin) : login(account, code, codeLogin)" />
                     </el-col>
                 </el-row>
                 <el-row style="margin-top: 1rem">

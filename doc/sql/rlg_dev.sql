@@ -128,12 +128,11 @@ CREATE TABLE IF NOT EXISTS file(
     uuid                char(32)        NOT NULL,
     user_uuid           char(32)        DEFAULT NULL COMMENT '文件上传者uuid',
     sha512              char(128)       DEFAULT NULL COMMENT '文件sha512值',
-    suffix              varchar(8)      DEFAULT NULL COMMENT '后缀名',
     type                varchar(64)     DEFAULT NULL COMMENT '文件类型',
     size                bigint          UNSIGNED DEFAULT 0 COMMENT '文件大小',
     upload_time         datetime        DEFAULT NULL COMMENT '文件上传时间',
     create_time         datetime        DEFAULT NULL COMMENT '创建时间',
     modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间',
     PRIMARY KEY (uuid),
-    UNIQUE KEY (sha512)
+    UNIQUE KEY (sha512, size)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文件表';

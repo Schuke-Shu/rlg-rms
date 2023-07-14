@@ -1,6 +1,5 @@
 package cn.maplerabbit.rlg.pojo.file.dto;
 
-import cn.maplerabbit.rlg.common.constpak.ValidationMessageConst;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -17,8 +16,8 @@ import java.io.Serializable;
 @Setter
 @Accessors(chain = true)
 
-@ApiModel("单文件上传DTO")
-public class SingleUploadDTO
+@ApiModel("文件上传DTO")
+public class UploadDTO
         implements Serializable
 {
     @ApiModelProperty("文件")
@@ -26,8 +25,6 @@ public class SingleUploadDTO
     private MultipartFile file;
     @ApiModelProperty("父目录id")
     private Long parentId;
-    @ApiModelProperty("是否隐藏")
-    private Integer hidden;
 
     @Override
     public String toString()
@@ -36,7 +33,6 @@ public class SingleUploadDTO
                 .append('{')
                 .append("file=").append(file)
                 .append(", parentId=").append(parentId)
-                .append(", hidden=").append(hidden)
                 .append('}')
                 .toString();
     }

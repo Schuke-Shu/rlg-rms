@@ -2,6 +2,7 @@ import web from '@utils/Http';
 import qs from "qs";
 import * as jose from 'jose';
 import env from "@utils/Const";
+import {ElMessage} from "element-plus";
 
 export function login(account, key, way)
 {
@@ -23,8 +24,7 @@ export function login(account, key, way)
             }
             localStorage.setItem(env.storageKeyUser, qs.stringify(user));
             location.reload();
-        },
-        error => alert(error.message)
+        }
     );
 }
 
@@ -42,8 +42,7 @@ export function register(username, password)
         () => {
             alert("注册成功！");
             location.href = '/'
-        },
-        error => alert(error.message)
+        }
     )
 }
 
@@ -53,9 +52,7 @@ export function getCode(uri, account)
         {
             method: 'GET',
             url: '/code' + uri + '?account=' + account
-        },
-        null,
-        error => alert(error.message)
+        }
     )
 }
 

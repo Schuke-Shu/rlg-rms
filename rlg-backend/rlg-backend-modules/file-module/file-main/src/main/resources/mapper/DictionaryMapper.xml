@@ -2,12 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.maplerabbit.rlg.module.file.mapper.DictionaryMapper">
+    <!-- List<Dictionary> listByParentId(Long id); -->
     <select id="listByParentId" resultMap="BaseResultMap">
         select
             <include refid="BaseQueryColumns" />
         from dictionary
         <where>
-            parent_id = #{id}
+            user_uuid = #{userUuid} and parent_id = #{parentId}
+        </where>
+    </select>
+
+    <select id="queryByParentIdAndFilename" resultMap="BaseResultMap">
+        select
+            <include refid="BaseQueryColumns" />
+        from dictionary
+        <where>
+            user_uuid = #{userUuid} and parent_id = #{parentId} and filename = #{filename}
         </where>
     </select>
 

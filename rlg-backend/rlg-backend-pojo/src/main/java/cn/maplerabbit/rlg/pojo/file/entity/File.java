@@ -27,10 +27,6 @@ public class File implements Serializable
      */
     private String sha512;
     /**
-     * 后缀名
-     */
-    private String suffix;
-    /**
      * 文件类型
      */
     private String type;
@@ -59,7 +55,6 @@ public class File implements Serializable
                 .append("uuid='").append(uuid).append('\'')
                 .append(", userUuid='").append(userUuid).append('\'')
                 .append(", sha512='").append(sha512).append('\'')
-                .append(", suffix='").append(suffix).append('\'')
                 .append(", type='").append(type).append('\'')
                 .append(", size=").append(size)
                 .append(", uploadTime=").append(uploadTime)

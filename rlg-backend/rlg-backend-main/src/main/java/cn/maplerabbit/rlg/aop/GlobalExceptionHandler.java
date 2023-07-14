@@ -52,6 +52,7 @@ public class GlobalExceptionHandler
     @ExceptionHandler
     public ErrorResult handleProgramError(ProgramError e)
     {
+        e.printStackTrace(); // 生产环境关闭
         log.error("-- {}，msg：{}", e.getClass().getSimpleName(), e.getMessage());
         return ErrorResult.fail(ServiceCode.ERR_UNKNOWN, "服务器忙，请稍后再试");
     }
@@ -119,6 +120,7 @@ public class GlobalExceptionHandler
 
     @ExceptionHandler
     public ErrorResult handleThrowable(Throwable e) {
+        e.printStackTrace(); // 生产环境关闭
         log.error(
                 "-- Unhandled Exception: {}, please check error-log file: {}",
                 e.getClass().getName(),

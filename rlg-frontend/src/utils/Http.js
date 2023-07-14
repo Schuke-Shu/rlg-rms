@@ -2,6 +2,7 @@
 import axios from "axios";
 import qs from "qs";
 import env from '@utils/Const';
+import {ElMessage} from "element-plus";
 
 const send = axios.create({
     baseURL: env.baseUrl,
@@ -34,10 +35,15 @@ const web = function (config, success, fail)
                         location.href = '/';
                         break;
                     default:
-                        fail && fail(data);
+                        fail ? fail(data) : error(data);
                 }
             }
         );
+
+    const error = data =>
+    {
+        alert(data.message);
+    }
 }
 
 export default web;

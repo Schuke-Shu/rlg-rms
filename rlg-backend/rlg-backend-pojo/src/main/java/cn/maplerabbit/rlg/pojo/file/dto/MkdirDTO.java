@@ -23,23 +23,20 @@ public class MkdirDTO
         implements Serializable,
                    ValidationMessageConst
 {
-    @ApiModelProperty(value = "文件夹名", required = true)
-    @NotNull(message = FILE_NAME_EMPTY)
-    @Pattern(regexp = "^[\\u4E00-\\u9FFF\\w@#$%*.\\- ]+$", message = FILE_NAME_PATTERN)
-    private String filename;
     @ApiModelProperty("父目录id")
     private Long parentId;
-    @ApiModelProperty("是否隐藏")
-    private Integer hidden;
+    @ApiModelProperty(value = "文件夹名", required = true)
+    @NotNull(message = FILE_NAME_EMPTY)
+    @Pattern(regexp = "^((?![\\\\/:*?<>|'\"%]).)+$", message = FILE_NAME_PATTERN)
+    private String name;
 
     @Override
     public String toString()
     {
         return new StringBuilder(this.getClass().getSimpleName())
                 .append('{')
-                .append("filename='").append(filename).append('\'')
-                .append(", parentId=").append(parentId)
-                .append(", hidden=").append(hidden)
+                .append("parentId=").append(parentId)
+                .append(", name='").append(name).append('\'')
                 .append('}')
                 .toString();
     }
