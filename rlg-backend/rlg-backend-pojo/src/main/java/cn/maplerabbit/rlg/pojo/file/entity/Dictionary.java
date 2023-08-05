@@ -32,6 +32,10 @@ public class Dictionary
      */
     private String filename;
     /**
+     * 文件路径
+     */
+    private String path;
+    /**
      * 文件层级
      */
     private Integer deep;
@@ -77,6 +81,7 @@ public class Dictionary
                 .append(", fileUuid='").append(fileUuid).append('\'')
                 .append(", userUuid='").append(userUuid).append('\'')
                 .append(", filename='").append(filename).append('\'')
+                .append(", path='").append(path).append('\'')
                 .append(", deep=").append(deep)
                 .append(", parentId=").append(parentId)
                 .append(", directory=").append(directory)

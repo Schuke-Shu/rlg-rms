@@ -2,6 +2,7 @@ package cn.maplerabbit.rlg.module.file.mapper;
 
 import cn.maplerabbit.rlg.pojo.file.entity.Dictionary;
 import cn.maplerabbit.rlg.common.template.LongModelMapperTemplate;
+import cn.maplerabbit.rlg.pojo.file.vo.ListFileVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,13 +11,15 @@ public interface DictionaryMapper
         extends LongModelMapperTemplate<Dictionary>
 {
     /**
-     * 通过父目录id列出文件列表
-     * @param id 父目录id
+     * 通过用户id与父目录id列出文件列表
+     *
+     * @param userUuid 用户id
+     * @param path
      * @return 文件列表
      */
-    List<Dictionary> listByParentId(
+    List<ListFileVO> listByPath(
             @Param("userUuid") String userUuid,
-            @Param("parentId") Long parentId
+            @Param("path") String path
     );
 
     /**

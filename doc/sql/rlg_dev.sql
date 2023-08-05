@@ -110,6 +110,7 @@ CREATE TABLE IF NOT EXISTS dictionary(
     file_uuid           char(32)        DEFAULT NULL COMMENT '文件uuid',
     user_uuid           char(32)        DEFAULT NULL COMMENT '用户uuid',
     filename            varchar(255)    DEFAULT NULL COMMENT '文件名称',
+    path                text            DEFAULT NULL COMMENT '文件路径',
     deep                int             UNSIGNED DEFAULT 0 COMMENT '文件层级',
     parent_id           bigint          UNSIGNED DEFAULT 0 COMMENT '父目录id',
     directory           tinyint         UNSIGNED DEFAULT 0 COMMENT '是否为目录，1:是，0:否',
@@ -119,7 +120,8 @@ CREATE TABLE IF NOT EXISTS dictionary(
     hidden              tinyint         UNSIGNED DEFAULT 0 COMMENT '是否隐藏，1:是，0:否',
     create_time         datetime        DEFAULT NULL COMMENT '创建时间',
     modified_time       datetime        DEFAULT NULL COMMENT '最后修改时间',
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    UNIQUE KEY (parent_id, filename)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户文件索引表，存储用户的文件目录结构';
 
 # 文件表

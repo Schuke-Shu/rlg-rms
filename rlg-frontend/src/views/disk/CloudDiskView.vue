@@ -67,7 +67,7 @@
             <el-main>
                 <input ref="file" type="file" webkitdirectory/>
 
-                <el-input v-model="parentId" placeholder="父目录id" />
+                <el-input v-model="parentId" placeholder="父目录路径" />
 
                 <el-button class="ml-3" type="success" @click="submitUpload">
                     upload

@@ -1,6 +1,6 @@
 package cn.maplerabbit.rlg.util.impl;
 
-import cn.hutool.core.util.ObjectUtil;
+import icu.mabbit.mdk4j.core.util.ObjectUtil;
 import cn.maplerabbit.rlg.common.exception.FtpError;
 import cn.maplerabbit.rlg.common.util.IFileIOUtil;
 import cn.maplerabbit.rlg.util.ftp.Ftp;

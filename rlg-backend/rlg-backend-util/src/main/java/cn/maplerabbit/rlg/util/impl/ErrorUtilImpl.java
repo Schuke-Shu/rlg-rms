@@ -20,6 +20,9 @@ import java.time.LocalDateTime;
 
 import static cn.maplerabbit.rlg.common.enumpak.DirectoryEnum.ERROR_LOG;
 
+/**
+ * 异常工具实现类
+ */
 @Slf4j
 @Component
 public class ErrorUtilImpl implements IErrorUtil

@@ -38,6 +38,8 @@
         <hutool.version>5.8.20</hutool.version>
         <tika.version>2.5.0</tika.version>
 
+        <mdk4j-core.version>1</mdk4j-core.version>
+
         <rlg-backend.version>0.1.0.TEST</rlg-backend.version>
     </properties>
 
@@ -154,11 +156,10 @@
             <version>${tika.version}</version>
         </dependency>
 
-        <!-- hutool -->
         <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-core</artifactId>
-            <version>${hutool.version}</version>
+            <groupId>icu.mabbit.mdk4j</groupId>
+            <artifactId>core</artifactId>
+            <version>${mdk4j-core.version}</version>
         </dependency>
     </dependencies>
 

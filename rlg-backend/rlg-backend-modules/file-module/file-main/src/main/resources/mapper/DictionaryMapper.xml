@@ -2,16 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.maplerabbit.rlg.module.file.mapper.DictionaryMapper">
-    <!-- List<Dictionary> listByParentId(Long id); -->
-    <select id="listByParentId" resultMap="BaseResultMap">
-        select
-            <include refid="BaseQueryColumns" />
-        from dictionary
-        <where>
-            user_uuid = #{userUuid} and parent_id = #{parentId}
-        </where>
-    </select>
-
+    <!-- Dictionary queryByParentIdAndFilename(String userUuid, Long parentId, String filename); -->
     <select id="queryByParentIdAndFilename" resultMap="BaseResultMap">
         select
             <include refid="BaseQueryColumns" />
@@ -21,18 +12,51 @@
         </where>
     </select>
 
+    <sql id="ListByPath">
+        id, file_uuid, filename, path, directory, file_size, hidden
+    </sql>
+
+    <resultMap id="ListByPathMap" type="cn.maplerabbit.rlg.pojo.file.vo.ListFileVO">
+        <id column="id" property="id" />
+        <result column="file_uuid" property="fileUuid" />
+        <result column="filename" property="filename" />
+        <result column="path" property="path" />
+        <result column="directory" property="directory" />
+        <result column="file_size" property="fileSize" />
+        <result column="hidden" property="hidden" />
+    </resultMap>
+
+    <!-- List<Dictionary> listByParentId(String userUuid, Long id); -->
+    <select id="listByPath" resultMap="ListByPathMap">
+        select
+            <include refid="ListByPath" />
+        from dictionary
+        <where>
+            parent_id = (
+                select id from dictionary
+                <where>
+                    user_uuid = #{userUuid}
+                    and
+                    path = #{path}
+                    and
+                    deleted != 1
+                </where>
+            )
+        </where>
+    </select>
+
     <!-- ========== Base CRUD ========== -->
     <sql id="BaseColumns">
-        id, file_uuid, user_uuid, filename, deep, parent_id, directory, file_size, deleted, delete_time, hidden
+        id, file_uuid, user_uuid, filename, path, deep, parent_id, directory, file_size, deleted, delete_time, hidden
     </sql>
     <sql id="BaseQueryColumns">
-        id, file_uuid, user_uuid, filename, deep, parent_id, directory, file_size, deleted, delete_time, hidden, create_time, modified_time
+        id, file_uuid, user_uuid, filename, path, deep, parent_id, directory, file_size, deleted, delete_time, hidden, create_time, modified_time
     </sql>
     <sql id="save">
-        null, #{fileUuid}, #{userUuid}, #{filename}, #{deep}, #{parentId}, #{directory}, #{fileSize}, #{deleted}, #{deleteTime}, #{hidden}
+        null, #{fileUuid}, #{userUuid}, #{filename}, #{path}, #{deep}, #{parentId}, #{directory}, #{fileSize}, #{deleted}, #{deleteTime}, #{hidden}
     </sql>
     <sql id="saveBatch">
-        null, #{i.fileUuid}, #{i.userUuid}, #{i.filename}, #{i.deep}, #{i.parentId}, #{i.directory}, #{i.fileSize}, #{i.deleted}, #{i.deleteTime}, #{i.hidden}
+        null, #{i.fileUuid}, #{i.userUuid}, #{i.filename}, #{i.path}, #{i.deep}, #{i.parentId}, #{i.directory}, #{i.fileSize}, #{i.deleted}, #{i.deleteTime}, #{i.hidden}
     </sql>
 
     <sql id="BaseCount">
@@ -44,6 +68,7 @@
         <result column="file_uuid" property="fileUuid" />
         <result column="user_uuid" property="userUuid" />
         <result column="filename" property="filename" />
+        <result column="path" property="path" />
         <result column="deep" property="deep" />
         <result column="parent_id" property="parentId" />
         <result column="directory" property="directory" />
@@ -87,6 +112,7 @@
             <if test="fileUuid != null">file_uuid = #{fileUuid},</if>
             <if test="userUuid != null">user_uuid = #{userUuid},</if>
             <if test="filename != null">filename = #{filename},</if>
+            <if test="path != null">path = #{path},</if>
             <if test="deep != null">deep = #{deep},</if>
             <if test="parentId != null">parent_id = #{parentId},</if>
             <if test="directory != null">directory = #{directory},</if>

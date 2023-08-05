@@ -8,10 +8,10 @@ import cn.maplerabbit.rlg.module.file.exception.FileError;
 import cn.maplerabbit.rlg.module.file.mapper.DictionaryMapper;
 import cn.maplerabbit.rlg.module.file.service.IDictionaryService;
 import cn.maplerabbit.rlg.module.file.service.IFileService;
-import cn.maplerabbit.rlg.pojo.file.dto.UploadDTO;
 import cn.maplerabbit.rlg.pojo.file.dto.MkdirDTO;
 import cn.maplerabbit.rlg.pojo.file.entity.Dictionary;
 import cn.maplerabbit.rlg.pojo.file.entity.File;
+import cn.maplerabbit.rlg.pojo.file.vo.ListFileVO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +24,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -94,14 +96,15 @@ public class DictionaryServiceImpl
         Dictionary directory = new Dictionary()
                 .setUserUuid(userUuid)
                 .setFilename(filename)
+                .setPath(path(parent, filename))
                 // 如果为null，说明在根目录下，deep为0，否则为父目录deep加一
-                .setDeep(parent == null ? NO_PARENT : (parent.getDeep() + 1))
-                .setParentId(parent == null ? NO_PARENT : parent.getId())
+                .setDeep(deep(parent))
+                .setParentId(parentId(parent))
                 .setDirectory(IS_DIRECTORY)
                 .setDeleted(NOT_DELETED)
                 .setDeleteTime(null)
                 // 是否隐藏继承自父目录，如果没有父目录，默认不隐藏
-                .setHidden(parent == null ? NOT_HIDDEN : parent.getHidden());
+                .setHidden(hidden(parent));
 
         if (dictionaryMapper.save(directory) < 1)
             throw new DictionaryCreateException(ServiceCode.ERR_INSERT, "文件夹创建失败，请稍后再试");
@@ -110,21 +113,20 @@ public class DictionaryServiceImpl
     }
 
     @Override
-    public void upload(UploadDTO uploadDTO, LoginPrincipal principal)
+    public void upload(Long parentId, MultipartFile file, LoginPrincipal principal)
     {
-        log.debug("Upload file: {}, user: {}", uploadDTO.getFile().getOriginalFilename(), principal.getUsername());
+        log.debug("Upload file: {}, user: {}", file.getOriginalFilename(), principal.getUsername());
 
         String userUuid = principal.getUuid();
 
-        Dictionary parent = getParent(uploadDTO.getParentId(), userUuid);
-        MultipartFile multipartFile = uploadDTO.getFile();
+        Dictionary parent = getParent(parentId, userUuid);
 
         // 解析文件名
-        FileDetail detail;
+        FilenameParser.FileDetail detail;
 
         synchronized (LOCK.lock(userUuid))
         {
-            detail = new FilenameParser(parent, multipartFile.getOriginalFilename(), userUuid)
+            detail = new FilenameParser(parent, file.getOriginalFilename(), userUuid)
                     .parse();
 
             LOCK.unlock(userUuid);
@@ -132,20 +134,23 @@ public class DictionaryServiceImpl
 
         try
         {
-            String sha512 = DigestUtils.sha512Hex(multipartFile.getInputStream());
-            File existFile = fileService.ftpExist(sha512, multipartFile.getSize());
+            String sha512 = DigestUtils.sha512Hex(file.getInputStream());
+            File existFile = fileService.ftpExist(sha512, file.getSize());
 
             // 如果文件存在，使用文件uuid，否则生成uuid
             String fileUuid = existFile != null ? existFile.getUuid() : uuid();
 
+            if (dictionaryMapper.queryByParentIdAndFilename(userUuid, detail.parent.getId(), detail.filename) != null)
+                detail.filename = addSuffix(detail.filename);
+
             // 存储文件索引至数据库
-            Dictionary file = newFile(fileUuid, userUuid, multipartFile, detail);
+            Dictionary dFile = newFile(fileUuid, userUuid, file, detail);
 
             // 如果文件实体不存在，须要上传
             if (existFile == null)
                 fileService.upload(
-                        newFile(file, sha512, multipartFile),
-                        multipartFile
+                        newFile(dFile, sha512, file),
+                        file
                 );
         }
         catch (IOException e)
@@ -169,7 +174,7 @@ public class DictionaryServiceImpl
             parent = dictionaryMapper.query(parentId);
             // 参数中存在父目录id，但是找不到父目录，报错
             if (parent == null)
-                throw new DictionaryCreateException(ServiceCode.ERR_BAD_REQUEST, "父目录不存在");
+                throw new DictionaryCreateException(ServiceCode.ERR_BAD_REQUEST, "该目录不存在");
         }
 
         // 父目录存在且该目录所属用户与当前操作用户不同
@@ -186,23 +191,25 @@ public class DictionaryServiceImpl
      *
      * @return 文件索引
      */
-    private Dictionary newFile(String fileUuid, String userUuid, MultipartFile multipartFile, FileDetail detail)
+    private Dictionary newFile(String fileUuid, String userUuid, MultipartFile multipartFile, FilenameParser.FileDetail detail)
     {
         Dictionary parent = detail.parent;
+        String filename = detail.filename;
 
         Dictionary file = new Dictionary()
                 .setFileUuid(fileUuid)
                 .setUserUuid(userUuid)
                 // 父目录、文件名与扩展名必须解析后的从文件信息中获取
-                .setFilename(detail.filename)
-                .setDeep(parent == null ? NO_PARENT : (parent.getDeep() + 1))
-                .setParentId(parent == null ? NO_PARENT : parent.getId())
+                .setFilename(filename)
+                .setPath(path(parent, filename))
+                .setDeep(deep(parent))
+                .setParentId(parentId(parent))
                 .setDirectory(NOT_DIRECTORY)
                 .setFileSize(multipartFile.getSize())
                 .setDeleted(NOT_DELETED)
                 .setDeleteTime(null)
                 // 是否隐藏继承自父目录，如果没有父目录，默认不隐藏
-                .setHidden(parent == null ? NOT_HIDDEN : parent.getHidden());
+                .setHidden(hidden(parent));
 
         if (dictionaryMapper.save(file) < 1)
             throw new DictionaryCreateException(ServiceCode.ERR_INSERT, "文件创建失败，请稍后再试");
@@ -241,6 +248,24 @@ public class DictionaryServiceImpl
                 .replaceAll("-", "");
     }
 
+    private String addSuffix(String filename)
+    {
+        return new StringBuilder(filename)
+                .append("_")
+                .append(LocalDate.now().toString().replaceAll("-", ""))
+                .append("_")
+                .append(Long.toHexString(System.currentTimeMillis() % ONE_DAY_MILLIS))
+                .toString();
+    }
+
+    private String path(Dictionary parent, String filename) {return parent == null ? (ROOT + filename) : (parent.getPath() + "/" + filename);}
+
+    private Integer deep(Dictionary parent) {return parent == null ? NO_PARENT : (parent.getDeep() + 1);}
+
+    private Long parentId(Dictionary parent) {return parent == null ? NO_PARENT : parent.getId();}
+
+    private Integer hidden(Dictionary parent) {return parent == null ? NOT_HIDDEN : parent.getHidden();}
+
     @AllArgsConstructor
     private class FilenameParser
     {
@@ -266,23 +291,17 @@ public class DictionaryServiceImpl
 
             // 如果有分隔符，说明为文件夹上传
             if (filename.contains(separator))
-                parseDir();
+            {
+                // 获取文件路径，并循环切换直至目标文件的父目录，沿途创建目录
+                String[] paths = filename.split("/");
+                for (int i = 0; i < paths.length - 1; i++)
+                    if (StringUtils.hasText(paths[i]))
+                        changeCurrentDirectory(paths[i]);
+
+                filename = paths[paths.length - 1];
+            }
 
             return new FileDetail(currentDirectory, filename);
-        }
-
-        /**
-         * 解析带文件夹的文件名
-         */
-        private void parseDir()
-        {
-            // 获取文件路径，并循环切换直至目标文件的父目录，沿途创建目录
-            String[] paths = filename.split("/");
-            for (int i = 0; i < paths.length - 1; i++)
-                if (StringUtils.hasText(paths[i]))
-                    changeCurrentDirectory(paths[i]);
-
-            filename = paths[paths.length - 1];
         }
 
         /**
@@ -304,7 +323,8 @@ public class DictionaryServiceImpl
                 directory = new Dictionary()
                         .setUserUuid(userUuid)
                         .setFilename(childDir)
-                        .setDeep(currentDirectory == null ? NO_PARENT : (currentDirectory.getDeep() + 1))
+                        .setPath(path(currentDirectory, childDir))
+                        .setDeep(deep(currentDirectory))
                         .setParentId(id)
                         .setDirectory(IS_DIRECTORY)
                         .setDeleted(NOT_DELETED)
@@ -319,19 +339,25 @@ public class DictionaryServiceImpl
             currentDirectory = directory;
             log.debug("Change current directory to: {}", directory);
         }
+
+        @AllArgsConstructor
+        private class FileDetail
+        {
+            /**
+             * 父目录
+             */
+            private Dictionary parent;
+            /**
+             * 文件名
+             */
+            private String filename;
+        }
     }
 
-    @AllArgsConstructor
-    private static class FileDetail
+    @Override
+    public List<ListFileVO> list(String path, LoginPrincipal principal)
     {
-        /**
-         * 父目录
-         */
-        private Dictionary parent;
-        /**
-         * 文件名
-         */
-        private String filename;
+        return dictionaryMapper.listByPath(principal.getUuid(), path);
     }
 }
 
@@ -351,7 +377,7 @@ class UserLock
     private static final Map<String, AtomicInteger> WAITING_POOL = new HashMap<>();
 
     /**
-     * 加锁
+     * 生成锁
      * @param uuid 用户uuid
      * @return 锁
      */

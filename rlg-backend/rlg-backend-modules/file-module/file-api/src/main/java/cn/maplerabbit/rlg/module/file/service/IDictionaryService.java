@@ -1,8 +1,11 @@
 package cn.maplerabbit.rlg.module.file.service;
 
 import cn.maplerabbit.rlg.common.entity.LoginPrincipal;
-import cn.maplerabbit.rlg.pojo.file.dto.UploadDTO;
 import cn.maplerabbit.rlg.pojo.file.dto.MkdirDTO;
+import cn.maplerabbit.rlg.pojo.file.vo.ListFileVO;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 文件索引服务接口
@@ -37,6 +40,14 @@ public interface IDictionaryService
      * 不隐藏
      */
     Integer NOT_HIDDEN = 0;
+    /**
+     * 根路径
+     */
+    String ROOT = "/";
+    /**
+     * 一天的毫秒数
+     */
+    Long ONE_DAY_MILLIS = 0b101001001100101110000000000L;
 
     /**
      * 创建文件夹
@@ -47,8 +58,18 @@ public interface IDictionaryService
 
     /**
      * 上传文件
-     * @param uploadDTO 上传文件DTO
+     * @param parentId 父目录id
+     * @param file 文件
      * @param principal 当事人
      */
-    void upload(UploadDTO uploadDTO, LoginPrincipal principal);
+    void upload(Long parentId, MultipartFile file, LoginPrincipal principal);
+
+    /**
+     * 根据父目录id查询文件列表
+     *
+     * @param path
+     * @param principal 当事人
+     * @return 文件列表
+     */
+    List<ListFileVO> list(String path, LoginPrincipal principal);
 }
