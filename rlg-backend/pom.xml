@@ -156,10 +156,11 @@
             <version>${tika.version}</version>
         </dependency>
 
+        <!-- hutool -->
         <dependency>
-            <groupId>icu.mabbit.mdk4j</groupId>
-            <artifactId>core</artifactId>
-            <version>${mdk4j-core.version}</version>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
+            <version>${hutool.version}</version>
         </dependency>
     </dependencies>
 

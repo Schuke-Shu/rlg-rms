@@ -23,7 +23,7 @@ public class File implements Serializable
      */
     private String userUuid;
     /**
-     * 文件md5值
+     * 文件sha512值
      */
     private String sha512;
     /**

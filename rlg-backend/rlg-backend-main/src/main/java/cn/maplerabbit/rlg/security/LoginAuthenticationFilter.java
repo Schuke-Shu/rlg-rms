@@ -42,6 +42,8 @@ public class LoginAuthenticationFilter
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException
     {
+        log.debug("Access LoginAuthenticationFilter");
+
         // 登录账户，可能为用户名、邮箱、手机号
         String account = obtainAccount(request);
         // 登录密钥，可能为密码、验证码
@@ -51,7 +53,6 @@ public class LoginAuthenticationFilter
         // 请求方法
         String method = request.getMethod();
 
-        log.debug("Access LoginAuthenticationFilter");
         log.trace(
                 "details: \nlogin way: {}\naccount: {}, key: {}\nrequest method: {}",
                 loginWay,

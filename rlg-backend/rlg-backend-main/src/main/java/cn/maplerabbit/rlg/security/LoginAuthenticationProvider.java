@@ -93,8 +93,8 @@ public class LoginAuthenticationProvider
                 return null;
             }
         }
-        UserDetails user = null;
 
+        UserDetails user = null;
         try
         {
             user = userService
