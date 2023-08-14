@@ -62,14 +62,13 @@ public class UserController
     @GetMapping("/token/refresh")
     public JsonResult<?> refresh(HttpServletRequest request)
     {
-        return SuccessResult.ok(
-                userService.refresh(
-                        request.getHeader(
-                                rlgProperties
-                                        .getToken()
-                                        .getHeader()
-                        )
+        String newJwt = userService.refresh(
+                request.getHeader(
+                        rlgProperties
+                                .getToken()
+                                .getHeader()
                 )
         );
+        return SuccessResult.ok(newJwt);
     }
 }

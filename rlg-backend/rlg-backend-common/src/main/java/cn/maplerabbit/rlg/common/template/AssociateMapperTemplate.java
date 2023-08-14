@@ -27,14 +27,14 @@ public interface AssociateMapperTemplate<L extends Serializable, R extends Seria
 
     /**
      * 单个删除
-     * @param pk primary key
+     * @param id 关联表id
      * @return 受影响行数
      */
     int remove(@Param("id") Long id);
 
     /**
      * 批量删除
-     * @param pks primary keys
+     * @param ids 关联表id集合
      * @return 受影响行数
      */
     int removeBatch(List<Long> ids);

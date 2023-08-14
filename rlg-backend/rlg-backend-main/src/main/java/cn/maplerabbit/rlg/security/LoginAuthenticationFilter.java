@@ -23,7 +23,9 @@ import static cn.maplerabbit.rlg.common.property.RlgProperties.UserProperties.Lo
 public class LoginAuthenticationFilter
         extends AbstractAuthenticationProcessingFilter
 {
-    private static final AntPathRequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER = new AntPathRequestMatcher("/user/login", "POST");
+    private static final String LOGIN_URI = "/user/login";
+    private static final String POST = "POST";
+    private static final AntPathRequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER = new AntPathRequestMatcher(LOGIN_URI, POST);
     private boolean postOnly = true;
 
     private final LoginProperties loginProperties;
@@ -48,7 +50,7 @@ public class LoginAuthenticationFilter
         String account = obtainAccount(request);
         // 登录密钥，可能为密码、验证码
         String key = obtainKey(request);
-        // 登录方式
+        // 登录方式标记
         String loginWay = request.getHeader(loginProperties.getLoginWayHeader());
         // 请求方法
         String method = request.getMethod();
@@ -62,10 +64,10 @@ public class LoginAuthenticationFilter
         );
 
         // 登录方法只允许post
-        if (this.postOnly && !method.equals("POST"))
+        if (this.postOnly && !method.equals(POST))
         {
             log.debug("Authentication method not supported: '{}'", method);
-            throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
+            throw new AuthenticationServiceException("Authentication method not supported: " + method);
         }
 
         LoginAuthenticationToken authRequest =
