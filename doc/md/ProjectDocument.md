@@ -1,5 +1,62 @@
 # 命名规范
 
+## 数据库（未实装）
+
+**==普通表命名规范：`表属性字母 + 模块id + 实体id`==**
+
+**==关联表命名规范：`左表名称_右表名称`==**
+
+> 例：
+>
+> 某模块id为`01`，其中有某个实体id为`001`，该实体所需的表应命名为`D01001`
+>
+> `D01001`与`D01002`的关联表命名为`D01001_D01002`
+
+**==id使用两位十六进制==**
+
+
+
+==表属性字母==
+
+| 属性名                   | 字母 | 对应英文单词 |
+| ------------------------ | ---- | ------------ |
+| 数据表（实体类对应的表） | D    | data         |
+| 测试表                   | T    | test         |
+
+
+
+**元数据表：**
+
+- `meta_module`（模块信息）
+
+  ```mysql
+  # 模块信息表
+  # DROP TABLE IF EXISTS meta_module;
+  CREATE TABLE IF NOT EXISTS meta_module(
+      id                  char(2)         NOT NULL COMMENT '模块id，由两位十六进制数组成',
+      name                varchar(32)     DEFAULT NULL COMMENT '模块名称',
+      note	            varchar(255)    DEFAULT NULL COMMENT '注释',
+      PRIMARY KEY (id)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='模块信息表，记录所有模块';
+  ```
+
+- `meta_entity`（实体信息）
+
+  ```mysql
+  # 实体信息表
+  # DROP TABLE IF EXISTS meta_entity;
+  CREATE TABLE IF NOT EXISTS meta_entity(
+      id                  char(3)         NOT NULL COMMENT '实体id，由三位十六进制数组成',
+      name                varchar(32)     DEFAULT NULL COMMENT '实体名称',
+      module_id			varchar(2)		NOT NULL COMMENT '所属模块id',
+      note             	varchar(255)    DEFAULT NULL COMMENT '注释',
+      PRIMARY KEY (id)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='模块信息表，记录所有实体';
+  ```
+
+
+
+
 # 自定义全局配置项
 
 ==`application`配置文件中的自定义全局配置项，供生产环境按需修改==
